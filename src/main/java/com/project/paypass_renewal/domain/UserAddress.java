@@ -1,10 +1,8 @@
 package com.project.paypass_renewal.domain;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
+@Entity
 public class UserAddress {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
