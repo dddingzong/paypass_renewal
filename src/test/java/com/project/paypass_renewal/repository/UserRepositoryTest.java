@@ -26,9 +26,10 @@ class UserRepositoryTest {
 
         // when
         userRepository.save(user);
-        Long id = userRepository.findById(user.getId()).get().getId();
 
         // then
+        Long id = userRepository.findById(user.getId()).get().getId();
+
         Assertions.assertThat(id).isEqualTo(user.getId());
 
     }
