@@ -34,10 +34,11 @@ public class User {
     @Column(nullable = false)
     private String linkCode;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private ServiceCode serviceCode;
 
-    // 모든 정보가 들어왔을 경우
+    // 사용자 신규 가입 시
     public User (String mainId, String name, LocalDate birth, String number, String homeAddress, String centerAddress, String linkCode, ServiceCode serviceCode) {
         this.mainId = mainId;
         this.name = name;
