@@ -1,5 +1,6 @@
 package com.project.paypass_renewal.domain.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.project.paypass_renewal.domain.ServiceCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,6 +15,7 @@ public class UserDto {
 
     private String name;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate birth;
 
     private String number;
