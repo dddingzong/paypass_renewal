@@ -19,7 +19,7 @@ class UserTest {
         String number = "01012345678";
         String homeAddress = "01675";
         String centerAddress = "01747";
-        String linkCode = "245863";
+        String linkCode = "123456";
         ServiceCode serviceCode = ServiceCode.PROTECT_SERVICE;
 
         // when
@@ -45,7 +45,7 @@ class UserTest {
         LocalDate birth = LocalDate.of(2000, 5, 13);
         String number = "01012345678";
         String homeAddress = "01675";
-        String linkCode = "245863";
+        String linkCode = "123456";
         ServiceCode serviceCode = ServiceCode.PROTECT_SERVICE;
 
         // when
@@ -61,4 +61,5 @@ class UserTest {
         assertThat(user.getLinkCode()).isEqualTo(linkCode);
         assertThat(user.getServiceCode()).isEqualTo(serviceCode);
     }
+
 }
