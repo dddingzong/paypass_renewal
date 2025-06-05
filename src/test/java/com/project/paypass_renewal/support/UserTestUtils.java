@@ -5,7 +5,7 @@ import com.project.paypass_renewal.domain.User;
 
 import java.time.LocalDate;
 
-public class UserUtils {
+public class UserTestUtils {
 
     public static User createDummyUser() {
         return new User("dummy@gmail.com",
@@ -17,4 +17,5 @@ public class UserUtils {
                 "123456",
                 ServiceCode.PROTECT_SERVICE);
     }
+
 }
