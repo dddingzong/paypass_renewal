@@ -2,6 +2,7 @@ package com.project.paypass_renewal.domain.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.project.paypass_renewal.domain.ServiceCode;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -11,6 +12,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class UserDto {
 
+    @NotNull(message = "이메일은 필수 값입니다.")
     private String mainId;
 
     private String name;
