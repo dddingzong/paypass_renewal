@@ -56,6 +56,9 @@ class UserControllerTest {
         UserDto userDto = UserDtoTestUtil.createDummyUserDto();
 
         User user = UserTestUtils.createDummyUser();
+
+        // stub
+        when(userService.checkDuplicateMainId(any(String.class))).thenReturn(false);
         // userService.saveNewUser 호출 시 dummyUser 반환하도록 설정
         when(userService.saveNewUser(any(UserDto.class))).thenReturn(user);
 
@@ -91,6 +94,9 @@ class UserControllerTest {
                 """;
 
         User user = UserTestUtils.createDummyUser();
+
+        // stub
+        when(userService.checkDuplicateMainId(any(String.class))).thenReturn(false);
         // userService.saveNewUser 호출 시 dummyUser 반환하도록 설정
         when(userService.saveNewUser(any(UserDto.class))).thenReturn(user);
 
@@ -104,6 +110,30 @@ class UserControllerTest {
         // then
         result.andExpect(status().isOk())
                 .andExpect(jsonPath("$.mainId").value("dummy@gmail.com"));
+
+    }
+
+    @Test
+    @DisplayName("컨트롤러_신규유저_이메일중복_테스트")
+    void duplicateMainIdTest() throws Exception {
+        // given
+        final String url = "/login/newUser";
+        UserDto userDto = UserDtoTestUtil.createDummyUserDto();
+
+        // stub
+        when(userService.checkDuplicateMainId(any(String.class))).thenReturn(true);
+
+        String json = objectMapper.writeValueAsString(userDto);
+        // when
+        ResultActions result = mockMvc.perform(
+                MockMvcRequestBuilders.post(url)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json)
+        );
+
+        // then
+        result.andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.message").exists());
 
     }
 }
