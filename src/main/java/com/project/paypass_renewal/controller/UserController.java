@@ -22,9 +22,14 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/login/newUser")
-    public ResponseEntity<Map<String, Object>> createNewUser(@Valid @RequestBody UserDto userDto){
+    public ResponseEntity<Map<String, Object>> createNewUser(@Valid @RequestBody UserDto userDto) {
 
         log.info("사용자 신규 회원가입 요청");
+
+        if (userService.checkDuplicateMainId(userDto.getMainId())) {
+            log.warn("이미 존재하는 이메일입니다. mainId : " + userDto.getMainId());
+            return ResponseEntity.badRequest().body(Map.of("message", "이미 존재하는 메인 아이디입니다."));
+        }
 
         User user = userService.saveNewUser(userDto);
 
