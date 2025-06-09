@@ -17,6 +17,10 @@ public class UserService {
     private final UserRepository userRepository;
     private final LinkCodeGenerator linkCodeGenerator;
 
+    public boolean checkDuplicateMainId (String mainId) {
+        return userRepository.existsByMainId(mainId);
+    }
+
     public User saveNewUser(UserDto userDto) {
         // linkCode 생성
         String linkCode = linkCodeGenerator.generate();
