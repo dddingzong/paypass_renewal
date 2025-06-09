@@ -12,13 +12,11 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class UserDto {
 
-    @NotNull(message = "이메일은 필수 값입니다.")
-    @NotEmpty(message = "이메일은 빈칸으로 작성할 수 없습니다")
+    @NotEmpty(message = "이메일은 필수 값입니다.")
     @Email(message = "이메일 형식을 지켜주십시오")
     private String mainId;
 
-    @NotNull(message = "이름은 필수 값입니다.")
-    @NotEmpty(message = "이름은 빈칸으로 작성할 수 없습니다")
+    @NotEmpty(message = "이름은 필수 값입니다.")
     @Pattern(regexp = "^[가-힣]{2,4}$", message = "이름은 한글로 2~4자 사이로 작성해주세요")
     private String name;
 
@@ -28,12 +26,18 @@ public class UserDto {
     @NotNull(message = "생년월일은 필수 값입니다.")
     private LocalDate birth;
 
+    @NotEmpty(message = "전화번호는 필수 값입니다.")
+    @Pattern(regexp = "^\\d{11}$", message = "전화번호 형식이 올바르지 않습니다.")
     private String number;
 
+    @NotEmpty(message = "집 주소는 필수 값입니다.")
+    @Pattern(regexp = "^\\d{5}$", message = "우편번호는 5자리 숫자여야 합니다.")
     private String homeAddress;
 
+    @Pattern(regexp = "^\\d{5}$", message = "우편번호는 5자리 숫자여야 합니다. 거주 센터가 없으시다면 빈칸으로 제출해 주십시오")
     private String centerAddress;
 
+    @NotNull(message = "서비스 코드는 필수 값입니다.")
     private ServiceCode serviceCode;
 
     public UserDto(String mainId, String name, LocalDate birth, String number, String homeAddress, String centerAddress, ServiceCode serviceCode) {
