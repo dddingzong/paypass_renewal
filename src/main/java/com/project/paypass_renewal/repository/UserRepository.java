@@ -7,4 +7,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     boolean existsByLinkCode(String linkCode);
 
+    boolean existsByMainId(String mainId);
+
 }
