@@ -80,7 +80,7 @@ class UserControllerTest {
         final String url = "/login/newUser";
         String json = """
                 {
-                    "homeAddress": "324521",
+                    "homeAddress": "32521",
                     "birth": "2025-06-02",
                     "centerAddress": null,
                     "name": "정종인",
