@@ -1,10 +1,9 @@
-package com.project.paypass_renewal.controller;
+package com.project.paypass_renewal.domain;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.project.paypass_renewal.domain.ServiceCode;
-import com.project.paypass_renewal.domain.User;
+import com.project.paypass_renewal.controller.UserController;
 import com.project.paypass_renewal.domain.dto.UserDto;
 import com.project.paypass_renewal.exception.handler.user.UserControllerExceptionHandler;
 import com.project.paypass_renewal.service.UserService;
