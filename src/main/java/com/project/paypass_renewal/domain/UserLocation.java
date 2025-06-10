@@ -1,8 +1,14 @@
 package com.project.paypass_renewal.domain;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+import java.math.BigDecimal;
 
 @Entity
+@Getter
+@NoArgsConstructor
 public class UserLocation {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -12,8 +18,14 @@ public class UserLocation {
     private String mainId;
 
     @Column(nullable = false)
-    private Long latitude;
+    private BigDecimal latitude;
 
     @Column(nullable = false)
-    private Long longitude;
+    private BigDecimal longitude;
+
+    public UserLocation(String mainId, BigDecimal latitude, BigDecimal longitude) {
+        this.mainId = mainId;
+        this.latitude = latitude;
+        this.longitude = longitude;
+    }
 }
