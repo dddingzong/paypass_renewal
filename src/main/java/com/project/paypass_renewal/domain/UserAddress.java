@@ -2,6 +2,8 @@ package com.project.paypass_renewal.domain;
 
 import jakarta.persistence.*;
 
+import java.math.BigDecimal;
+
 @Entity
 public class UserAddress {
 
@@ -12,12 +14,12 @@ public class UserAddress {
     private String mainId;
 
     @Column(nullable = false)
-    private Long homeLatitude;
+    private BigDecimal homeLatitude;
 
     @Column(nullable = false)
-    private Long homeLongitude;
+    private BigDecimal homeLongitude;
 
-    Long centerLatitude;
+    BigDecimal centerLatitude;
 
-    Long centerLongitude;
+    BigDecimal centerLongitude;
 }
