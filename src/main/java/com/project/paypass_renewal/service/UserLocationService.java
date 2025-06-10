@@ -1,0 +1,36 @@
+package com.project.paypass_renewal.service;
+
+import com.project.paypass_renewal.domain.UserLocation;
+import com.project.paypass_renewal.domain.dto.UserLocationRequestDto;
+import com.project.paypass_renewal.repository.UserLocationRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import java.math.BigDecimal;
+
+@Service
+@RequiredArgsConstructor
+public class UserLocationService {
+
+    private UserLocationRepository userLocationRepository;
+
+    public UserLocation saveUserLocation(UserLocationRequestDto userLocationDto){
+
+        UserLocation userLocation = toEntity(userLocationDto);
+
+        userLocationRepository.save(userLocation);
+
+        return userLocation;
+    }
+
+    private UserLocation toEntity(UserLocationRequestDto userLocationDto){
+
+        String mainId = userLocationDto.getMainId();
+        String latitude = userLocationDto.getLatitude();
+        String longitude = userLocationDto.getLongitude();
+
+        return new UserLocation(mainId, new BigDecimal(latitude), new BigDecimal(longitude));
+    }
+
+
+}
