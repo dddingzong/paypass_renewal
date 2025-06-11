@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 @RequiredArgsConstructor
 public class UserLocationService {
 
-    private UserLocationRepository userLocationRepository;
+    private final UserLocationRepository userLocationRepository;
 
     public UserLocation saveUserLocation(UserLocationRequestDto userLocationDto){
 
