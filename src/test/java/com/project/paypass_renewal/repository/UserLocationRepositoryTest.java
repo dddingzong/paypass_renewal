@@ -22,7 +22,7 @@ class UserLocationRepositoryTest {
     @DisplayName("실시간_위치_저장")
     void saveUserLocationTest(){
         // given
-        UserLocation userLocation = new UserLocation("test@gmail.com", BigDecimal.valueOf(37.6616521), BigDecimal.valueOf(127.0561246));
+        UserLocation userLocation = new UserLocation("01012345678", BigDecimal.valueOf(37.6616521), BigDecimal.valueOf(127.0561246));
 
         // when
         UserLocation savedUserLocation = userLocationRepository.save(userLocation);

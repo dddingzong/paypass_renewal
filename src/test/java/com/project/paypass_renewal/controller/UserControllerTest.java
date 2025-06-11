@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.project.paypass_renewal.domain.User;
 import com.project.paypass_renewal.domain.dto.UserDto;
+import com.project.paypass_renewal.exception.handler.GlobalExceptionHandler;
 import com.project.paypass_renewal.service.UserService;
 import com.project.paypass_renewal.support.UserDtoTestUtil;
 import com.project.paypass_renewal.support.UserTestUtils;
@@ -45,7 +46,9 @@ class UserControllerTest {
         objectMapper.registerModule(new JavaTimeModule());
         objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 
-        mockMvc = MockMvcBuilders.standaloneSetup(userController).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(userController)
+                .setControllerAdvice(new GlobalExceptionHandler())
+                .build();
     }
 
     @Test
@@ -58,7 +61,7 @@ class UserControllerTest {
         User user = UserTestUtils.createDummyUser();
 
         // stub
-        when(userService.checkDuplicateMainId(any(String.class))).thenReturn(false);
+        when(userService.checkDuplicateNumber(any(String.class))).thenReturn(false);
         // userService.saveNewUser 호출 시 dummyUser 반환하도록 설정
         when(userService.saveNewUser(any(UserDto.class))).thenReturn(user);
 
@@ -72,8 +75,7 @@ class UserControllerTest {
 
         // then
         result.andExpect(status().isOk())
-                .andExpect(jsonPath("$.mainId").value("dummy@gmail.com"));
-
+                .andExpect(jsonPath("$.number").value("01012345678"));
     }
 
     @Test
@@ -87,16 +89,16 @@ class UserControllerTest {
                     "birth": "2025-06-02",
                     "centerAddress": null,
                     "name": "정종인",
-                    "number": "01089099721",
-                    "serviceCode": "PROTECT_SERVICE",
-                    "mainId": "chungjongin@gmail.com"
+                    "number": "01089091234",
+                    "serviceCode": "CARE_SERVICE",
+                    "password": "abs123"
                 }
                 """;
 
         User user = UserTestUtils.createDummyUser();
 
         // stub
-        when(userService.checkDuplicateMainId(any(String.class))).thenReturn(false);
+        when(userService.checkDuplicateNumber(any(String.class))).thenReturn(false);
         // userService.saveNewUser 호출 시 dummyUser 반환하도록 설정
         when(userService.saveNewUser(any(UserDto.class))).thenReturn(user);
 
@@ -109,19 +111,54 @@ class UserControllerTest {
 
         // then
         result.andExpect(status().isOk())
-                .andExpect(jsonPath("$.mainId").value("dummy@gmail.com"));
-
+                .andExpect(jsonPath("$.number").value("01012345678"));
     }
 
     @Test
-    @DisplayName("컨트롤러_신규유저_이메일중복_테스트")
-    void duplicateMainIdTest() throws Exception {
+    @DisplayName("컨트롤러_신규유저_비밀번호_이상_저장_테스트")
+    void createNewUserLongPasswordTest() throws Exception {
+        // given
+        final String url = "/login/newUser";
+        String json = """
+                {
+                    "homeAddress": "32521",
+                    "birth": "2025-06-02",
+                    "centerAddress": null,
+                    "name": "정종인",
+                    "number": "01089091234",
+                    "serviceCode": "CARE_SERVICE",
+                    "password": "nNa1D2A123dAA01"
+                }
+                """;
+
+        User user = UserTestUtils.createDummyUser();
+
+        // stub
+        when(userService.checkDuplicateNumber(any(String.class))).thenReturn(false);
+        // userService.saveNewUser 호출 시 dummyUser 반환하도록 설정
+        when(userService.saveNewUser(any(UserDto.class))).thenReturn(user);
+
+        // when
+        ResultActions result = mockMvc.perform(
+                MockMvcRequestBuilders.post(url)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json)
+        );
+
+        // then
+        result.andExpect(status().isOk())
+                .andExpect(jsonPath("$.number").value("01012345678"));
+    }
+
+    @Test
+    @DisplayName("컨트롤러_신규유저_번호중복_테스트")
+    void duplicateNumberTest() throws Exception {
         // given
         final String url = "/login/newUser";
         UserDto userDto = UserDtoTestUtil.createDummyUserDto();
 
         // stub
-        when(userService.checkDuplicateMainId(any(String.class))).thenReturn(true);
+        when(userService.checkDuplicateNumber(any(String.class))).thenReturn(true);
 
         String json = objectMapper.writeValueAsString(userDto);
         // when
@@ -134,6 +171,5 @@ class UserControllerTest {
         // then
         result.andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.message").exists());
-
     }
 }

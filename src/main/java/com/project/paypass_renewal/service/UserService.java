@@ -17,8 +17,8 @@ public class UserService {
     private final UserRepository userRepository;
     private final LinkCodeGenerator linkCodeGenerator;
 
-    public boolean checkDuplicateMainId (String mainId) {
-        return userRepository.existsByMainId(mainId);
+    public boolean checkDuplicateNumber (String number) {
+        return userRepository.existsByNumber(number);
     }
 
     public User saveNewUser(UserDto userDto) {
@@ -44,15 +44,15 @@ public class UserService {
     }
 
     private User toEntity(UserDto userDto, String linkCode){
-        String mainId = userDto.getMainId();
         String name = userDto.getName();
+        String password = userDto.getPassword();
         LocalDate birth = userDto.getBirth();
         String number = userDto.getNumber();
         String homeAddress = userDto.getHomeAddress();
         String centerAddress = userDto.getCenterAddress();
         ServiceCode serviceCode = userDto.getServiceCode();
 
-        User user = new User(mainId, name, birth, number, homeAddress, centerAddress, linkCode, serviceCode);
+        User user = new User(name, password, birth, number, homeAddress, centerAddress, linkCode, serviceCode);
 
         return user;
     }

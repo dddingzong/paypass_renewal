@@ -8,12 +8,12 @@ import java.time.LocalDate;
 public class UserDtoTestUtil {
 
     public static UserDto createDummyUserDto() {
-        return new UserDto("dummy@gmail.com",
-                "더미유저",
+        return new UserDto("더미유저",
+                "abc123",
                 LocalDate.of(2000, 1, 1),
                 "01012345678",
                 "12345",
                 "67890",
-                ServiceCode.PROTECT_SERVICE);
+                ServiceCode.CARE_SERVICE);
     }
 }

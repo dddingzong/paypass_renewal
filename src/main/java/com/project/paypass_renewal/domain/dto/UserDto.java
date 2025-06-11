@@ -12,13 +12,14 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class UserDto {
 
-    @NotEmpty(message = "이메일은 필수 값입니다.")
-    @Email(message = "이메일 형식을 지켜주십시오")
-    private String mainId;
-
     @NotEmpty(message = "이름은 필수 값입니다.")
     @Pattern(regexp = "^[가-힣]{2,4}$", message = "이름은 한글로 2~4자 사이로 작성해주세요")
     private String name;
+
+    @NotEmpty(message = "비밀번호는 필수 값입니다.")
+    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{6,}$",
+            message = "비밀번호는 영문자와 숫자를 포함한 6자리 이상이어야 합니다.")
+    private String password;
 
     // LocalDate 타입은 @Valid 사용 불가, 따로 예외처리 진행
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
@@ -40,9 +41,9 @@ public class UserDto {
     @NotNull(message = "서비스 코드는 필수 값입니다.")
     private ServiceCode serviceCode;
 
-    public UserDto(String mainId, String name, LocalDate birth, String number, String homeAddress, String centerAddress, ServiceCode serviceCode) {
-        this.mainId = mainId;
+    public UserDto(String name, String password, LocalDate birth, String number, String homeAddress, String centerAddress, ServiceCode serviceCode) {
         this.name = name;
+        this.password = password;
         this.birth = birth;
         this.number = number;
         this.homeAddress = homeAddress;

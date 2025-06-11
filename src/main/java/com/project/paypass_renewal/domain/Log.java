@@ -11,7 +11,7 @@ public class Log {
     private Long id;
 
     @Column(nullable = false)
-    private String mainId;
+    private String number;
 
     @Column(nullable = false)
     private LocalDateTime departureTime;

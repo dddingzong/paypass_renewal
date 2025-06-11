@@ -15,7 +15,7 @@ public class UserLocation {
     private Long id;
 
     @Column(nullable = false)
-    private String mainId;
+    private String number;
 
     @Column(nullable = false)
     private BigDecimal latitude;
@@ -23,8 +23,8 @@ public class UserLocation {
     @Column(nullable = false)
     private BigDecimal longitude;
 
-    public UserLocation(String mainId, BigDecimal latitude, BigDecimal longitude) {
-        this.mainId = mainId;
+    public UserLocation(String number, BigDecimal latitude, BigDecimal longitude) {
+        this.number = number;
         this.latitude = latitude;
         this.longitude = longitude;
     }

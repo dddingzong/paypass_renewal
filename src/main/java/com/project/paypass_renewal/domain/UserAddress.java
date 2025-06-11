@@ -11,7 +11,7 @@ public class UserAddress {
     private Long id;
 
     @Column(nullable = false)
-    private String mainId;
+    private String number;
 
     @Column(nullable = false)
     private BigDecimal homeLatitude;

@@ -8,14 +8,14 @@ import java.time.LocalDate;
 public class UserTestUtils {
 
     public static User createDummyUser() {
-        return new User("dummy@gmail.com",
-                "더미유저",
+        return new User("더미유저",
+                "abc123",
                 LocalDate.of(2000, 1, 1),
                 "01012345678",
                 "12345",
                 "67890",
                 "123456",
-                ServiceCode.PROTECT_SERVICE);
+                ServiceCode.CARE_SERVICE);
     }
 
 }

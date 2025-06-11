@@ -25,13 +25,13 @@ class UserLocationServiceTest {
     @DisplayName("서비스_유저위치_저장_테스트")
     void saveNewUserTest(){
         // given
-        UserLocationRequestDto userLocationDto = new UserLocationRequestDto("test@gmail.com", "37.6616521", "127.0561246");
+        UserLocationRequestDto userLocationDto = new UserLocationRequestDto("01012345678", "37.6616521", "127.0561246");
 
         // when
         UserLocation userLocation = userLocationService.saveUserLocation(userLocationDto);
 
         // then
-        assertThat(userLocation.getMainId()).isEqualTo(userLocationDto.getMainId());
+        assertThat(userLocation.getNumber()).isEqualTo(userLocationDto.getNumber());
         assertThat(userLocation.getLatitude()).isEqualTo(String.valueOf(userLocationDto.getLatitude()));
         assertThat(userLocation.getLongitude()).isEqualTo(String.valueOf(userLocationDto.getLongitude()));
     }

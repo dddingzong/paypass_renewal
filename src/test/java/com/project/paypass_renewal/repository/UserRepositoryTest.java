@@ -50,16 +50,16 @@ class UserRepositoryTest {
     }
 
     @Test
-    @DisplayName("유저_이메일_존재유무_테스트")
-    void checkExistsMainIdTest() {
+    @DisplayName("유저_번호_존재유무_테스트")
+    void checkExistsNumberTest() {
         // given
         User user = UserTestUtils.createDummyUser();
 
         // when
-        boolean firstCheck = userRepository.existsByMainId(user.getMainId());
+        boolean firstCheck = userRepository.existsByNumber(user.getNumber());
 
         userRepository.save(user);
-        boolean secondCheck = userRepository.existsByMainId(user.getMainId());
+        boolean secondCheck = userRepository.existsByNumber(user.getNumber());
 
         // then
         assertThat(firstCheck).isFalse();

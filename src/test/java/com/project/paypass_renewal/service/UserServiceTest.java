@@ -41,8 +41,8 @@ class UserServiceTest {
         User user = userService.saveNewUser(userDto);
 
         // then
-        assertThat(user.getMainId()).isNotNull();
-        assertThat(user.getMainId()).isEqualTo(userDto.getMainId());
+        assertThat(user.getNumber()).isNotNull();
+        assertThat(user.getNumber()).isEqualTo(userDto.getNumber());
         assertThat(user.getLinkCode()).isNotNull();
         assertThat(user.getLinkCode()).isEqualTo(linkCode);
     }
@@ -63,8 +63,8 @@ class UserServiceTest {
         User user = userService.saveNewUser(userDto);
 
         // then
-        assertThat(user.getMainId()).isNotNull();
-        assertThat(user.getMainId()).isEqualTo(userDto.getMainId());
+        assertThat(user.getNumber()).isNotNull();
+        assertThat(user.getNumber()).isEqualTo(userDto.getNumber());
         assertThat(user.getLinkCode()).isNotNull();
         assertThat(user.getLinkCode()).isEqualTo(secondLinkCode);
     }

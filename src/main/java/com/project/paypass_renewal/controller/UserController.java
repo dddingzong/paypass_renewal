@@ -2,6 +2,8 @@ package com.project.paypass_renewal.controller;
 
 import com.project.paypass_renewal.domain.User;
 import com.project.paypass_renewal.domain.dto.UserDto;
+import com.project.paypass_renewal.exception.CustomException;
+import com.project.paypass_renewal.exception.ErrorResult;
 import com.project.paypass_renewal.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -26,15 +28,15 @@ public class UserController {
 
         log.info("사용자 신규 회원가입 요청");
 
-        if (userService.checkDuplicateMainId(userDto.getMainId())) {
-            log.warn("이미 존재하는 이메일입니다. mainId : " + userDto.getMainId());
-            return ResponseEntity.badRequest().body(Map.of("message", "이미 존재하는 메인 아이디입니다."));
+        if (userService.checkDuplicateNumber(userDto.getNumber())) {
+            throw new CustomException(ErrorResult.USER_NUMBER_DUPLICATE);
         }
 
         User user = userService.saveNewUser(userDto);
 
         Map<String, Object> response = new HashMap<>();
-        response.put("mainId", user.getMainId());
+        response.put("name", user.getName());
+        response.put("number", user.getNumber());
 
         log.info("사용자 이름: " + user.getName() + ", 성공적으로 회원가입 완료되었습니다.");
 

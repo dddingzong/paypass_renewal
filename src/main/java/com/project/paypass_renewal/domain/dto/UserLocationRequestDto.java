@@ -7,12 +7,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UserLocationRequestDto {
 
-    private String mainId;
+    private String number;
     private String latitude;
     private String longitude;
 
-    public UserLocationRequestDto(String mainId, String latitude, String longitude) {
-        this.mainId = mainId;
+    public UserLocationRequestDto(String number, String latitude, String longitude) {
+        this.number = number;
         this.latitude = latitude;
         this.longitude = longitude;
     }

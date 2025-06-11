@@ -9,8 +9,8 @@ public class Link {
     private Long id;
 
     @Column(nullable = false)
-    private String supportId;
+    private String supportNumber;
 
     @Column(nullable = false)
-    private String userId;
+    private String userNumber;
 }

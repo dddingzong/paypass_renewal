@@ -8,8 +8,7 @@ import org.springframework.http.HttpStatus;
 @RequiredArgsConstructor
 public enum ErrorResult {
 
-    USER_EMAIL_DUPLICATE(HttpStatus.BAD_REQUEST, "중복된 이메일입니다.")
-    ;
+    USER_NUMBER_DUPLICATE(HttpStatus.BAD_REQUEST, "중복된 전화번호입니다.");
 
     private final HttpStatus httpStatus;
     private final String message;

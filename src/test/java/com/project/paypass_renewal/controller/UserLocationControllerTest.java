@@ -44,7 +44,7 @@ class UserLocationControllerTest {
         // given
         final String url = "/user/getUserLocation";
 
-        UserLocationRequestDto userLocationDto = new UserLocationRequestDto("test@gmail.com", "37.6616521", "127.0561246");
+        UserLocationRequestDto userLocationDto = new UserLocationRequestDto("01012345678", "37.6616521", "127.0561246");
 
         String json = objectMapper.writeValueAsString(userLocationDto);
         // when
@@ -55,7 +55,7 @@ class UserLocationControllerTest {
         );
         // then
         result.andExpect(status().isOk())
-                .andExpect(content().string("success"));
+                .andExpect(content().string("saveSuccess"));
     }
 
 }

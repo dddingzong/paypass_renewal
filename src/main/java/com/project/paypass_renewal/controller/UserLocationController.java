@@ -20,7 +20,7 @@ public class UserLocationController {
 
         userLocationService.saveUserLocation(userLocationRequestDto);
 
-        return ResponseEntity.ok("success");
+        return ResponseEntity.ok("saveSuccess");
     }
 
 

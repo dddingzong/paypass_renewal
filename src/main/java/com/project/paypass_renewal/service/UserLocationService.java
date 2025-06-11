@@ -25,11 +25,11 @@ public class UserLocationService {
 
     private UserLocation toEntity(UserLocationRequestDto userLocationDto){
 
-        String mainId = userLocationDto.getMainId();
+        String number = userLocationDto.getNumber();
         String latitude = userLocationDto.getLatitude();
         String longitude = userLocationDto.getLongitude();
 
-        return new UserLocation(mainId, new BigDecimal(latitude), new BigDecimal(longitude));
+        return new UserLocation(number, new BigDecimal(latitude), new BigDecimal(longitude));
     }
 
 
