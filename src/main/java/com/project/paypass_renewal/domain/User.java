@@ -14,11 +14,11 @@ public class User {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true)
-    private String mainId;
-
     @Column(nullable = false)
     private String name;
+
+    @Column(nullable = false)
+    private String password;
 
     @Column(nullable = false)
     private LocalDate birth;
@@ -34,13 +34,14 @@ public class User {
     @Column(nullable = false)
     private String linkCode;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private ServiceCode serviceCode;
 
-    // 모든 정보가 들어왔을 경우
-    public User (String mainId, String name, LocalDate birth, String number, String homeAddress, String centerAddress, String linkCode, ServiceCode serviceCode) {
-        this.mainId = mainId;
+    // 사용자 신규 가입 시
+    public User  (String name, String password, LocalDate birth, String number, String homeAddress, String centerAddress, String linkCode, ServiceCode serviceCode) {
         this.name = name;
+        this.password = password;
         this.birth = birth;
         this.number = number;
         this.homeAddress = homeAddress;

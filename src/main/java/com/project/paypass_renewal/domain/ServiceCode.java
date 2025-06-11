@@ -3,7 +3,7 @@ package com.project.paypass_renewal.domain;
 public enum ServiceCode {
     NONE(0, "no service"),
     PAYPASS_SERVICE(1, "paypass service"),
-    PROTECT_SERVICE(2, "protect service"),
+    CARE_SERVICE(2, "protect service"),
     ALL_SERVICES(3, "all service");
 
     private final int code;

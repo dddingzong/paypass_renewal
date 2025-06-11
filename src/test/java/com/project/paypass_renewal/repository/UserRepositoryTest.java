@@ -1,28 +1,27 @@
 package com.project.paypass_renewal.repository;
 
-import com.project.paypass_renewal.domain.ServiceCode;
 import com.project.paypass_renewal.domain.User;
-import org.assertj.core.api.Assertions;
+import com.project.paypass_renewal.support.UserTestUtils;
+import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.time.LocalDate;
+import static org.assertj.core.api.Assertions.*;
 
 @SpringBootTest
+@Transactional
 class UserRepositoryTest {
 
     @Autowired
     private UserRepository userRepository;
 
     @Test
-    @DisplayName("신규유저_저장_테스트")
-    void saveNewUser(){
+    @DisplayName("리포지토리_신규유저_저장_테스트")
+    void saveNewUserTest(){
         // given
-        User user = new User("test@gmail.com", "정종인",
-                LocalDate.of(2000, 5, 13), "01012345678",
-                "01675", "01747", "245863", ServiceCode.PROTECT_SERVICE);
+        User user = UserTestUtils.createDummyUser();
 
         // when
         userRepository.save(user);
@@ -30,7 +29,41 @@ class UserRepositoryTest {
         // then
         Long id = userRepository.findById(user.getId()).get().getId();
 
-        Assertions.assertThat(id).isEqualTo(user.getId());
-
+        assertThat(id).isEqualTo(user.getId());
     }
+
+    @Test
+    @DisplayName("유저링크_존재유무_테스트")
+    void checkExistsLinkCode(){
+        // given
+        User user = UserTestUtils.createDummyUser();
+
+        // when
+        boolean firstCheck = userRepository.existsByLinkCode(user.getLinkCode());
+
+        userRepository.save(user);
+        boolean secondCheck = userRepository.existsByLinkCode(user.getLinkCode());
+
+        // then
+        assertThat(firstCheck).isFalse();
+        assertThat(secondCheck).isTrue();
+    }
+
+    @Test
+    @DisplayName("유저_번호_존재유무_테스트")
+    void checkExistsNumberTest() {
+        // given
+        User user = UserTestUtils.createDummyUser();
+
+        // when
+        boolean firstCheck = userRepository.existsByNumber(user.getNumber());
+
+        userRepository.save(user);
+        boolean secondCheck = userRepository.existsByNumber(user.getNumber());
+
+        // then
+        assertThat(firstCheck).isFalse();
+        assertThat(secondCheck).isTrue();
+    }
+
 }
