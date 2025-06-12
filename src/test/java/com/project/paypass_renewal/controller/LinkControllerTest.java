@@ -56,5 +56,28 @@ class LinkControllerTest {
         result.andExpect(status().isOk())
                 .andExpect(content().string("saveSuccess"));
     }
-    
+
+    // 보내야하는 정보: 이름,
+    @Test
+    @DisplayName("이용자_조회_테스트")
+    void findUsersListTest() throws Exception{
+        // given
+        final String url = "link/getUserList";
+
+        String supporterNumber = "01012345678";
+        String json = objectMapper.writeValueAsString(supporterNumber);
+
+        // when
+        ResultActions result = mockMvc.perform(
+                MockMvcRequestBuilders.post(url)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json)
+        );
+
+        // then
+
+
+    }
+
+
 }
