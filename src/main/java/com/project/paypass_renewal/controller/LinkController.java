@@ -51,4 +51,14 @@ public class LinkController {
         return ResponseEntity.ok(linkListResponseDtoList);
     }
 
+    @PostMapping("/link/deleteLink")
+    public ResponseEntity<String> deleteLink(@RequestBody LinkRequestDto linkRequestDto) {
+
+        log.info("링크 삭제 요청을 받았습니다.");
+
+        int deleteCount = linkService.deleteLink(linkRequestDto);
+
+        return ResponseEntity.ok("deleteSuccess. 삭제된 데이터 개수: " + deleteCount);
+    }
+
 }
