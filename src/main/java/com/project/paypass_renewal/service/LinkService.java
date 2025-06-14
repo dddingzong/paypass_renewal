@@ -54,6 +54,13 @@ public class LinkService {
                 .toList();
     }
 
+    public int deleteLink(LinkRequestDto linkRequestDto){
+        String supporterNumber = linkRequestDto.getSupporterNumber();
+        String userNumber = linkRequestDto.getUserNumber();
+
+        return linkRepository.deleteBySupporterNumberAndUserNumber(supporterNumber,userNumber);
+    }
+
     private String supporterNumberRequestDtoToString(SupporterNumberRequestDto supporterNumberRequestDto) {
         return supporterNumberRequestDto.getSupporterNumber();
     }
