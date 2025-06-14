@@ -12,5 +12,9 @@ public interface LinkRepository extends JpaRepository<Link, Long> {
     @Query("SELECT l.userNumber FROM Link l WHERE l.supporterNumber = :supporterNumber")
     List<String> findUserNumbersBySupporterNumber(@Param("supporterNumber") String supporterNumber);
 
+    void deleteBySupporterNumberAndUserNumber(String supporterNumber, String userNumber);
+
+    boolean existsBySupporterNumberAndUserNumber(String supporterNumber, String userNumber);
+
 }
 
