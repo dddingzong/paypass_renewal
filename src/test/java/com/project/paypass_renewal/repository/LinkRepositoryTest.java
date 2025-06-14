@@ -58,4 +58,30 @@ class LinkRepositoryTest {
         assertThat(userNumbers).containsExactlyInAnyOrder(userNumberOne, userNumberTwo);
     }
 
+    @Test
+    @DisplayName("링크_중복_검사_테스트")
+    void checkDuplicateLinkTest() {
+        // given
+        String supporterNumber = "01012345678";
+        String userNumber = "01011111111";
+
+        Link link = new Link(supporterNumber, userNumber);
+
+        // when
+        boolean firstCheck = linkRepository.existsBySupporterNumberAndUserNumber(supporterNumber, userNumber);
+        linkRepository.save(link);
+        boolean secondCheck = linkRepository.existsBySupporterNumberAndUserNumber(supporterNumber, userNumber);
+
+        // then
+        assertThat(firstCheck).isFalse();
+        assertThat(secondCheck).isTrue();
+    }
+
+    @Test
+    @DisplayName("링크_삭제_테스트")
+    void deleteLinkTest() {
+
+    }
+
+
 }
