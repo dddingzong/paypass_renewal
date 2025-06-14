@@ -29,6 +29,13 @@ public class LinkService {
         return link;
     }
 
+    public boolean checkDuplicateLink(LinkRequestDto linkRequestDto) {
+        String supporterNumber = linkRequestDto.getSupporterNumber();
+        String userNumber = linkRequestDto.getUserNumber();
+
+        return linkRepository.existsBySupporterNumberAndUserNumber(supporterNumber, userNumber);
+    }
+
     public List<String> findUserNumbersBySupporterNumber(SupporterNumberRequestDto supporterNumberRequestDto) {
         String supporterNumber = supporterNumberRequestDtoToString(supporterNumberRequestDto);
         return linkRepository.findUserNumbersBySupporterNumber(supporterNumber);
