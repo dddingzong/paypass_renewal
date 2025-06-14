@@ -1,6 +1,7 @@
 package com.project.paypass_renewal.repository;
 
 import com.project.paypass_renewal.domain.Link;
+import com.project.paypass_renewal.domain.dto.request.LinkRequestDto;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -80,7 +81,21 @@ class LinkRepositoryTest {
     @Test
     @DisplayName("링크_삭제_테스트")
     void deleteLinkTest() {
+        // given
+        Link dummyLinkOne = new Link("01012345678", "01011111111");
+        Link dummyLinkTwo = new Link("01012345678", "01022222222");
 
+        linkRepository.save(dummyLinkOne);
+        linkRepository.save(dummyLinkTwo);
+
+        // when
+        int deleteCount = linkRepository.deleteBySupporterNumberAndUserNumber(dummyLinkOne.getSupporterNumber(), dummyLinkOne.getUserNumber());
+
+        List<String> userNumbers = linkRepository.findUserNumbersBySupporterNumber(dummyLinkOne.getSupporterNumber());
+        // then
+
+        assertThat(deleteCount).isEqualTo(1);
+        assertThat(userNumbers).doesNotContain(dummyLinkOne.getUserNumber());
     }
 
 
