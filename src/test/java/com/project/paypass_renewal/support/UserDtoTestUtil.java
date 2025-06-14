@@ -1,7 +1,7 @@
 package com.project.paypass_renewal.support;
 
 import com.project.paypass_renewal.domain.ServiceCode;
-import com.project.paypass_renewal.domain.dto.UserDto;
+import com.project.paypass_renewal.domain.dto.request.UserDto;
 
 import java.time.LocalDate;
 

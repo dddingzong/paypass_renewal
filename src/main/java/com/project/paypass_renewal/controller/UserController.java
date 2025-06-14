@@ -1,7 +1,7 @@
 package com.project.paypass_renewal.controller;
 
 import com.project.paypass_renewal.domain.User;
-import com.project.paypass_renewal.domain.dto.UserDto;
+import com.project.paypass_renewal.domain.dto.request.UserDto;
 import com.project.paypass_renewal.exception.CustomException;
 import com.project.paypass_renewal.exception.ErrorResult;
 import com.project.paypass_renewal.service.UserService;

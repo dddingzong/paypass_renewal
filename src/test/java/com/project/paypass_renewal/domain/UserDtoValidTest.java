@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.project.paypass_renewal.controller.UserController;
-import com.project.paypass_renewal.domain.dto.UserDto;
+import com.project.paypass_renewal.domain.dto.request.UserDto;
 import com.project.paypass_renewal.exception.handler.user.UserControllerExceptionHandler;
 import com.project.paypass_renewal.service.UserService;
 import org.junit.jupiter.api.BeforeEach;

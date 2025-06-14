@@ -1,7 +1,7 @@
 package com.project.paypass_renewal.service;
 
 import com.project.paypass_renewal.domain.UserLocation;
-import com.project.paypass_renewal.domain.dto.UserLocationRequestDto;
+import com.project.paypass_renewal.domain.dto.request.UserLocationRequestDto;
 import com.project.paypass_renewal.repository.UserLocationRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

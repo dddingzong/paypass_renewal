@@ -2,7 +2,7 @@ package com.project.paypass_renewal.controller;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.project.paypass_renewal.domain.dto.UserLocationRequestDto;
+import com.project.paypass_renewal.domain.dto.request.UserLocationRequestDto;
 import com.project.paypass_renewal.service.UserLocationService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

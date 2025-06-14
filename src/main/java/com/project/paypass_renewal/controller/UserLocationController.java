@@ -1,7 +1,7 @@
 package com.project.paypass_renewal.controller;
 
 
-import com.project.paypass_renewal.domain.dto.UserLocationRequestDto;
+import com.project.paypass_renewal.domain.dto.request.UserLocationRequestDto;
 import com.project.paypass_renewal.service.UserLocationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

@@ -2,7 +2,7 @@ package com.project.paypass_renewal.service;
 
 import com.project.paypass_renewal.domain.ServiceCode;
 import com.project.paypass_renewal.domain.User;
-import com.project.paypass_renewal.domain.dto.UserDto;
+import com.project.paypass_renewal.domain.dto.request.UserDto;
 import com.project.paypass_renewal.generator.LinkCodeGenerator;
 import com.project.paypass_renewal.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
