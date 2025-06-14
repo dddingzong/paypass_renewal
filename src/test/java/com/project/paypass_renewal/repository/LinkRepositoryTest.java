@@ -34,7 +34,7 @@ class LinkRepositoryTest {
     }
 
     @Test
-    @DisplayName("이용자_조회_테스트")
+    @DisplayName("이용자_번호_조회_테스트")
     void findUserNumberBySupporterNumberTest(){
         // given
         String supporterNumber = "01012345678";
@@ -57,7 +57,5 @@ class LinkRepositoryTest {
         assertThat(userNumbers).hasSize(2);
         assertThat(userNumbers).containsExactlyInAnyOrder(userNumberOne, userNumberTwo);
     }
-
-
 
 }
