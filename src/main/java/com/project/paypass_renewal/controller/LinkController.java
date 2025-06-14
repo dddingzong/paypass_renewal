@@ -4,6 +4,8 @@ import com.project.paypass_renewal.domain.User;
 import com.project.paypass_renewal.domain.dto.request.LinkRequestDto;
 import com.project.paypass_renewal.domain.dto.request.SupporterNumberRequestDto;
 import com.project.paypass_renewal.domain.dto.response.LinkListResponseDto;
+import com.project.paypass_renewal.exception.CustomException;
+import com.project.paypass_renewal.exception.ErrorResult;
 import com.project.paypass_renewal.service.LinkService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +25,12 @@ public class LinkController {
 
     @PostMapping("/link/saveNewLink")
     public ResponseEntity<String> saveNewLink(@RequestBody LinkRequestDto linkRequestDto) {
+
+        if (linkService.checkDuplicateLink(linkRequestDto)){
+            log.info("중복된 링크가 존재합니다.");
+            throw new CustomException(ErrorResult.LINK_USER_AND_SUPPORTER_DUPLICATE);
+        }
+
         linkService.saveNewLink(linkRequestDto);
         return ResponseEntity.ok("saveSuccess");
     }
