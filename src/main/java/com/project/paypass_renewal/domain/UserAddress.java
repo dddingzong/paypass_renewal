@@ -23,4 +23,10 @@ public class UserAddress {
 
     private String centerStreetAddress;
 
+    public UserAddress(String number, String homeStreetAddress, String homeStreetAddressDetail, String centerStreetAddress) {
+        this.number = number;
+        this.homeStreetAddress = homeStreetAddress;
+        this.homeStreetAddressDetail = homeStreetAddressDetail;
+        this.centerStreetAddress = centerStreetAddress;
+    }
 }
