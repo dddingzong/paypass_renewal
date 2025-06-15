@@ -1,10 +1,12 @@
 package com.project.paypass_renewal.domain;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
-import java.math.BigDecimal;
-
+@Getter
 @Entity
+@RequiredArgsConstructor
 public class UserAddress {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,12 +16,11 @@ public class UserAddress {
     private String number;
 
     @Column(nullable = false)
-    private BigDecimal homeLatitude;
+    private String homeStreetAddress;
 
     @Column(nullable = false)
-    private BigDecimal homeLongitude;
+    private String homeStreetAddressDetail;
 
-    private BigDecimal centerLatitude;
+    private String centerStreetAddress;
 
-    private BigDecimal centerLongitude;
 }
