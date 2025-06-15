@@ -19,7 +19,7 @@ public class UserAddress {
     @Column(nullable = false)
     private BigDecimal homeLongitude;
 
-    BigDecimal centerLatitude;
+    private BigDecimal centerLatitude;
 
-    BigDecimal centerLongitude;
+    private BigDecimal centerLongitude;
 }
