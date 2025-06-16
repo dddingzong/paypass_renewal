@@ -1,8 +1,7 @@
 package com.project.paypass_renewal.service;
 
-import com.mysql.cj.util.TestUtils;
-import com.project.paypass_renewal.domain.User;
 import com.project.paypass_renewal.domain.UserAddress;
+import com.project.paypass_renewal.domain.dto.request.NumberRequestDto;
 import com.project.paypass_renewal.domain.dto.response.MyPageResponseDto;
 import com.project.paypass_renewal.repository.UserAddressRepository;
 import com.project.paypass_renewal.repository.UserRepository;
@@ -37,13 +36,15 @@ class MyPageServiceTest {
         // 필요 데이터: name, number, homeStreetAddress, homeStreetAddressDetail, centerStreetAddress, LinkCode
 
         // given
+        NumberRequestDto numberRequestDto = new NumberRequestDto("01012345678");
+
         // stub
         when(userRepository.findByNumber(any(String.class))).thenReturn(UserTestUtils.createDummyUser());
         when(userAddressRepository.findByNumber(any(String.class))).thenReturn(
                 new UserAddress("01012345678", "서울시 노원구 노원로 564", "1001-102", "서울 노원구 노원로18길 41"));
 
         // when
-        MyPageResponseDto myPageResponseDto = myPageService.getMyPageData("01012345678");
+        MyPageResponseDto myPageResponseDto = myPageService.getMyPageData(numberRequestDto);
 
         // then
         Assertions.assertThat(myPageResponseDto).isNotNull();
