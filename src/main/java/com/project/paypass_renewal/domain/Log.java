@@ -1,10 +1,14 @@
 package com.project.paypass_renewal.domain;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+@Getter
 @Entity
+@NoArgsConstructor
 public class Log {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,4 +28,13 @@ public class Log {
 
     @Column(nullable = false)
     private String arrivalLocation;
+
+    public Log(String number, LocalDateTime departureTime, LocalDateTime arrivalTime, String departureLocation, String arrivalLocation) {
+        this.number = number;
+        this.departureTime = departureTime;
+        this.arrivalTime = arrivalTime;
+        this.departureLocation = departureLocation;
+        this.arrivalLocation = arrivalLocation;
+    }
+
 }
