@@ -41,10 +41,10 @@ public class UserRequestDto {
     @NotNull(message = "서비스 코드는 필수 값입니다.")
     private ServiceCode serviceCode;
 
-    @NotNull(message = "집 주소는 필수 값입니다.")
+    @NotEmpty(message = "집 주소는 필수 값입니다.")
     private String homeStreetAddress;
 
-    @NotNull(message = "집 상세 주소는 필수 값입니다.")
+    @NotEmpty(message = "집 상세 주소는 필수 값입니다.")
     private String homeStreetAddressDetail;
 
     private String centerStreetAddress;
