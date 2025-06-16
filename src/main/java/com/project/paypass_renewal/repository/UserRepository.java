@@ -13,4 +13,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     List<User> findByNumberIn(List<String> userNumbers);
 
+    User findByNumber(String number);
+
 }
