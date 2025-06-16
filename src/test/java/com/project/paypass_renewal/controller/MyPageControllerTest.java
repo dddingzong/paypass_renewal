@@ -1,8 +1,10 @@
 package com.project.paypass_renewal.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.project.paypass_renewal.domain.dto.request.HomeAddressRequestDto;
 import com.project.paypass_renewal.domain.dto.request.NumberRequestDto;
 import com.project.paypass_renewal.domain.dto.response.MyPageResponseDto;
+import com.project.paypass_renewal.exception.handler.mypage.MyPageControllerExceptionHandler;
 import com.project.paypass_renewal.service.MyPageService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -37,6 +39,7 @@ class MyPageControllerTest {
     void init() {
         objectMapper = new ObjectMapper();
         mockMvc = MockMvcBuilders.standaloneSetup(myPageController)
+                .setControllerAdvice(new MyPageControllerExceptionHandler())
                 .build();
     }
 
@@ -74,6 +77,71 @@ class MyPageControllerTest {
                 .andExpect(jsonPath("$.name").value("더미유저"))
                 .andExpect(jsonPath("$.number").value("01012345678"))
                 .andExpect(jsonPath("$.homeStreetAddress").value("서울시 노원구 노원로 564"));
+    }
+
+    @Test
+    @DisplayName("유저주소_수정_테스트")
+    void updateHomeAddressTest() throws Exception{
+        // given
+        final String url = "/myPage/updateHomeAddress";
+        HomeAddressRequestDto homeAddressRequestDto = new HomeAddressRequestDto("01011112222", "72451", "서울시 테스트 주소", "테스트 자세한 주소");
+        String json = objectMapper.writeValueAsString(homeAddressRequestDto);
+
+        // when
+        ResultActions result = mockMvc.perform(
+                MockMvcRequestBuilders.post(url)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json)
+        );
+
+        // then
+        result.andExpect(status().isOk())
+                .andExpect(content().string("updateSuccess"));
+
+    }
+
+    @Test
+    @DisplayName("유저주소_수정_세부주소_미입력_테스트")
+    void updateHomeAddressNotValidDetailAddressBlankTest() throws Exception{
+        // given
+        final String url = "/myPage/updateHomeAddress";
+        HomeAddressRequestDto homeAddressRequestDto = new HomeAddressRequestDto("01011112222", "72451", "서울시 테스트 주소", "");
+        String json = objectMapper.writeValueAsString(homeAddressRequestDto);
+
+        // when
+        ResultActions result = mockMvc.perform(
+                MockMvcRequestBuilders.post(url)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json)
+        );
+
+        // then
+        result.andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.message").exists())
+                .andExpect(jsonPath("$.status").value(400));
+
+    }
+
+    @Test
+    @DisplayName("유저주소_수정_세부주소_null_테스트")
+    void updateHomeAddressNotValidDetailAddressNullTest() throws Exception{
+        // given
+        final String url = "/myPage/updateHomeAddress";
+        HomeAddressRequestDto homeAddressRequestDto = new HomeAddressRequestDto("01011112222", "72451", "서울시 테스트 주소", null);
+        String json = objectMapper.writeValueAsString(homeAddressRequestDto);
+
+        // when
+        ResultActions result = mockMvc.perform(
+                MockMvcRequestBuilders.post(url)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json)
+        );
+
+        // then
+        result.andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.message").exists())
+                .andExpect(jsonPath("$.status").value(400));
+
     }
 
 }
