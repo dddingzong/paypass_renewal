@@ -50,4 +50,8 @@ public class User {
         this.serviceCode = serviceCode;
     }
 
+    public void updateHomeAddress(String homeAddress){
+        this.homeAddress = homeAddress;
+    }
+
 }
