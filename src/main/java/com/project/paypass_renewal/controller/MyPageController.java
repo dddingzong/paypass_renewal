@@ -1,0 +1,27 @@
+package com.project.paypass_renewal.controller;
+
+import com.project.paypass_renewal.domain.dto.request.NumberRequestDto;
+import com.project.paypass_renewal.domain.dto.response.MyPageResponseDto;
+import com.project.paypass_renewal.service.MyPageService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequiredArgsConstructor
+public class MyPageController {
+
+    private final MyPageService myPageService;
+
+    @PostMapping("/myPage/getInformation")
+    public ResponseEntity<MyPageResponseDto> getMyPageData(@RequestBody NumberRequestDto numberRequestDto) {
+
+        MyPageResponseDto myPageResponseDto = myPageService.getMyPageData(numberRequestDto);
+
+        return ResponseEntity.ok(myPageResponseDto);
+    }
+
+
+}
