@@ -2,6 +2,7 @@ package com.project.paypass_renewal.service;
 
 import com.project.paypass_renewal.domain.User;
 import com.project.paypass_renewal.domain.UserAddress;
+import com.project.paypass_renewal.domain.dto.request.CenterAddressRequestDto;
 import com.project.paypass_renewal.domain.dto.request.HomeAddressRequestDto;
 import com.project.paypass_renewal.domain.dto.request.NumberRequestDto;
 import com.project.paypass_renewal.domain.dto.response.MyPageResponseDto;
@@ -58,7 +59,19 @@ public class MyPageService {
     }
 
 
-
     // 사용자 센터 주소 변경 변경사항: centerAddress, centerStreetAddress
+    @Transactional
+    public String updateCenterAddress(CenterAddressRequestDto centerAddressRequestDto){
+        String number = centerAddressRequestDto.getNumber();
+        String centerAddress = centerAddressRequestDto.getCenterAddress();
+        String centerStreetAddress = centerAddressRequestDto.getCenterStreetAddress();
 
+        User user = userRepository.findByNumber(number);
+        user.updateCenterAddress(centerAddress);
+
+        UserAddress userAddress = userAddressRepository.findByNumber(number);
+        userAddress.updateCenterStreetAddress(centerStreetAddress);
+
+        return number;
+    }
 }
