@@ -10,7 +10,7 @@ import java.time.LocalDate;
 
 @Getter
 @NoArgsConstructor
-public class UserDto {
+public class UserRequestDto {
 
     @NotEmpty(message = "이름은 필수 값입니다.")
     @Pattern(regexp = "^[가-힣]{2,4}$", message = "이름은 한글로 2~4자 사이로 작성해주세요")
@@ -41,7 +41,13 @@ public class UserDto {
     @NotNull(message = "서비스 코드는 필수 값입니다.")
     private ServiceCode serviceCode;
 
-    public UserDto(String name, String password, LocalDate birth, String number, String homeAddress, String centerAddress, ServiceCode serviceCode) {
+    @NotNull(message = "집 주소는 필수 값입니다.")
+    private String homeStreetAddress;
+
+    @NotNull(message = "집 상세 주소는 필수 값입니다.")
+    private String homeStreetAddressDetail;
+
+    public UserRequestDto(String name, String password, LocalDate birth, String number, String homeAddress, String centerAddress, ServiceCode serviceCode) {
         this.name = name;
         this.password = password;
         this.birth = birth;

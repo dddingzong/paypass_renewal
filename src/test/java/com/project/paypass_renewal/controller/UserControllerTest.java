@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.project.paypass_renewal.domain.User;
-import com.project.paypass_renewal.domain.dto.request.UserDto;
+import com.project.paypass_renewal.domain.dto.request.UserRequestDto;
 import com.project.paypass_renewal.exception.handler.GlobalExceptionHandler;
 import com.project.paypass_renewal.service.UserService;
 import com.project.paypass_renewal.support.UserDtoTestUtil;
@@ -56,16 +56,16 @@ class UserControllerTest {
     void createNewUserTest() throws Exception {
         // given
         final String url = "/login/newUser";
-        UserDto userDto = UserDtoTestUtil.createDummyUserDto();
+        UserRequestDto userRequestDto = UserDtoTestUtil.createDummyUserDto();
 
         User user = UserTestUtils.createDummyUser();
 
         // stub
         when(userService.checkDuplicateNumber(any(String.class))).thenReturn(false);
         // userService.saveNewUser 호출 시 dummyUser 반환하도록 설정
-        when(userService.saveNewUser(any(UserDto.class))).thenReturn(user);
+        when(userService.saveNewUser(any(UserRequestDto.class))).thenReturn(user);
 
-        String json = objectMapper.writeValueAsString(userDto);
+        String json = objectMapper.writeValueAsString(userRequestDto);
         // when
         ResultActions result = mockMvc.perform(
                 MockMvcRequestBuilders.post(url)
@@ -100,7 +100,7 @@ class UserControllerTest {
         // stub
         when(userService.checkDuplicateNumber(any(String.class))).thenReturn(false);
         // userService.saveNewUser 호출 시 dummyUser 반환하도록 설정
-        when(userService.saveNewUser(any(UserDto.class))).thenReturn(user);
+        when(userService.saveNewUser(any(UserRequestDto.class))).thenReturn(user);
 
         // when
         ResultActions result = mockMvc.perform(
@@ -136,7 +136,7 @@ class UserControllerTest {
         // stub
         when(userService.checkDuplicateNumber(any(String.class))).thenReturn(false);
         // userService.saveNewUser 호출 시 dummyUser 반환하도록 설정
-        when(userService.saveNewUser(any(UserDto.class))).thenReturn(user);
+        when(userService.saveNewUser(any(UserRequestDto.class))).thenReturn(user);
 
         // when
         ResultActions result = mockMvc.perform(
@@ -155,12 +155,12 @@ class UserControllerTest {
     void duplicateNumberTest() throws Exception {
         // given
         final String url = "/login/newUser";
-        UserDto userDto = UserDtoTestUtil.createDummyUserDto();
+        UserRequestDto userRequestDto = UserDtoTestUtil.createDummyUserDto();
 
         // stub
         when(userService.checkDuplicateNumber(any(String.class))).thenReturn(true);
 
-        String json = objectMapper.writeValueAsString(userDto);
+        String json = objectMapper.writeValueAsString(userRequestDto);
         // when
         ResultActions result = mockMvc.perform(
                 MockMvcRequestBuilders.post(url)

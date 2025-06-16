@@ -2,7 +2,7 @@ package com.project.paypass_renewal.service;
 
 import com.project.paypass_renewal.domain.ServiceCode;
 import com.project.paypass_renewal.domain.User;
-import com.project.paypass_renewal.domain.dto.request.UserDto;
+import com.project.paypass_renewal.domain.dto.request.UserRequestDto;
 import com.project.paypass_renewal.generator.LinkCodeGenerator;
 import com.project.paypass_renewal.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +21,7 @@ public class UserService {
         return userRepository.existsByNumber(number);
     }
 
-    public User saveNewUser(UserDto userDto) {
+    public User saveNewUser(UserRequestDto userRequestDto) {
         // linkCode 생성
         String linkCode = linkCodeGenerator.generate();
 
@@ -29,7 +29,7 @@ public class UserService {
         String uniqueLinkCode = checkLinkCodeDuplicate(linkCode);
 
         // User 생성 및 저장
-        User user = toEntity(userDto, uniqueLinkCode);
+        User user = toEntity(userRequestDto, uniqueLinkCode);
 
         userRepository.save(user);
         return user;
@@ -43,14 +43,14 @@ public class UserService {
         return linkCode;
     }
 
-    private User toEntity(UserDto userDto, String linkCode){
-        String name = userDto.getName();
-        String password = userDto.getPassword();
-        LocalDate birth = userDto.getBirth();
-        String number = userDto.getNumber();
-        String homeAddress = userDto.getHomeAddress();
-        String centerAddress = userDto.getCenterAddress();
-        ServiceCode serviceCode = userDto.getServiceCode();
+    private User toEntity(UserRequestDto userRequestDto, String linkCode){
+        String name = userRequestDto.getName();
+        String password = userRequestDto.getPassword();
+        LocalDate birth = userRequestDto.getBirth();
+        String number = userRequestDto.getNumber();
+        String homeAddress = userRequestDto.getHomeAddress();
+        String centerAddress = userRequestDto.getCenterAddress();
+        ServiceCode serviceCode = userRequestDto.getServiceCode();
 
         User user = new User(name, password, birth, number, homeAddress, centerAddress, linkCode, serviceCode);
 

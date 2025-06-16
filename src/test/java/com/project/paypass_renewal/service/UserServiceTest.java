@@ -1,7 +1,7 @@
 package com.project.paypass_renewal.service;
 
 import com.project.paypass_renewal.domain.User;
-import com.project.paypass_renewal.domain.dto.request.UserDto;
+import com.project.paypass_renewal.domain.dto.request.UserRequestDto;
 import com.project.paypass_renewal.generator.LinkCodeGenerator;
 import com.project.paypass_renewal.repository.UserRepository;
 import com.project.paypass_renewal.support.UserDtoTestUtil;
@@ -31,18 +31,18 @@ class UserServiceTest {
     @DisplayName("서비스_신규유저_저장_테스트")
     void saveNewUserTest() {
         // given
-        UserDto userDto = UserDtoTestUtil.createDummyUserDto();
+        UserRequestDto userRequestDto = UserDtoTestUtil.createDummyUserDto();
         String linkCode = "ABC123";
         // stub
         when(linkCodeGenerator.generate()).thenReturn(linkCode);
         when(userRepository.existsByLinkCode(linkCode)).thenReturn(false);
 
         // when
-        User user = userService.saveNewUser(userDto);
+        User user = userService.saveNewUser(userRequestDto);
 
         // then
         assertThat(user.getNumber()).isNotNull();
-        assertThat(user.getNumber()).isEqualTo(userDto.getNumber());
+        assertThat(user.getNumber()).isEqualTo(userRequestDto.getNumber());
         assertThat(user.getLinkCode()).isNotNull();
         assertThat(user.getLinkCode()).isEqualTo(linkCode);
     }
@@ -51,7 +51,7 @@ class UserServiceTest {
     @DisplayName("서비스_신규유저_링크코드_중복_테스트")
     void linkCodeDuplicateTest(){
         // given
-        UserDto userDto = UserDtoTestUtil.createDummyUserDto();
+        UserRequestDto userRequestDto = UserDtoTestUtil.createDummyUserDto();
         String firstLinkCode = "123ABC";
         String secondLinkCode = "456DEF";
         // stub
@@ -60,11 +60,11 @@ class UserServiceTest {
         when(userRepository.existsByLinkCode(secondLinkCode)).thenReturn(false);
 
         // when
-        User user = userService.saveNewUser(userDto);
+        User user = userService.saveNewUser(userRequestDto);
 
         // then
         assertThat(user.getNumber()).isNotNull();
-        assertThat(user.getNumber()).isEqualTo(userDto.getNumber());
+        assertThat(user.getNumber()).isEqualTo(userRequestDto.getNumber());
         assertThat(user.getLinkCode()).isNotNull();
         assertThat(user.getLinkCode()).isEqualTo(secondLinkCode);
     }

@@ -1,7 +1,7 @@
 package com.project.paypass_renewal.controller;
 
 import com.project.paypass_renewal.domain.User;
-import com.project.paypass_renewal.domain.dto.request.UserDto;
+import com.project.paypass_renewal.domain.dto.request.UserRequestDto;
 import com.project.paypass_renewal.exception.CustomException;
 import com.project.paypass_renewal.exception.ErrorResult;
 import com.project.paypass_renewal.service.UserService;
@@ -24,15 +24,15 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/login/newUser")
-    public ResponseEntity<Map<String, Object>> createNewUser(@Valid @RequestBody UserDto userDto) {
+    public ResponseEntity<Map<String, Object>> createNewUser(@Valid @RequestBody UserRequestDto userRequestDto) {
 
         log.info("사용자 신규 회원가입 요청");
 
-        if (userService.checkDuplicateNumber(userDto.getNumber())) {
+        if (userService.checkDuplicateNumber(userRequestDto.getNumber())) {
             throw new CustomException(ErrorResult.USER_NUMBER_DUPLICATE);
         }
 
-        User user = userService.saveNewUser(userDto);
+        User user = userService.saveNewUser(userRequestDto);
 
         Map<String, Object> response = new HashMap<>();
         response.put("name", user.getName());
