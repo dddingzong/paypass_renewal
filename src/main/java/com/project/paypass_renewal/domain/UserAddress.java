@@ -29,4 +29,9 @@ public class UserAddress {
         this.homeStreetAddressDetail = homeStreetAddressDetail;
         this.centerStreetAddress = centerStreetAddress;
     }
+
+    public void updateHomeStreetAddress(String homeStreetAddress, String homeStreetAddressDetail) {
+        this.homeStreetAddress = homeStreetAddress;
+        this.homeStreetAddressDetail = homeStreetAddressDetail;
+    }
 }
