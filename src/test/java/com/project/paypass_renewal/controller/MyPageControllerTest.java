@@ -1,6 +1,7 @@
 package com.project.paypass_renewal.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.project.paypass_renewal.domain.dto.request.CenterAddressRequestDto;
 import com.project.paypass_renewal.domain.dto.request.HomeAddressRequestDto;
 import com.project.paypass_renewal.domain.dto.request.NumberRequestDto;
 import com.project.paypass_renewal.domain.dto.response.MyPageResponseDto;
@@ -141,7 +142,49 @@ class MyPageControllerTest {
         result.andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.message").exists())
                 .andExpect(jsonPath("$.status").value(400));
+    }
+
+    @Test
+    @DisplayName("센터주소_수정_테스트")
+    void updateCenterAddressTest() throws Exception{
+        // given
+        final String url = "/myPage/updateCenterAddress";
+        CenterAddressRequestDto centerAddressRequestDto = new CenterAddressRequestDto("01012345678", "64813", "변경 후 센터주소 테스트");
+        String json = objectMapper.writeValueAsString(centerAddressRequestDto);
+
+        // when
+        ResultActions result = mockMvc.perform(
+                MockMvcRequestBuilders.post(url)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json)
+        );
+
+        // then
+        result.andExpect(status().isOk())
+                .andExpect(content().string("updateSuccess"));
+    }
+
+    @Test
+    @DisplayName("센터주소_유효성검사_테스트")
+    void updateCenterAddressNotValidTest() throws Exception{
+        // given
+        final String url = "/myPage/updateCenterAddress";
+        CenterAddressRequestDto centerAddressRequestDto = new CenterAddressRequestDto("01012345678", "6481", "변경 후 센터주소 테스트");
+        String json = objectMapper.writeValueAsString(centerAddressRequestDto);
+
+        // when
+        ResultActions result = mockMvc.perform(
+                MockMvcRequestBuilders.post(url)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json)
+        );
+
+        // then
+        result.andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.message").exists())
+                .andExpect(jsonPath("$.status").value(400));
 
     }
+
 
 }
