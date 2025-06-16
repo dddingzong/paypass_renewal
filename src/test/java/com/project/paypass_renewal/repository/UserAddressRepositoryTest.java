@@ -2,7 +2,6 @@ package com.project.paypass_renewal.repository;
 
 import com.project.paypass_renewal.domain.UserAddress;
 import jakarta.transaction.Transactional;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +30,21 @@ class UserAddressRepositoryTest {
         assertThat(findUserAddress).isNotNull();
         assertThat(findUserAddress.getNumber()).isEqualTo("01012345678");
 
+    }
+
+    @Test
+    @DisplayName("유저주소_저장_테스트")
+    void saveUserAddressTest() {
+        // given
+        UserAddress userAddress = new UserAddress("01012345678", "서울시 노원구 노원로 564", "1001-102", "서울 노원구 노원로18길 41");
+
+        // when
+        UserAddress savedUserAddress = userAddressRepository.save(userAddress);
+
+        // then
+        assertThat(savedUserAddress).isNotNull();
+        assertThat(savedUserAddress.getNumber()).isEqualTo("01012345678");
+        assertThat(savedUserAddress.getHomeStreetAddress()).isEqualTo("서울시 노원구 노원로 564");
     }
 
 }
