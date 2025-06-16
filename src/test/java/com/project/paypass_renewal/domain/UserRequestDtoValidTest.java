@@ -522,6 +522,31 @@ class UserRequestDtoValidTest {
                 .andExpect(jsonPath("$.status").value(400));
     }
 
+    @Test
+    @DisplayName("UserDto_centerStreetAddress_센터주소형식_Null")
+    void userDtoCenterStreetAddressNullTest() throws Exception {
+        // given
+        UserRequestDto userRequestDto = createUserRequestDtoDummy("정종인", "abs123", LocalDate.of(2000, 5, 1), "01089099721", "15311", null, ServiceCode.PAYPASS_SERVICE, "서울시 노원구 노원로 564", "1001-102", null);
+        String json = objectMapper.writeValueAsString(userRequestDto);
+        User user = toEntity(userRequestDto, "ABC123");
+
+        // stub
+        when(userService.saveNewUser(any(UserRequestDto.class))).thenReturn(user);
+
+        // when
+        ResultActions result = mockMvc.perform(
+                MockMvcRequestBuilders.post(url)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json)
+        );
+
+        // then
+        result.andExpect(status().isOk())
+                .andExpect(jsonPath("$.number").value("01089099721"))
+                .andExpect(jsonPath("$.centerAddress").doesNotExist())
+                .andExpect(jsonPath("$.centerStreetAddress").doesNotExist());
+    }
+
 
     private UserRequestDto createUserRequestDtoDummy(String name, String password, LocalDate birth, String number, String homeAddress, String centerAddress, ServiceCode serviceCode, String homeStreetAddress, String homeStreetAddressDetail, String centerStreetAddress) {
         return new UserRequestDto(name, password, birth, number, homeAddress, centerAddress, serviceCode, homeStreetAddress, homeStreetAddressDetail, centerStreetAddress);
