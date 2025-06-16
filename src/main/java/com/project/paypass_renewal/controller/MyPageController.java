@@ -1,5 +1,6 @@
 package com.project.paypass_renewal.controller;
 
+import com.project.paypass_renewal.domain.dto.request.CenterAddressRequestDto;
 import com.project.paypass_renewal.domain.dto.request.HomeAddressRequestDto;
 import com.project.paypass_renewal.domain.dto.request.NumberRequestDto;
 import com.project.paypass_renewal.domain.dto.response.MyPageResponseDto;
@@ -33,5 +34,12 @@ public class MyPageController {
         return ResponseEntity.ok("updateSuccess");
     }
 
+    @PostMapping("/myPage/updateCenterAddress")
+    public ResponseEntity<String> updateCenterAddress(@Valid @RequestBody CenterAddressRequestDto centerAddressRequestDto) {
+
+        myPageService.updateCenterAddress(centerAddressRequestDto);
+
+        return ResponseEntity.ok("updateSuccess");
+    }
 
 }
