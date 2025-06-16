@@ -47,7 +47,6 @@ public class UserRequestDto {
     @NotNull(message = "집 상세 주소는 필수 값입니다.")
     private String homeStreetAddressDetail;
 
-    @NotNull(message = "센터 주소는 필수 값입니다.")
     private String centerStreetAddress;
 
     public UserRequestDto(String name, String password, LocalDate birth, String number, String homeAddress, String centerAddress, ServiceCode serviceCode, String homeStreetAddress, String homeStreetAddressDetail, String centerStreetAddress) {
