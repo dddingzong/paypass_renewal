@@ -2,10 +2,12 @@ package com.project.paypass_renewal.service;
 
 import com.project.paypass_renewal.domain.User;
 import com.project.paypass_renewal.domain.UserAddress;
+import com.project.paypass_renewal.domain.dto.request.HomeAddressRequestDto;
 import com.project.paypass_renewal.domain.dto.request.NumberRequestDto;
 import com.project.paypass_renewal.domain.dto.response.MyPageResponseDto;
 import com.project.paypass_renewal.repository.UserAddressRepository;
 import com.project.paypass_renewal.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -38,5 +40,25 @@ public class MyPageService {
                 user.getLinkCode()
         );
     }
+
+    // 사용자 집 주소 변경. 변경사항: homeAddress, homeStreetAddress, homeStreetAddressDetail
+    @Transactional
+    public String updateHomeAddress(HomeAddressRequestDto homeAddressRequestDto) {
+        String number = homeAddressRequestDto.getNumber();
+        String homeAddress = homeAddressRequestDto.getHomeAddress();
+        String homeStreetAddress = homeAddressRequestDto.getHomeStreetAddress();
+        String homeStreetAddressDetail = homeAddressRequestDto.getHomeStreetAddressDetail();
+
+        User user = userRepository.findByNumber(number);
+        user.updateHomeAddress(homeAddress);
+        UserAddress userAddress = userAddressRepository.findByNumber(number);
+        userAddress.updateHomeStreetAddress(homeStreetAddress, homeStreetAddressDetail);
+
+        return number;
+    }
+
+
+
+    // 사용자 센터 주소 변경 변경사항: centerAddress, centerStreetAddress
 
 }
