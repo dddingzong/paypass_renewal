@@ -1,8 +1,10 @@
 package com.project.paypass_renewal.controller;
 
+import com.project.paypass_renewal.domain.dto.request.HomeAddressRequestDto;
 import com.project.paypass_renewal.domain.dto.request.NumberRequestDto;
 import com.project.paypass_renewal.domain.dto.response.MyPageResponseDto;
 import com.project.paypass_renewal.service.MyPageService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,6 +23,14 @@ public class MyPageController {
         MyPageResponseDto myPageResponseDto = myPageService.getMyPageData(numberRequestDto);
 
         return ResponseEntity.ok(myPageResponseDto);
+    }
+
+    @PostMapping("/myPage/updateHomeAddress")
+    public ResponseEntity<String> updateHomeAddress(@Valid @RequestBody HomeAddressRequestDto homeAddressRequestDto) {
+
+        myPageService.updateHomeAddress(homeAddressRequestDto);
+
+        return ResponseEntity.ok("updateSuccess");
     }
 
 
