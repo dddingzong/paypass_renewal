@@ -95,5 +95,20 @@ class UserRepositoryTest {
         assertThat(UserList.get(2).getNumber()).isEqualTo("01033333333");
     }
 
+    @Test
+    @DisplayName("유저_번호로_유저_조회_테스트")
+    void findByUserTest() {
+        // given
+        User user = UserTestUtils.createDummyUser();
+
+        // when
+        userRepository.save(user);
+        User foundUser = userRepository.findByNumber(user.getNumber());
+
+        // then
+        assertThat(foundUser).isNotNull();
+        assertThat(foundUser.getNumber()).isEqualTo(user.getNumber());
+    }
+
 
 }
