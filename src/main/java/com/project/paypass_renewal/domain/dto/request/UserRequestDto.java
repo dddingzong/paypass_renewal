@@ -47,7 +47,10 @@ public class UserRequestDto {
     @NotNull(message = "집 상세 주소는 필수 값입니다.")
     private String homeStreetAddressDetail;
 
-    public UserRequestDto(String name, String password, LocalDate birth, String number, String homeAddress, String centerAddress, ServiceCode serviceCode) {
+    @NotNull(message = "센터 주소는 필수 값입니다.")
+    private String centerStreetAddress;
+
+    public UserRequestDto(String name, String password, LocalDate birth, String number, String homeAddress, String centerAddress, ServiceCode serviceCode, String homeStreetAddress, String homeStreetAddressDetail, String centerStreetAddress) {
         this.name = name;
         this.password = password;
         this.birth = birth;
@@ -55,5 +58,8 @@ public class UserRequestDto {
         this.homeAddress = homeAddress;
         this.centerAddress = centerAddress;
         this.serviceCode = serviceCode;
+        this.homeStreetAddress = homeStreetAddress;
+        this.homeStreetAddressDetail = homeStreetAddressDetail;
+        this.centerStreetAddress = centerStreetAddress;
     }
 }

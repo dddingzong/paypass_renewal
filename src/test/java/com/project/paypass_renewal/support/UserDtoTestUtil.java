@@ -14,6 +14,9 @@ public class UserDtoTestUtil {
                 "01012345678",
                 "12345",
                 "67890",
-                ServiceCode.CARE_SERVICE);
+                ServiceCode.CARE_SERVICE,
+                "서울시 노원구 노원로 564",
+                "1001-102",
+                "서울 노원구 노원로18길 41");
     }
 }

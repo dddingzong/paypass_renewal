@@ -29,7 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @ExtendWith(MockitoExtension.class)
 class UserRequestDtoValidTest {
-    // UserDto에서 받는 값은 name, password, birth, number, homeAddress, centerAddress, serviceCode
+    // UserDto에서 받는 값은 name, password, birth, number, homeAddress, centerAddress, serviceCode, homeStreetAddress, homeStreetAddressDetail, centerStreetAddress
 
     private final String url = "/login/newUser";
 
@@ -57,7 +57,7 @@ class UserRequestDtoValidTest {
     @DisplayName("UserDto_name_이름형식_오류")
     void userDtoNameNotValidTest() throws Exception {
         // given
-        UserRequestDto userRequestDto = createUserDtoDummy("정종정종인", "abc123" , LocalDate.of(2000, 5, 1), "01089099721", "01213", "12211", ServiceCode.PAYPASS_SERVICE);
+        UserRequestDto userRequestDto = createUserRequestDtoDummy("정종정종인", "abc123" , LocalDate.of(2000, 5, 1), "01089099721", "01213", "12211", ServiceCode.PAYPASS_SERVICE, "서울시 노원구 노원로 564", "1001-102", "서울 노원구 노원로18길 41");
         String json = objectMapper.writeValueAsString(userRequestDto);
 
         // when
@@ -77,7 +77,7 @@ class UserRequestDtoValidTest {
     @DisplayName("UserDto_name_이름형식_빈칸")
     void userDtoNameBlankTest() throws Exception {
         // given
-        UserRequestDto userRequestDto = createUserDtoDummy("", "abc123", LocalDate.of(2000, 5, 1), "01089099721", "01213", "12211", ServiceCode.PAYPASS_SERVICE);
+        UserRequestDto userRequestDto = createUserRequestDtoDummy("", "abc123", LocalDate.of(2000, 5, 1), "01089099721", "01213", "12211", ServiceCode.PAYPASS_SERVICE, "서울시 노원구 노원로 564", "1001-102", "서울 노원구 노원로18길 41");
         String json = objectMapper.writeValueAsString(userRequestDto);
 
         // when
@@ -97,7 +97,7 @@ class UserRequestDtoValidTest {
     @DisplayName("UserDto_password_비밀번호형식_한국어_오류")
     void userDtoPasswordNotValidKoreanTest() throws Exception {
         // given
-        UserRequestDto userRequestDto = createUserDtoDummy("정종인", "abㄱ123", LocalDate.of(2000, 5, 1), "01089099721", "01213", "12211", ServiceCode.PAYPASS_SERVICE);
+        UserRequestDto userRequestDto = createUserRequestDtoDummy("정종인", "abㄱ123", LocalDate.of(2000, 5, 1), "01089099721", "01213", "12211", ServiceCode.PAYPASS_SERVICE, "서울시 노원구 노원로 564", "1001-102", "서울 노원구 노원로18길 41");
         String json = objectMapper.writeValueAsString(userRequestDto);
 
         // when
@@ -117,7 +117,7 @@ class UserRequestDtoValidTest {
     @DisplayName("UserDto_password_비밀번호형식_특수기호_오류")
     void userDtoPasswordNotValidKSpecialTest() throws Exception {
         // given
-        UserRequestDto userRequestDto = createUserDtoDummy("정종인", "ab!123", LocalDate.of(2000, 5, 1), "01089099721", "01213", "12211", ServiceCode.PAYPASS_SERVICE);
+        UserRequestDto userRequestDto = createUserRequestDtoDummy("정종인", "ab!123", LocalDate.of(2000, 5, 1), "01089099721", "01213", "12211", ServiceCode.PAYPASS_SERVICE, "서울시 노원구 노원로 564", "1001-102", "서울 노원구 노원로18길 41");
         String json = objectMapper.writeValueAsString(userRequestDto);
 
         // when
@@ -137,7 +137,7 @@ class UserRequestDtoValidTest {
     @DisplayName("UserDto_password_비밀번호형식_여섯자리미만_오류")
     void userDtoPasswordNotValidUnderTest() throws Exception {
         // given
-        UserRequestDto userRequestDto = createUserDtoDummy("정종인", "ab123", LocalDate.of(2000, 5, 1), "01089099721", "01213", "12211", ServiceCode.PAYPASS_SERVICE);
+        UserRequestDto userRequestDto = createUserRequestDtoDummy("정종인", "ab123", LocalDate.of(2000, 5, 1), "01089099721", "01213", "12211", ServiceCode.PAYPASS_SERVICE, "서울시 노원구 노원로 564", "1001-102", "서울 노원구 노원로18길 41");
         String json = objectMapper.writeValueAsString(userRequestDto);
 
         // when
@@ -157,7 +157,7 @@ class UserRequestDtoValidTest {
     @DisplayName("UserDto_password_비밀번호형식_빈칸")
     void userDtoPasswordBlankTest() throws Exception {
         // given
-        UserRequestDto userRequestDto = createUserDtoDummy("정종인", "", LocalDate.of(2000, 5, 1), "01089099721", "01213", "12211", ServiceCode.PAYPASS_SERVICE);
+        UserRequestDto userRequestDto = createUserRequestDtoDummy("정종인", "", LocalDate.of(2000, 5, 1), "01089099721", "01213", "12211", ServiceCode.PAYPASS_SERVICE, "서울시 노원구 노원로 564", "1001-102", "서울 노원구 노원로18길 41");
         String json = objectMapper.writeValueAsString(userRequestDto);
 
         // when
@@ -177,7 +177,7 @@ class UserRequestDtoValidTest {
     @DisplayName("UserDto_password_비밀번호형식_null")
     void userDtoPasswordNullTest() throws Exception {
         // given
-        UserRequestDto userRequestDto = createUserDtoDummy("정종인", null, LocalDate.of(2000, 5, 1), "01089099721", "01213", "12211", ServiceCode.PAYPASS_SERVICE);
+        UserRequestDto userRequestDto = createUserRequestDtoDummy("정종인", null, LocalDate.of(2000, 5, 1), "01089099721", "01213", "12211", ServiceCode.PAYPASS_SERVICE, "서울시 노원구 노원로 564", "1001-102", "서울 노원구 노원로18길 41");
         String json = objectMapper.writeValueAsString(userRequestDto);
 
         // when
@@ -207,7 +207,10 @@ class UserRequestDtoValidTest {
                     "name": "정종인",
                     "number": "01089099721",
                     "serviceCode": "CARE_SERVICE",
-                    "password": "abc123"
+                    "password": "abc123",
+                    "homeStreetAddress": "서울시 노원구 노원로 564",
+                    "homeStreetAddressDetail": "1001-102",
+                    "centerStreetAddress": "서울 노원구 노원로18길 41"
                 }
                 """;
 
@@ -236,7 +239,10 @@ class UserRequestDtoValidTest {
                     "name": "정종인",
                     "number": "01089099721",
                     "serviceCode": "CARE_SERVICE",
-                    "password": "abs123"
+                    "password": "abs123",
+                    "homeStreetAddress": "서울시 노원구 노원로 564",
+                    "homeStreetAddressDetail": "1001-102",
+                    "centerStreetAddress": "서울 노원구 노원로18길 41"
                 }
                 """;
 
@@ -258,7 +264,7 @@ class UserRequestDtoValidTest {
     @DisplayName("UserDto_birth_생년월일형식_미래")
     void userDtoBirthFutureTest() throws Exception {
         // given
-        UserRequestDto userRequestDto = createUserDtoDummy("정종인", "abc123", LocalDate.of(2050, 5, 1), "01089099721", "01313", "13211", ServiceCode.PAYPASS_SERVICE);
+        UserRequestDto userRequestDto = createUserRequestDtoDummy("정종인", "abc123", LocalDate.of(2050, 5, 1), "01089099721", "01313", "13211", ServiceCode.PAYPASS_SERVICE, "서울시 노원구 노원로 564", "1001-102", "서울 노원구 노원로18길 41");
         String json = objectMapper.writeValueAsString(userRequestDto);
         // when
         ResultActions result = mockMvc.perform(
@@ -277,7 +283,7 @@ class UserRequestDtoValidTest {
     @DisplayName("UserDto_number_번호형식_하이픈_오류")
     void userDtoNumberNotValidHyphenTest() throws Exception {
         // given
-        UserRequestDto userRequestDto = createUserDtoDummy("정종인", "abc123", LocalDate.of(2000, 5, 1), "010-8909-9721", "01233", "12311", ServiceCode.PAYPASS_SERVICE);
+        UserRequestDto userRequestDto = createUserRequestDtoDummy("정종인", "abc123", LocalDate.of(2000, 5, 1), "010-8909-9721", "01233", "12311", ServiceCode.PAYPASS_SERVICE, "서울시 노원구 노원로 564", "1001-102", "서울 노원구 노원로18길 41");
         String json = objectMapper.writeValueAsString(userRequestDto);
 
         // when
@@ -297,7 +303,7 @@ class UserRequestDtoValidTest {
     @DisplayName("UserDto_number_번호형식_자릿수초과_오류")
     void userDtoNumberNotValidCountOverTest() throws Exception {
         // given
-        UserRequestDto userRequestDto = createUserDtoDummy("정종인", "abc123", LocalDate.of(2000, 5, 1), "010890997211", "01213", "12321", ServiceCode.PAYPASS_SERVICE);
+        UserRequestDto userRequestDto = createUserRequestDtoDummy("정종인", "abc123", LocalDate.of(2000, 5, 1), "010890997211", "01213", "12321", ServiceCode.PAYPASS_SERVICE, "서울시 노원구 노원로 564", "1001-102", "서울 노원구 노원로18길 41");
         String json = objectMapper.writeValueAsString(userRequestDto);
 
         // when
@@ -317,7 +323,7 @@ class UserRequestDtoValidTest {
     @DisplayName("UserDto_number_번호형식_자릿수미만_오류")
     void userDtoNumberNotValidCountUnderTest() throws Exception {
         // given
-        UserRequestDto userRequestDto = createUserDtoDummy("정종인", "abc123", LocalDate.of(2000, 5, 1), "0108909972", "01213", "12321", ServiceCode.PAYPASS_SERVICE);
+        UserRequestDto userRequestDto = createUserRequestDtoDummy("정종인", "abc123", LocalDate.of(2000, 5, 1), "0108909972", "01213", "12321", ServiceCode.PAYPASS_SERVICE, "서울시 노원구 노원로 564", "1001-102", "서울 노원구 노원로18길 41");
         String json = objectMapper.writeValueAsString(userRequestDto);
 
         // when
@@ -337,7 +343,7 @@ class UserRequestDtoValidTest {
     @DisplayName("UserDto_number_번호형식_빈칸")
     void userDtoNumberBlankTest() throws Exception {
         // given
-        UserRequestDto userRequestDto = createUserDtoDummy("정종인", "abc123", LocalDate.of(2000, 5, 1), "", "01313", "12321", ServiceCode.PAYPASS_SERVICE);
+        UserRequestDto userRequestDto = createUserRequestDtoDummy("정종인", "abc123", LocalDate.of(2000, 5, 1), "", "01313", "12321", ServiceCode.PAYPASS_SERVICE, "서울시 노원구 노원로 564", "1001-102", "서울 노원구 노원로18길 41");
         String json = objectMapper.writeValueAsString(userRequestDto);
 
         // when
@@ -357,7 +363,7 @@ class UserRequestDtoValidTest {
     @DisplayName("UserDto_homeAddress_집주소형식_다섯자리미만_오류")
     void userDtoHomeAddressNotValidShortTest() throws Exception {
         // given
-        UserRequestDto userRequestDto = createUserDtoDummy("정종인", "abs123", LocalDate.of(2000, 5, 1), "01089099721", "0131", "12311", ServiceCode.PAYPASS_SERVICE);
+        UserRequestDto userRequestDto = createUserRequestDtoDummy("정종인", "abs123", LocalDate.of(2000, 5, 1), "01089099721", "0131", "12311", ServiceCode.PAYPASS_SERVICE, "서울시 노원구 노원로 564", "1001-102", "서울 노원구 노원로18길 41");
         String json = objectMapper.writeValueAsString(userRequestDto);
 
         // when
@@ -377,7 +383,7 @@ class UserRequestDtoValidTest {
     @DisplayName("UserDto_homeAddress_집주소형식_다섯자리초과_오류")
     void userDtoHomeAddressNotValidLongTest() throws Exception {
         // given
-        UserRequestDto userRequestDto = createUserDtoDummy("정종인", "abs123", LocalDate.of(2000, 5, 1), "01089099721", "012331", "12321", ServiceCode.PAYPASS_SERVICE);
+        UserRequestDto userRequestDto = createUserRequestDtoDummy("정종인", "abs123", LocalDate.of(2000, 5, 1), "01089099721", "012331", "12321", ServiceCode.PAYPASS_SERVICE, "서울시 노원구 노원로 564", "1001-102", "서울 노원구 노원로18길 41");
         String json = objectMapper.writeValueAsString(userRequestDto);
 
         // when
@@ -397,7 +403,7 @@ class UserRequestDtoValidTest {
     @DisplayName("UserDto_homeAddress_집주소형식_빈칸")
     void userDtoHomeAddressBlankTest() throws Exception {
         // given
-        UserRequestDto userRequestDto = createUserDtoDummy("정종인", "abs123", LocalDate.of(2000, 5, 1), "01089099721", "", "12321", ServiceCode.PAYPASS_SERVICE);
+        UserRequestDto userRequestDto = createUserRequestDtoDummy("정종인", "abs123", LocalDate.of(2000, 5, 1), "01089099721", "", "12321", ServiceCode.PAYPASS_SERVICE, "서울시 노원구 노원로 564", "1001-102", "서울 노원구 노원로18길 41");
         String json = objectMapper.writeValueAsString(userRequestDto);
 
         // when
@@ -417,7 +423,7 @@ class UserRequestDtoValidTest {
     @DisplayName("UserDto_centerAddress_센터주소형식_다섯자리초과_오류")
     void userDtoCenterAddressNotValidLongTest() throws Exception {
         // given
-        UserRequestDto userRequestDto = createUserDtoDummy("정종인", "abs123", LocalDate.of(2000, 5, 1), "01089099721", "15311", "123211", ServiceCode.PAYPASS_SERVICE);
+        UserRequestDto userRequestDto = createUserRequestDtoDummy("정종인", "abs123", LocalDate.of(2000, 5, 1), "01089099721", "15311", "123211", ServiceCode.PAYPASS_SERVICE, "서울시 노원구 노원로 564", "1001-102", "서울 노원구 노원로18길 41");
         String json = objectMapper.writeValueAsString(userRequestDto);
 
         // when
@@ -437,7 +443,7 @@ class UserRequestDtoValidTest {
     @DisplayName("UserDto_centerAddress_센터주소형식_다섯자리미만_오류")
     void userDtoCenterAddressNotValidShortTest() throws Exception {
         // given
-        UserRequestDto userRequestDto = createUserDtoDummy("정종인", "abs123", LocalDate.of(2000, 5, 1), "01089099721", "15311", "1211", ServiceCode.PAYPASS_SERVICE);
+        UserRequestDto userRequestDto = createUserRequestDtoDummy("정종인", "abs123", LocalDate.of(2000, 5, 1), "01089099721", "15311", "1211", ServiceCode.PAYPASS_SERVICE, "서울시 노원구 노원로 564", "1001-102", "서울 노원구 노원로18길 41");
         String json = objectMapper.writeValueAsString(userRequestDto);
 
         // when
@@ -457,7 +463,7 @@ class UserRequestDtoValidTest {
     @DisplayName("UserDto_centerAddress_센터주소형식_빈칸")
     void userDtoCenterAddressBlankTest() throws Exception {
         // given
-        UserRequestDto userRequestDto = createUserDtoDummy("정종인", "abs123", LocalDate.of(2000, 5, 1), "01089099721", "15311", "", ServiceCode.PAYPASS_SERVICE);
+        UserRequestDto userRequestDto = createUserRequestDtoDummy("정종인", "abs123", LocalDate.of(2000, 5, 1), "01089099721", "15311", "", ServiceCode.PAYPASS_SERVICE, "서울시 노원구 노원로 564", "1001-102", "서울 노원구 노원로18길 41");
         String json = objectMapper.writeValueAsString(userRequestDto);
 
         // when
@@ -477,7 +483,7 @@ class UserRequestDtoValidTest {
     @DisplayName("UserDto_centerAddress_센터주소형식_Null")
     void userDtoCenterAddressNullTest() throws Exception {
         // given
-        UserRequestDto userRequestDto = createUserDtoDummy("정종인", "abs123", LocalDate.of(2000, 5, 1), "01089099721", "15311", null, ServiceCode.PAYPASS_SERVICE);
+        UserRequestDto userRequestDto = createUserRequestDtoDummy("정종인", "abs123", LocalDate.of(2000, 5, 1), "01089099721", "15311", null, ServiceCode.PAYPASS_SERVICE, "서울시 노원구 노원로 564", "1001-102", "서울 노원구 노원로18길 41");
         String json = objectMapper.writeValueAsString(userRequestDto);
         User user = toEntity(userRequestDto, "ABC123");
 
@@ -500,7 +506,7 @@ class UserRequestDtoValidTest {
     @DisplayName("UserDto_serviceCode_코드형식_null")
     void userDtoServiceCodeNullTest() throws Exception {
         // given
-        UserRequestDto userRequestDto = createUserDtoDummy("정종인", "abs123", LocalDate.of(2000, 5, 1), "01089099721", "15311", "123121", null);
+        UserRequestDto userRequestDto = createUserRequestDtoDummy("정종인", "abs123", LocalDate.of(2000, 5, 1), "01089099721", "15311", "123121", null, "서울시 노원구 노원로 564", "1001-102", "서울 노원구 노원로18길 41");
         String json = objectMapper.writeValueAsString(userRequestDto);
 
         // when
@@ -517,8 +523,8 @@ class UserRequestDtoValidTest {
     }
 
 
-    private UserRequestDto createUserDtoDummy(String name, String password, LocalDate birth, String number, String homeAddress, String centerAddress, ServiceCode serviceCode){
-        return new UserRequestDto(name, password, birth, number, homeAddress, centerAddress, serviceCode);
+    private UserRequestDto createUserRequestDtoDummy(String name, String password, LocalDate birth, String number, String homeAddress, String centerAddress, ServiceCode serviceCode, String homeStreetAddress, String homeStreetAddressDetail, String centerStreetAddress) {
+        return new UserRequestDto(name, password, birth, number, homeAddress, centerAddress, serviceCode, homeStreetAddress, homeStreetAddressDetail, centerStreetAddress);
     }
 
     private User toEntity(UserRequestDto userRequestDto, String linkCode){

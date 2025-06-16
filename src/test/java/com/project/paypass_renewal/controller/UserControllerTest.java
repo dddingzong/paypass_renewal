@@ -91,7 +91,10 @@ class UserControllerTest {
                     "name": "정종인",
                     "number": "01089091234",
                     "serviceCode": "CARE_SERVICE",
-                    "password": "abs123"
+                    "password": "abs123",
+                    "homeStreetAddress": "서울시 노원구 노원로 564",
+                    "homeStreetAddressDetail": "1001-102",
+                    "centerStreetAddress": "서울 노원구 노원로18길 41"
                 }
                 """;
 
@@ -127,7 +130,10 @@ class UserControllerTest {
                     "name": "정종인",
                     "number": "01089091234",
                     "serviceCode": "CARE_SERVICE",
-                    "password": "nNa1D2A123dAA01"
+                    "password": "nNa1D2A123dAA01",
+                    "homeStreetAddress": "서울시 노원구 노원로 564",
+                    "homeStreetAddressDetail": "1001-102",
+                    "centerStreetAddress": "서울 노원구 노원로18길 41"
                 }
                 """;
 
