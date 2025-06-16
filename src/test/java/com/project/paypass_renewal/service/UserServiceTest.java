@@ -22,6 +22,9 @@ class UserServiceTest {
     UserRepository userRepository;
 
     @Mock
+    UserAddressService userAddressService;
+
+    @Mock
     LinkCodeGenerator linkCodeGenerator;
 
     @InjectMocks

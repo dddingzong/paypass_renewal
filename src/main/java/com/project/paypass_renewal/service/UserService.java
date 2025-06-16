@@ -15,6 +15,7 @@ import java.time.LocalDate;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final UserAddressService userAddressService;
     private final LinkCodeGenerator linkCodeGenerator;
 
     public boolean checkDuplicateNumber (String number) {
@@ -30,6 +31,9 @@ public class UserService {
 
         // User 생성 및 저장
         User user = toEntity(userRequestDto, uniqueLinkCode);
+
+        // UserAddress 생성 및 저장
+        userAddressService.saveNewUserAddress(userRequestDto);
 
         userRepository.save(user);
         return user;
