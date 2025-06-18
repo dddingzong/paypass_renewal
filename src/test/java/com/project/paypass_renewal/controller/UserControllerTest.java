@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.project.paypass_renewal.domain.User;
+import com.project.paypass_renewal.domain.dto.request.LoginRequestDto;
 import com.project.paypass_renewal.domain.dto.request.UserRequestDto;
 import com.project.paypass_renewal.exception.handler.GlobalExceptionHandler;
 import com.project.paypass_renewal.service.UserService;
@@ -178,4 +179,77 @@ class UserControllerTest {
         result.andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.message").exists());
     }
+
+    @Test
+    @DisplayName("유저_로그인_요청_아이디미존재시_예외발생_테스트")
+    void userSignInWithoutNumberTest() throws Exception{
+        // given
+        final String url = "/login/signIn";
+        LoginRequestDto loginRequestDto = new LoginRequestDto("01012341234", "abc123");
+
+        // stub
+        when(userService.checkExistNumber(any(String.class))).thenReturn(false);
+
+        String json = objectMapper.writeValueAsString(loginRequestDto);
+        // when
+        ResultActions result = mockMvc.perform(
+                MockMvcRequestBuilders.post(url)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json)
+        );
+
+        // then
+        result.andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.message").value("존재하지 않는 전화번호 입니다."));
+    }
+
+    @Test
+    @DisplayName("유저_로그인_요청_비밀번호_매칭_실패_예외발생_테스트")
+    void userSignInNotMatchPasswordTest() throws Exception{
+        // given
+        final String url = "/login/signIn";
+        LoginRequestDto loginRequestDto = new LoginRequestDto("01012341234", "abc123");
+
+        // stub
+        when(userService.checkExistNumber(any(String.class))).thenReturn(true);
+        when(userService.matchPassword(any(LoginRequestDto.class))).thenReturn(false);
+
+        String json = objectMapper.writeValueAsString(loginRequestDto);
+        // when
+        ResultActions result = mockMvc.perform(
+                MockMvcRequestBuilders.post(url)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json)
+        );
+
+        // then
+        result.andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.message").value("비밀번호가 일치하지 않습니다."));
+    }
+
+    @Test
+    @DisplayName("유저_로그인_요청_성공_테스트")
+    void userSignInSuccessTest() throws Exception{
+        // given
+        final String url = "/login/signIn";
+        LoginRequestDto loginRequestDto = new LoginRequestDto("01012341234", "abc123");
+
+        // stub
+        when(userService.checkExistNumber(any(String.class))).thenReturn(true);
+        when(userService.matchPassword(any(LoginRequestDto.class))).thenReturn(true);
+
+        String json = objectMapper.writeValueAsString(loginRequestDto);
+        // when
+        ResultActions result = mockMvc.perform(
+                MockMvcRequestBuilders.post(url)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json)
+        );
+
+        // then
+        result.andExpect(status().isOk())
+                .andExpect(jsonPath("$.number").exists())
+                .andExpect(jsonPath("message").value("loginSuccess"));
+    }
+
 }
