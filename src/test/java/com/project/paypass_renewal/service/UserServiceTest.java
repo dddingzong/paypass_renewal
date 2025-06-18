@@ -1,10 +1,12 @@
 package com.project.paypass_renewal.service;
 
 import com.project.paypass_renewal.domain.User;
+import com.project.paypass_renewal.domain.dto.request.LoginRequestDto;
 import com.project.paypass_renewal.domain.dto.request.UserRequestDto;
 import com.project.paypass_renewal.generator.LinkCodeGenerator;
 import com.project.paypass_renewal.repository.UserRepository;
 import com.project.paypass_renewal.support.UserDtoTestUtil;
+import com.project.paypass_renewal.support.UserTestUtils;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,6 +15,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -72,4 +75,54 @@ class UserServiceTest {
         assertThat(user.getLinkCode()).isEqualTo(secondLinkCode);
     }
 
+    @Test
+    @DisplayName("유저_비밀번호_매치_불일치_테스트")
+    void matchPasswordFalseTest() {
+        // given
+        LoginRequestDto loginRequestDto = new LoginRequestDto("01012345678", "abc111");
+        User user = UserTestUtils.createDummyUser();
+
+        // stub
+        when(userRepository.findByNumber(any(String.class))).thenReturn(user);
+
+        // when
+        boolean result = userService.matchPassword(loginRequestDto);
+
+        // then
+        assertThat(result).isFalse();
+    }
+
+    @Test
+    @DisplayName("유저_비밀번호_매치_일치_테스트")
+    void matchPasswordTrueTest() {
+        // given
+        LoginRequestDto loginRequestDto = new LoginRequestDto("01012345678", "abc123");
+        User user = UserTestUtils.createDummyUser();
+
+        // stub
+        when(userRepository.findByNumber(any(String.class))).thenReturn(user);
+
+        // when
+        boolean result = userService.matchPassword(loginRequestDto);
+
+        // then
+        assertThat(result).isTrue();
+    }
+
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
