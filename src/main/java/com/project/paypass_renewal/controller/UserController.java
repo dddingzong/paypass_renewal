@@ -1,6 +1,7 @@
 package com.project.paypass_renewal.controller;
 
 import com.project.paypass_renewal.domain.User;
+import com.project.paypass_renewal.domain.dto.request.LoginRequestDto;
 import com.project.paypass_renewal.domain.dto.request.UserRequestDto;
 import com.project.paypass_renewal.exception.CustomException;
 import com.project.paypass_renewal.exception.ErrorResult;
@@ -39,6 +40,28 @@ public class UserController {
         response.put("number", user.getNumber());
 
         log.info("사용자 이름: " + user.getName() + ", 성공적으로 회원가입 완료되었습니다.");
+
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/login/signIn")
+    public ResponseEntity<Map<String, Object>> userSignIn(@RequestBody LoginRequestDto loginRequestDto) {
+
+        log.info(loginRequestDto.getNumber() + " 사용자 로그인 요청");
+
+        if (!userService.checkExistNumber(loginRequestDto.getNumber())) {
+           throw new CustomException(ErrorResult.NOT_EXIST_NUMBER);
+        }
+
+        if (!userService.matchPassword(loginRequestDto)) {
+            throw new CustomException(ErrorResult.USER_NOT_MATCH_PASSWORD);
+        }
+
+        log.info(loginRequestDto.getNumber() + " 로그인 완료");
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("message","loginSuccess");
+        response.put("number", loginRequestDto.getNumber());
 
         return ResponseEntity.ok(response);
     }
