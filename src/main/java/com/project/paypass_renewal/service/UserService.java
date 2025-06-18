@@ -2,6 +2,7 @@ package com.project.paypass_renewal.service;
 
 import com.project.paypass_renewal.domain.ServiceCode;
 import com.project.paypass_renewal.domain.User;
+import com.project.paypass_renewal.domain.dto.request.LoginRequestDto;
 import com.project.paypass_renewal.domain.dto.request.UserRequestDto;
 import com.project.paypass_renewal.generator.LinkCodeGenerator;
 import com.project.paypass_renewal.repository.UserRepository;
@@ -38,6 +39,23 @@ public class UserService {
         userRepository.save(user);
         return user;
     }
+
+
+    public boolean checkExistNumber(String number) {
+        return userRepository.existsByNumber(number);
+    }
+
+    public boolean matchPassword(LoginRequestDto loginRequestDto) {
+
+        String number = loginRequestDto.getNumber();
+        String password = loginRequestDto.getPassword();
+
+        User user = userRepository.findByNumber(number);
+
+        return user.getPassword().equals(password);
+
+    }
+
 
     private String checkLinkCodeDuplicate(String firstLinkCode){
         String linkCode = firstLinkCode;
