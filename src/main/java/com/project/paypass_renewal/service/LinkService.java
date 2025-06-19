@@ -76,11 +76,14 @@ public class LinkService {
 
     private Link toEntity(LinkRequestDto linkRequestDto) {
         String supporterNumber = linkRequestDto.getSupporterNumber();
+
         String linkCode = linkRequestDto.getUserLinkCode();
         User user = userRepository.findByLinkCode(linkCode);
         String userNumber = user.getNumber();
 
-        return new Link(supporterNumber, userNumber);
+        String relation = linkRequestDto.getRelation();
+
+        return new Link(supporterNumber, userNumber, relation);
     }
 
 
