@@ -6,6 +6,8 @@ import com.project.paypass_renewal.domain.User;
 import com.project.paypass_renewal.domain.dto.response.LinkListResponseDto;
 import com.project.paypass_renewal.domain.dto.request.LinkRequestDto;
 import com.project.paypass_renewal.repository.LinkRepository;
+import com.project.paypass_renewal.repository.UserRepository;
+import com.project.paypass_renewal.support.UserTestUtils;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -17,6 +19,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class LinkServiceTest {
@@ -24,6 +28,8 @@ class LinkServiceTest {
     @Mock
     LinkRepository linkRepository;
 
+    @Mock
+    UserRepository userRepository;
 
     @InjectMocks
     LinkService linkService;
@@ -32,14 +38,18 @@ class LinkServiceTest {
     @DisplayName("링크_저장_테스트")
     void saveNewLinkTest() {
         // given
-        LinkRequestDto linkDto = new LinkRequestDto("01089091234","01012341234");
+        LinkRequestDto linkDto = new LinkRequestDto("01012341234","ABC123","어머니");
+        User user = UserTestUtils.createDummyUser();
+
+        // stub
+        when(userRepository.findByLinkCode(any(String.class))).thenReturn(user);
 
         // when
         Link link = linkService.saveNewLink(linkDto);
 
         // then
-        assertThat(link.getSupporterNumber()).isEqualTo("01089091234");
-        assertThat(link.getUserNumber()).isEqualTo("01012341234");
+        assertThat(link.getSupporterNumber()).isEqualTo("01012341234");
+        assertThat(link.getUserNumber()).isEqualTo(user.getNumber());
     }
 
     @Test
@@ -60,6 +70,7 @@ class LinkServiceTest {
         assertThat(LinkList.get(0).getUserNumber()).isEqualTo("01011111111");
         assertThat(LinkList.get(1).getUserNumber()).isEqualTo("01022222222");
     }
+
 
 
 }
