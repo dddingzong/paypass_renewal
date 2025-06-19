@@ -18,14 +18,16 @@ public class UserCareGeofence {
     @Column(nullable = false)
     private String number;
 
-    @Column(nullable = false)
+    @Column(nullable = false, precision = 38, scale = 8)
     private BigDecimal homeLatitude;
 
-    @Column(nullable = false)
+    @Column(nullable = false, precision = 38, scale = 8)
     private BigDecimal homeLongitude;
 
+    @Column(precision = 38, scale = 8)
     private BigDecimal centerLatitude;
 
+    @Column(precision = 38, scale = 8)
     private BigDecimal centerLongitude;
 
 }
