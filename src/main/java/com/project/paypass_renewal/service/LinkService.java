@@ -2,6 +2,7 @@ package com.project.paypass_renewal.service;
 
 import com.project.paypass_renewal.domain.Link;
 import com.project.paypass_renewal.domain.User;
+import com.project.paypass_renewal.domain.dto.request.LinkDeleteRequestDto;
 import com.project.paypass_renewal.domain.dto.request.SupporterNumberRequestDto;
 import com.project.paypass_renewal.domain.dto.response.LinkListResponseDto;
 import com.project.paypass_renewal.domain.dto.request.LinkRequestDto;
@@ -29,9 +30,17 @@ public class LinkService {
         return link;
     }
 
+    public boolean checkLinkCodeExist(LinkRequestDto linkRequestDto) {
+        String linkCode = linkRequestDto.getUserLinkCode();
+        return userRepository.existsByLinkCode(linkCode);
+    }
+
     public boolean checkDuplicateLink(LinkRequestDto linkRequestDto) {
+        String linkCode = linkRequestDto.getUserLinkCode();
+        User user = userRepository.findByLinkCode(linkCode);
+
         String supporterNumber = linkRequestDto.getSupporterNumber();
-        String userNumber = linkRequestDto.getUserNumber();
+        String userNumber = user.getNumber();
 
         return linkRepository.existsBySupporterNumberAndUserNumber(supporterNumber, userNumber);
     }
@@ -54,9 +63,9 @@ public class LinkService {
                 .toList();
     }
 
-    public int deleteLink(LinkRequestDto linkRequestDto){
-        String supporterNumber = linkRequestDto.getSupporterNumber();
-        String userNumber = linkRequestDto.getUserNumber();
+    public int deleteLink(LinkDeleteRequestDto linkDeleteRequestDto){
+        String supporterNumber = linkDeleteRequestDto.getSupporterNumber();
+        String userNumber = linkDeleteRequestDto.getUserNumber();
 
         return linkRepository.deleteBySupporterNumberAndUserNumber(supporterNumber,userNumber);
     }
@@ -67,9 +76,12 @@ public class LinkService {
 
     private Link toEntity(LinkRequestDto linkRequestDto) {
         String supporterNumber = linkRequestDto.getSupporterNumber();
-        String userNumber = linkRequestDto.getUserNumber();
+        String linkCode = linkRequestDto.getUserLinkCode();
+        User user = userRepository.findByLinkCode(linkCode);
+        String userNumber = user.getNumber();
 
         return new Link(supporterNumber, userNumber);
     }
+
 
 }
