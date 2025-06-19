@@ -56,8 +56,11 @@ class LinkControllerTest {
     void saveNewLinkTest() throws Exception {
         // given
         final String url = "/link/saveNewLink";
-        LinkRequestDto linkDto = new LinkRequestDto("01089091234", "01012341234");
+        LinkRequestDto linkDto = new LinkRequestDto("01089091234", "ABC123","부모님");
         String json = objectMapper.writeValueAsString(linkDto);
+
+        // stub
+        when(linkService.checkLinkCodeExist(any(LinkRequestDto.class))).thenReturn(true);
 
         // when
         ResultActions result = mockMvc.perform(
@@ -72,14 +75,38 @@ class LinkControllerTest {
     }
 
     @Test
+    @DisplayName("링크_코드_미존재_예외_테스트")
+    void checkLinkCodeAlreadyExistTest() throws Exception{
+        // given
+        final String url = "/link/saveNewLink";
+        LinkRequestDto linkDto = new LinkRequestDto("01089091234", "ABC123","부모님");
+        String json = objectMapper.writeValueAsString(linkDto);
+
+        // stub
+        when(linkService.checkLinkCodeExist(any(LinkRequestDto.class))).thenReturn(false);
+
+        // when
+        ResultActions result = mockMvc.perform(
+                MockMvcRequestBuilders.post(url)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json)
+        );
+
+        // then
+        result.andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.message").exists());
+    }
+
+    @Test
     @DisplayName("링크_중복_저장_테스트")
     void checkDuplicateLinkTest() throws Exception {
         // given
         final String url = "/link/saveNewLink";
-        LinkRequestDto linkDto = new LinkRequestDto("01089091234", "01012341234");
+        LinkRequestDto linkDto = new LinkRequestDto("01089091234", "ABC123","부모님");
         String json = objectMapper.writeValueAsString(linkDto);
 
         // stub
+        when(linkService.checkLinkCodeExist(any(LinkRequestDto.class))).thenReturn(true);
         when(linkService.checkDuplicateLink(any(LinkRequestDto.class))).thenReturn(true);
 
         // when
