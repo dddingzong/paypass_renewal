@@ -23,7 +23,7 @@ class LinkRepositoryTest {
     @DisplayName("링크_저장_테스트")
     void saveNewLinkTest(){
         // given
-        Link link = new Link("01012345678", "01011111111");
+        Link link = new Link("01012345678", "01011111111", "어머님");
 
         // when
         Link savedLink = linkRepository.save(link);
@@ -40,12 +40,15 @@ class LinkRepositoryTest {
         // given
         String supporterNumber = "01012345678";
         String supporterNumberDummy = "01012341234";
+
         String userNumberOne = "01011111111";
         String userNumberTwo = "01022222222";
 
-        Link linkOne = new Link(supporterNumber, userNumberOne);
-        Link linkTwo = new Link(supporterNumber, userNumberTwo);
-        Link linkDummy = new Link(supporterNumberDummy, userNumberOne);
+        String relation = "어머님";
+
+        Link linkOne = new Link(supporterNumber, userNumberOne, relation);
+        Link linkTwo = new Link(supporterNumber, userNumberTwo, relation);
+        Link linkDummy = new Link(supporterNumberDummy, userNumberOne, relation);
 
         linkRepository.save(linkOne);
         linkRepository.save(linkTwo);
@@ -65,8 +68,9 @@ class LinkRepositoryTest {
         // given
         String supporterNumber = "01012345678";
         String userNumber = "01011111111";
+        String relation = "어머님";
 
-        Link link = new Link(supporterNumber, userNumber);
+        Link link = new Link(supporterNumber, userNumber, relation);
 
         // when
         boolean firstCheck = linkRepository.existsBySupporterNumberAndUserNumber(supporterNumber, userNumber);
@@ -82,8 +86,8 @@ class LinkRepositoryTest {
     @DisplayName("링크_삭제_테스트")
     void deleteLinkTest() {
         // given
-        Link dummyLinkOne = new Link("01012345678", "01011111111");
-        Link dummyLinkTwo = new Link("01012345678", "01022222222");
+        Link dummyLinkOne = new Link("01012345678", "01011111111", "어머님");
+        Link dummyLinkTwo = new Link("01012345678", "01022222222", "어머님");
 
         linkRepository.save(dummyLinkOne);
         linkRepository.save(dummyLinkTwo);
