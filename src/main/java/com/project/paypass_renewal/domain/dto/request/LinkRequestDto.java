@@ -7,10 +7,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class LinkRequestDto {
     private String supporterNumber;
-    private String userNumber;
+    private String userLinkCode;
+    private String relation;
 
-    public LinkRequestDto(String supporterNumber, String userNumber) {
+    public LinkRequestDto(String supporterNumber, String userLinkCode, String relation) {
         this.supporterNumber = supporterNumber;
-        this.userNumber = userNumber;
+        this.userLinkCode = userLinkCode;
+        this.relation = relation;
     }
 }
