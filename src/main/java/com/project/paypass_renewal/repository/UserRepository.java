@@ -15,4 +15,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     User findByNumber(String number);
 
+    User findByLinkCode(String linkCode);
+
 }
