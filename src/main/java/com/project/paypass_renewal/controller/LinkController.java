@@ -1,6 +1,7 @@
 package com.project.paypass_renewal.controller;
 
 import com.project.paypass_renewal.domain.User;
+import com.project.paypass_renewal.domain.dto.request.LinkDeleteRequestDto;
 import com.project.paypass_renewal.domain.dto.request.LinkRequestDto;
 import com.project.paypass_renewal.domain.dto.request.SupporterNumberRequestDto;
 import com.project.paypass_renewal.domain.dto.response.LinkListResponseDto;
@@ -26,8 +27,13 @@ public class LinkController {
     @PostMapping("/link/saveNewLink")
     public ResponseEntity<String> saveNewLink(@RequestBody LinkRequestDto linkRequestDto) {
 
+        if (!linkService.checkLinkCodeExist(linkRequestDto)) {
+            log.info("링크코드가 존재하지 않습니다.");
+            throw new CustomException(ErrorResult.LINK_CODE_NOT_EXIST);
+        }
+
         if (linkService.checkDuplicateLink(linkRequestDto)){
-            log.info("중복된 링크가 존재합니다.");
+            log.info("중복된 사용자가 존재합니다.");
             throw new CustomException(ErrorResult.LINK_USER_AND_SUPPORTER_DUPLICATE);
         }
 
@@ -52,11 +58,11 @@ public class LinkController {
     }
 
     @PostMapping("/link/deleteLink")
-    public ResponseEntity<String> deleteLink(@RequestBody LinkRequestDto linkRequestDto) {
+    public ResponseEntity<String> deleteLink(@RequestBody LinkDeleteRequestDto linkDeleteRequestDto) {
 
         log.info("링크 삭제 요청을 받았습니다.");
 
-        int deleteCount = linkService.deleteLink(linkRequestDto);
+        int deleteCount = linkService.deleteLink(linkDeleteRequestDto);
 
         return ResponseEntity.ok("deleteSuccess. 삭제된 데이터 개수: " + deleteCount);
     }
