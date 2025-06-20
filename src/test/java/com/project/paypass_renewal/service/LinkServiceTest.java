@@ -3,6 +3,7 @@ package com.project.paypass_renewal.service;
 import com.project.paypass_renewal.domain.Link;
 import com.project.paypass_renewal.domain.ServiceCode;
 import com.project.paypass_renewal.domain.User;
+import com.project.paypass_renewal.domain.dto.request.SupporterNumberRequestDto;
 import com.project.paypass_renewal.domain.dto.response.LinkListResponseDto;
 import com.project.paypass_renewal.domain.dto.request.LinkRequestDto;
 import com.project.paypass_renewal.repository.LinkRepository;
@@ -62,13 +63,22 @@ class LinkServiceTest {
                 new User("test2", "abc123", LocalDate.of(2000, 01, 02), "01022222222", "12152", null, "AG1DEV", ServiceCode.CARE_SERVICE)
         );
 
+        SupporterNumberRequestDto supporterNumberRequestDto = new SupporterNumberRequestDto("01012345678");
+
+        Link link = new Link("01012345678", "01000001111", "어머니");
+
+        // stub
+        when(linkRepository.findByUserNumberAndSupporterNumber(any(String.class), any(String.class))).thenReturn(link);
+
         // when
-        List<LinkListResponseDto> LinkList = linkService.userToLinkResponseDto(userList);
+        List<LinkListResponseDto> LinkList = linkService.userToLinkResponseDto(userList, supporterNumberRequestDto);
 
         // then
         assertThat(LinkList).hasSize(2);
         assertThat(LinkList.get(0).getUserNumber()).isEqualTo("01011111111");
         assertThat(LinkList.get(1).getUserNumber()).isEqualTo("01022222222");
+        assertThat(LinkList.get(0).getRelation()).isEqualTo("어머니");
+        assertThat(LinkList.get(1).getRelation()).isEqualTo("어머니");
     }
 
 

@@ -9,10 +9,12 @@ public class LinkListResponseDto {
     private String userNumber;
     private String name;
     private String homeAddress;
+    private String relation;
 
-    public LinkListResponseDto(String userNumber, String name, String homeAddress) {
+    public LinkListResponseDto(String userNumber, String name, String homeAddress, String relation) {
         this.userNumber = userNumber;
         this.name = name;
         this.homeAddress = homeAddress;
+        this.relation = relation;
     }
 }

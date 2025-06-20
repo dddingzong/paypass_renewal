@@ -52,7 +52,7 @@ public class LinkController {
 
         List<User> userList = linkService.findUserListByNumbers(userNumbers);
 
-        List<LinkListResponseDto> linkListResponseDtoList = linkService.userToLinkResponseDto(userList);
+        List<LinkListResponseDto> linkListResponseDtoList = linkService.userToLinkResponseDto(userList, supporterNumberRequestDto);
 
         return ResponseEntity.ok(linkListResponseDtoList);
     }

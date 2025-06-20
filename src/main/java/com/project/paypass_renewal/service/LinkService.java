@@ -11,6 +11,7 @@ import com.project.paypass_renewal.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -54,13 +55,26 @@ public class LinkService {
         return userRepository.findByNumberIn(userNumbers);
     }
 
-    public List<LinkListResponseDto> userToLinkResponseDto(List<User> userList) {
-        return userList.stream()
-                .map(user -> new LinkListResponseDto(
-                        user.getNumber(),
-                        user.getName(),
-                        user.getHomeAddress()))
-                .toList();
+    public List<LinkListResponseDto> userToLinkResponseDto(List<User> userList, SupporterNumberRequestDto supporterNumberRequestDto) {
+        ArrayList<LinkListResponseDto> responseDtoList = new ArrayList<>();
+
+        String supporterNumber = supporterNumberRequestDto.getSupporterNumber();
+
+        for (User user : userList) {
+            String number = user.getNumber();
+            String name = user.getName();
+            String homeAddress = user.getHomeAddress();
+
+            Link link = linkRepository.findByUserNumberAndSupporterNumber(number, supporterNumber);
+            String relation = link.getRelation();
+
+            LinkListResponseDto linkListResponseDto = new LinkListResponseDto(number, name, homeAddress, relation);
+            responseDtoList.add(linkListResponseDto);
+
+        }
+
+        return responseDtoList;
+
     }
 
     public int deleteLink(LinkDeleteRequestDto linkDeleteRequestDto){

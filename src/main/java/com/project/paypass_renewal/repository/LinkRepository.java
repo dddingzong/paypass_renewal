@@ -16,5 +16,7 @@ public interface LinkRepository extends JpaRepository<Link, Long> {
 
     boolean existsBySupporterNumberAndUserNumber(String supporterNumber, String userNumber);
 
+    Link findByUserNumberAndSupporterNumber(String supporterNumber, String userNumber );
+
 }
 

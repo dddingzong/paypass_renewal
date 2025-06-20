@@ -140,10 +140,10 @@ class LinkControllerTest {
                 new User("test2", "abc123", LocalDate.of(2000, 01, 02), "01022222222", "12152", null, "AG1DEV", ServiceCode.CARE_SERVICE)
         ));
 
-        when(linkService.userToLinkResponseDto(anyList()))
+        when(linkService.userToLinkResponseDto(anyList(),any(SupporterNumberRequestDto.class)))
                 .thenReturn(List.of(
-                        new LinkListResponseDto("01089091234", "User1","12641"),
-                        new LinkListResponseDto("01012341234", "User2", "12451")
+                        new LinkListResponseDto("01089091234", "User1","12641", "어머님"),
+                        new LinkListResponseDto("01012341234", "User2", "12451", "어머님")
                 ));
 
         // when
