@@ -9,6 +9,7 @@ import com.project.paypass_renewal.domain.dto.request.LinkRequestDto;
 import com.project.paypass_renewal.repository.LinkRepository;
 import com.project.paypass_renewal.repository.UserAddressRepository;
 import com.project.paypass_renewal.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -80,6 +81,7 @@ public class LinkService {
 
     }
 
+    @Transactional
     public int deleteLink(LinkDeleteRequestDto linkDeleteRequestDto){
         String supporterNumber = linkDeleteRequestDto.getSupporterNumber();
         String userNumber = linkDeleteRequestDto.getUserNumber();
