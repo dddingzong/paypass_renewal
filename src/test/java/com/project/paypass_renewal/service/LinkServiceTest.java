@@ -7,6 +7,7 @@ import com.project.paypass_renewal.domain.dto.request.SupporterNumberRequestDto;
 import com.project.paypass_renewal.domain.dto.response.LinkListResponseDto;
 import com.project.paypass_renewal.domain.dto.request.LinkRequestDto;
 import com.project.paypass_renewal.repository.LinkRepository;
+import com.project.paypass_renewal.repository.UserAddressRepository;
 import com.project.paypass_renewal.repository.UserRepository;
 import com.project.paypass_renewal.support.UserTestUtils;
 import org.junit.jupiter.api.DisplayName;
@@ -31,6 +32,9 @@ class LinkServiceTest {
 
     @Mock
     UserRepository userRepository;
+
+    @Mock
+    UserAddressRepository userAddressRepository;
 
     @InjectMocks
     LinkService linkService;
@@ -68,6 +72,7 @@ class LinkServiceTest {
         Link link = new Link("01012345678", "01000001111", "어머니");
 
         // stub
+        when(userAddressRepository.findHomeStreetAddressByNumber(any(String.class))).thenReturn("테스트용 도로명 주소");
         when(linkRepository.findByUserNumberAndSupporterNumber(any(String.class), any(String.class))).thenReturn(link);
 
         // when
@@ -79,6 +84,8 @@ class LinkServiceTest {
         assertThat(LinkList.get(1).getUserNumber()).isEqualTo("01022222222");
         assertThat(LinkList.get(0).getRelation()).isEqualTo("어머니");
         assertThat(LinkList.get(1).getRelation()).isEqualTo("어머니");
+        assertThat(LinkList.get(0).getHomeAddress()).isEqualTo("테스트용 도로명 주소");
+        assertThat(LinkList.get(1).getHomeAddress()).isEqualTo("테스트용 도로명 주소");
     }
 
 
