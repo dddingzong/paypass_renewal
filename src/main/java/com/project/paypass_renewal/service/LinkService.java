@@ -7,6 +7,7 @@ import com.project.paypass_renewal.domain.dto.request.SupporterNumberRequestDto;
 import com.project.paypass_renewal.domain.dto.response.LinkListResponseDto;
 import com.project.paypass_renewal.domain.dto.request.LinkRequestDto;
 import com.project.paypass_renewal.repository.LinkRepository;
+import com.project.paypass_renewal.repository.UserAddressRepository;
 import com.project.paypass_renewal.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,7 @@ public class LinkService {
 
     private final LinkRepository linkRepository;
     private final UserRepository userRepository;
+    private final UserAddressRepository userAddressRepository;
 
 
     public Link saveNewLink(LinkRequestDto linkRequestDto) {
@@ -63,7 +65,8 @@ public class LinkService {
         for (User user : userList) {
             String number = user.getNumber();
             String name = user.getName();
-            String homeAddress = user.getHomeAddress();
+
+            String homeAddress = userAddressRepository.findHomeStreetAddressByNumber(number);
 
             Link link = linkRepository.findByUserNumberAndSupporterNumber(number, supporterNumber);
             String relation = link.getRelation();
