@@ -49,4 +49,22 @@ class UserAddressRepositoryTest {
         assertThat(savedUserAddress.getHomeStreetAddress()).isEqualTo("서울시 노원구 노원로 564");
     }
 
+    @Test
+    @DisplayName("유저번호로_도로명주소_조회_테스트")
+    void findHomeStreetAddressByNumberTest() {
+        String number = "01012345678";
+        String homeStreetAddress = "서울시 노원구 노원로 564";
+
+        // given
+        UserAddress userAddress = new UserAddress(number, homeStreetAddress, "1001-102", "서울 노원구 노원로18길 41");
+        userAddressRepository.save(userAddress);
+
+        // when
+        String findHomeStreetAddress = userAddressRepository.findHomeStreetAddressByNumber(number);
+
+        // then
+        assertThat(findHomeStreetAddress).isEqualTo(userAddress.getHomeStreetAddress());
+
+    }
+
 }
