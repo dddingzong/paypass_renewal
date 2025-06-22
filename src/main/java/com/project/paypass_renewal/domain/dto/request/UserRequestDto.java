@@ -1,4 +1,4 @@
-package com.project.paypass_renewal.domain.dto;
+package com.project.paypass_renewal.domain.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.project.paypass_renewal.domain.ServiceCode;
@@ -10,7 +10,7 @@ import java.time.LocalDate;
 
 @Getter
 @NoArgsConstructor
-public class UserDto {
+public class UserRequestDto {
 
     @NotEmpty(message = "이름은 필수 값입니다.")
     @Pattern(regexp = "^[가-힣]{2,4}$", message = "이름은 한글로 2~4자 사이로 작성해주세요")
@@ -41,7 +41,15 @@ public class UserDto {
     @NotNull(message = "서비스 코드는 필수 값입니다.")
     private ServiceCode serviceCode;
 
-    public UserDto(String name, String password, LocalDate birth, String number, String homeAddress, String centerAddress, ServiceCode serviceCode) {
+    @NotEmpty(message = "집 주소는 필수 값입니다.")
+    private String homeStreetAddress;
+
+    @NotEmpty(message = "집 상세 주소는 필수 값입니다.")
+    private String homeStreetAddressDetail;
+
+    private String centerStreetAddress;
+
+    public UserRequestDto(String name, String password, LocalDate birth, String number, String homeAddress, String centerAddress, ServiceCode serviceCode, String homeStreetAddress, String homeStreetAddressDetail, String centerStreetAddress) {
         this.name = name;
         this.password = password;
         this.birth = birth;
@@ -49,5 +57,8 @@ public class UserDto {
         this.homeAddress = homeAddress;
         this.centerAddress = centerAddress;
         this.serviceCode = serviceCode;
+        this.homeStreetAddress = homeStreetAddress;
+        this.homeStreetAddressDetail = homeStreetAddressDetail;
+        this.centerStreetAddress = centerStreetAddress;
     }
 }

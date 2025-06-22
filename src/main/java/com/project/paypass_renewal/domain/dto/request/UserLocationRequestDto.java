@@ -1,4 +1,4 @@
-package com.project.paypass_renewal.domain.dto;
+package com.project.paypass_renewal.domain.dto.request;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

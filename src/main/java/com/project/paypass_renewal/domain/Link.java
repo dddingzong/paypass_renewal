@@ -18,8 +18,12 @@ public class Link {
     @Column(nullable = false)
     private String userNumber;
 
-    public Link(String supporterNumber, String userNumber) {
+    @Column(nullable = false)
+    private String relation;
+
+    public Link(String supporterNumber, String userNumber, String relation) {
         this.supporterNumber = supporterNumber;
         this.userNumber = userNumber;
+        this.relation = relation;
     }
 }

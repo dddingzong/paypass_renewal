@@ -17,10 +17,10 @@ public class UserLocation {
     @Column(nullable = false)
     private String number;
 
-    @Column(nullable = false)
+    @Column(nullable = false, precision = 38, scale = 8)
     private BigDecimal latitude;
 
-    @Column(nullable = false)
+    @Column(nullable = false, precision = 38, scale = 8)
     private BigDecimal longitude;
 
     public UserLocation(String number, BigDecimal latitude, BigDecimal longitude) {

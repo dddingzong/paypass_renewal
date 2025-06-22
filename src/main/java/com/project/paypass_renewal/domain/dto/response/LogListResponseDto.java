@@ -1,40 +1,27 @@
-package com.project.paypass_renewal.domain;
+package com.project.paypass_renewal.domain.dto.response;
 
-import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Getter
-@Entity
 @NoArgsConstructor
-public class Log {
+public class LogListResponseDto {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Column(nullable = false)
     private String number;
-
-    @Column(nullable = false)
+    private String name;
     private LocalDateTime departureTime;
-
-    @Column(nullable = false)
     private LocalDateTime arrivalTime;
-
-    @Column(nullable = false)
     private String departureLocation;
-
-    @Column(nullable = false)
     private String arrivalLocation;
 
-    public Log(String number, LocalDateTime departureTime, LocalDateTime arrivalTime, String departureLocation, String arrivalLocation) {
+    public LogListResponseDto(String number, String name, LocalDateTime departureTime, LocalDateTime arrivalTime, String departureLocation, String arrivalLocation) {
         this.number = number;
+        this.name = name;
         this.departureTime = departureTime;
         this.arrivalTime = arrivalTime;
         this.departureLocation = departureLocation;
         this.arrivalLocation = arrivalLocation;
     }
-
 }

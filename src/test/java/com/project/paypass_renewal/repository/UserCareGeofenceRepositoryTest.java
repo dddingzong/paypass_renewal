@@ -1,0 +1,44 @@
+package com.project.paypass_renewal.repository;
+
+import com.project.paypass_renewal.domain.UserCareGeofence;
+import jakarta.transaction.Transactional;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+
+import java.math.BigDecimal;
+
+import static org.assertj.core.api.Assertions.*;
+
+@SpringBootTest
+@Transactional
+class UserCareGeofenceRepositoryTest {
+
+    @Autowired
+    UserCareGeofenceRepository userCareGeofenceRepository;
+
+    @Test
+    @DisplayName("유저_지오펜스_저장_테스트")
+    void saveUserCareGeofenceTest() {
+        // given
+        String number = "01012345678";
+        BigDecimal homeLatitude = new BigDecimal("37.5665");
+        BigDecimal homeLongitude = new BigDecimal("126.9780");
+        BigDecimal centerLatitude = new BigDecimal("37.5667");
+        BigDecimal centerLongitude = new BigDecimal("126.9782");
+
+        UserCareGeofence userCareGeofence = new UserCareGeofence(number, homeLatitude, homeLongitude, centerLatitude, centerLongitude);
+
+        // when
+        UserCareGeofence savedGeofence = userCareGeofenceRepository.save(userCareGeofence);
+
+        // then
+        assertThat(savedGeofence.getNumber()).isEqualTo(number);
+        assertThat(savedGeofence.getHomeLatitude()).isEqualTo(homeLatitude);
+        assertThat(savedGeofence.getHomeLongitude()).isEqualTo(homeLongitude);
+        assertThat(savedGeofence.getCenterLatitude()).isEqualTo(centerLatitude);
+        assertThat(savedGeofence.getCenterLongitude()).isEqualTo(centerLongitude);
+    }
+
+}

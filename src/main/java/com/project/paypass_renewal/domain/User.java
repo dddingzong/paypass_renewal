@@ -9,6 +9,7 @@ import java.time.LocalDate;
 @Entity
 @Getter
 @NoArgsConstructor
+@Table(name = "\"user\"")
 public class User {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,6 +49,14 @@ public class User {
         this.centerAddress = centerAddress;
         this.linkCode = linkCode;
         this.serviceCode = serviceCode;
+    }
+
+    public void updateHomeAddress(String homeAddress){
+        this.homeAddress = homeAddress;
+    }
+
+    public void updateCenterAddress(String centerAddress){
+        this.centerAddress = centerAddress;
     }
 
 }
