@@ -2,14 +2,13 @@ package com.project.paypass_renewal.domain;
 
 import jakarta.persistence.*;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-
+import lombok.NoArgsConstructor;
 import java.math.BigDecimal;
 
 
 @Getter
 @Entity
-@RequiredArgsConstructor
+@NoArgsConstructor
 public class UserCareGeofence {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,4 +29,11 @@ public class UserCareGeofence {
     @Column(precision = 38, scale = 8)
     private BigDecimal centerLongitude;
 
+    public UserCareGeofence(String number, BigDecimal homeLatitude, BigDecimal homeLongitude, BigDecimal centerLatitude, BigDecimal centerLongitude) {
+        this.number = number;
+        this.homeLatitude = homeLatitude;
+        this.homeLongitude = homeLongitude;
+        this.centerLatitude = centerLatitude;
+        this.centerLongitude = centerLongitude;
+    }
 }
