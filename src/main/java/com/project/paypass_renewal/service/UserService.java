@@ -18,6 +18,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final UserAddressService userAddressService;
     private final LinkCodeGenerator linkCodeGenerator;
+    private final UserCareGeofenceService userCareGeofenceService;
 
     public boolean checkDuplicateNumber (String number) {
         return userRepository.existsByNumber(number);
@@ -35,6 +36,9 @@ public class UserService {
 
         // UserAddress 생성 및 저장
         userAddressService.saveNewUserAddress(userRequestDto);
+
+        // UserCareGeofence 생성 및 저장
+        userCareGeofenceService.saveUserGeofence(userRequestDto);
 
         userRepository.save(user);
         return user;
