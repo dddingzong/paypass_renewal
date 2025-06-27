@@ -37,7 +37,7 @@ public class UserService {
         User user = toEntity(userRequestDto, uniqueLinkCode);
 
         // User 생성 몇 저장
-        user = userRepository.save(user);
+        userRepository.save(user);
 
         // UserAddress 생성 및 저장
         userAddressService.saveNewUserAddress(userRequestDto);
