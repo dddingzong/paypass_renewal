@@ -28,6 +28,9 @@ class UserServiceTest {
     UserAddressService userAddressService;
 
     @Mock
+    UserCareGeofenceService userCareGeofenceService;
+
+    @Mock
     LinkCodeGenerator linkCodeGenerator;
 
     @InjectMocks

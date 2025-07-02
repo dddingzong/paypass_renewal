@@ -6,6 +6,7 @@ import com.project.paypass_renewal.domain.dto.request.LoginRequestDto;
 import com.project.paypass_renewal.domain.dto.request.UserRequestDto;
 import com.project.paypass_renewal.generator.LinkCodeGenerator;
 import com.project.paypass_renewal.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,11 +19,13 @@ public class UserService {
     private final UserRepository userRepository;
     private final UserAddressService userAddressService;
     private final LinkCodeGenerator linkCodeGenerator;
+    private final UserCareGeofenceService userCareGeofenceService;
 
     public boolean checkDuplicateNumber (String number) {
         return userRepository.existsByNumber(number);
     }
 
+    @Transactional
     public User saveNewUser(UserRequestDto userRequestDto) {
         // linkCode 생성
         String linkCode = linkCodeGenerator.generate();
@@ -33,10 +36,15 @@ public class UserService {
         // User 생성 및 저장
         User user = toEntity(userRequestDto, uniqueLinkCode);
 
+        // User 생성 몇 저장
+        userRepository.save(user);
+
         // UserAddress 생성 및 저장
         userAddressService.saveNewUserAddress(userRequestDto);
 
-        userRepository.save(user);
+        // UserCareGeofence 생성 및 저장
+        userCareGeofenceService.saveUserGeofence(userRequestDto);
+
         return user;
     }
 

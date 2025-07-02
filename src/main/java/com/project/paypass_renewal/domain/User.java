@@ -24,7 +24,7 @@ public class User {
     @Column(nullable = false)
     private LocalDate birth;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String number;
 
     @Column(nullable = false)
@@ -40,7 +40,7 @@ public class User {
     private ServiceCode serviceCode;
 
     // 사용자 신규 가입 시
-    public User  (String name, String password, LocalDate birth, String number, String homeAddress, String centerAddress, String linkCode, ServiceCode serviceCode) {
+    public User (String name, String password, LocalDate birth, String number, String homeAddress, String centerAddress, String linkCode, ServiceCode serviceCode) {
         this.name = name;
         this.password = password;
         this.birth = birth;
