@@ -33,4 +33,8 @@ public class UserLocationService {
     }
 
 
+    private UserLocation findByNumber(String number) {
+
+
+    }
 }
