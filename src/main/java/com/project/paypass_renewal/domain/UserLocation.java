@@ -29,6 +29,7 @@ public class UserLocation {
 
     public UserLocation(String number, BigDecimal latitude, BigDecimal longitude) {
         this.number = number;
+        this.savedTime = LocalDateTime.now();
         this.latitude = latitude;
         this.longitude = longitude;
     }
