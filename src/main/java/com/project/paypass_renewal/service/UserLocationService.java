@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -33,8 +34,8 @@ public class UserLocationService {
     }
 
 
-    private UserLocation findByNumber(String number) {
-
-
+    private UserLocation findRecentLocationByNumber(String number) {
+        List<UserLocation> userLocations = userLocationRepository.findByNumberOrderBySavedTimeDesc(number);
+        return userLocations.get(0);
     }
 }
