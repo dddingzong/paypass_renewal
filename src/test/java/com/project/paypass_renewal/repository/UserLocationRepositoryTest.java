@@ -38,12 +38,14 @@ class UserLocationRepositoryTest {
 
     @Test
     @DisplayName("유저_위치_리스트_조회")
-    void findByNumberOrderBySavedTimeDescTest() {
+    void findByNumberOrderBySavedTimeDescTest() throws InterruptedException {
         // given
         String number = "01012345678";
 
         UserLocation userLocationOne = new UserLocation(number, BigDecimal.valueOf(37.6616521), BigDecimal.valueOf(127.0561246));
+        Thread.sleep(1000);
         UserLocation userLocationTwo = new UserLocation(number, BigDecimal.valueOf(37.6616523), BigDecimal.valueOf(127.0561213));
+        Thread.sleep(1000);
         UserLocation userLocationThree = new UserLocation("01011112222", BigDecimal.valueOf(37.6616121), BigDecimal.valueOf(127.0561463));
 
         userLocationRepository.save(userLocationOne);
@@ -56,5 +58,6 @@ class UserLocationRepositoryTest {
         assertThat(userLocations).hasSize(2);
         assertThat(userLocations.get(0).getNumber()).isEqualTo(number);
         assertThat(userLocations.get(1).getNumber()).isEqualTo(number);
+        assertThat(userLocations.get(0).getLatitude()).isEqualTo(userLocationTwo.getLatitude());
     }
 }
