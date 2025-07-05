@@ -1,7 +1,9 @@
 package com.project.paypass_renewal.service;
 
 import com.project.paypass_renewal.domain.UserLocation;
+import com.project.paypass_renewal.domain.dto.request.NumberRequestDto;
 import com.project.paypass_renewal.domain.dto.request.UserLocationRequestDto;
+import com.project.paypass_renewal.domain.dto.response.UserLocationResponseDto;
 import com.project.paypass_renewal.repository.UserLocationRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -34,8 +36,15 @@ public class UserLocationService {
     }
 
 
-    private UserLocation findRecentLocationByNumber(String number) {
+    public UserLocationResponseDto findRecentLocationByNumber(NumberRequestDto numberRequestDto) {
+        String number = numberRequestDto.getNumber();
+
         List<UserLocation> userLocations = userLocationRepository.findByNumberOrderBySavedTimeDesc(number);
-        return userLocations.get(0);
+
+        UserLocation userLocation = userLocations.get(0);
+        BigDecimal latitude = userLocation.getLatitude();
+        BigDecimal longitude = userLocation.getLongitude();
+
+        return new UserLocationResponseDto(latitude, longitude);
     }
 }
