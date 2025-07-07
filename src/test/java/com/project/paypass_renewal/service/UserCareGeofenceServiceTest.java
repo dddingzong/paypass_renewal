@@ -2,7 +2,9 @@ package com.project.paypass_renewal.service;
 
 import com.project.paypass_renewal.domain.ServiceCode;
 import com.project.paypass_renewal.domain.UserCareGeofence;
+import com.project.paypass_renewal.domain.dto.request.NumberRequestDto;
 import com.project.paypass_renewal.domain.dto.request.UserRequestDto;
+import com.project.paypass_renewal.domain.dto.response.UserCareGeofenceResponseDto;
 import com.project.paypass_renewal.repository.UserCareGeofenceRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -11,9 +13,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class UserCareGeofenceServiceTest {
@@ -49,6 +54,39 @@ class UserCareGeofenceServiceTest {
         assertThat(userCareGeofence.getHomeLongitude()).isNotNull();
         assertThat(userCareGeofence.getCenterLatitude()).isNotNull();
         assertThat(userCareGeofence.getCenterLongitude()).isNotNull();
+    }
+
+    @Test
+    @DisplayName("유저_지오펜스_조회_테스트")
+    void findUserGeofenceTest() {
+        // given
+        NumberRequestDto numberRequestDto = new NumberRequestDto("01012345678");
+        String number = numberRequestDto.getNumber();
+        UserCareGeofence userCareGeofence = new UserCareGeofence(number, new BigDecimal("37.5665"), new BigDecimal("126.9780"), new BigDecimal("37.5667"), new BigDecimal("126.9782"));
+
+        // when
+        when(userCareGeofenceRepository.findByNumber(any(String.class))).thenReturn(userCareGeofence);
+        UserCareGeofenceResponseDto userCareGeofenceResponseDto = userCareGeofenceService.findUserCareGeofence(number);
+
+        // then
+        assertThat(userCareGeofenceResponseDto).isNotNull();
+        assertThat(userCareGeofenceResponseDto.getNumber()).isEqualTo(number);
+    }
+
+    @Test
+    @DisplayName("유저_지오펜스_조회_null_테스트")
+    void findUserGeofenceCenterAddressNullTest() {
+        // given
+        NumberRequestDto numberRequestDto = new NumberRequestDto("01012345678");
+        String number = numberRequestDto.getNumber();
+        UserCareGeofence userCareGeofence = new UserCareGeofence(number, new BigDecimal("37.5665"), new BigDecimal("126.9780"), null, null);
+
+        // when
+        when(userCareGeofenceRepository.findByNumber(any(String.class))).thenReturn(userCareGeofence);
+        UserCareGeofenceResponseDto userCareGeofenceResponseDto = userCareGeofenceService.findUserCareGeofence(number);
+
+        // then
+        assertThat(userCareGeofenceResponseDto).isNull();
     }
 
 
