@@ -23,11 +23,21 @@ public class UserCareGeofenceService {
     public UserCareGeofence saveUserGeofence(UserRequestDto userRequestDto) {
         log.info("유저 저장으로 인해 집과 센터에 geofence를 생성합니다.");
 
+        BigDecimal centerLatitude = null;
+        BigDecimal centerLongitude = null;
+
         String homeAddress = userRequestDto.getHomeAddress();
         String centerAddress = userRequestDto.getCenterAddress();
 
+        System.out.println("userRequestDto = " + userRequestDto);
+
         Map<String, BigDecimal> homeLatLog = ZipCodeToLatLogUtils.getLatLogFromZipCode(homeAddress);
-        Map<String, BigDecimal> centerLatLog = ZipCodeToLatLogUtils.getLatLogFromZipCode(centerAddress);
+
+        if (centerAddress != null) {
+            Map<String, BigDecimal> centerLatLog = ZipCodeToLatLogUtils.getLatLogFromZipCode(centerAddress);
+            centerLatitude = centerLatLog.get("latitude");
+            centerLongitude = centerLatLog.get("longitude");
+        }
 
         log.info("geofence 생성을 완료했습니다.");
 
@@ -35,8 +45,8 @@ public class UserCareGeofenceService {
                 userRequestDto.getNumber(),
                 homeLatLog.get("latitude"),
                 homeLatLog.get("longitude"),
-                centerLatLog.get("latitude"),
-                centerLatLog.get("longitude")
+                centerLatitude,
+                centerLongitude
         );
 
         userCareGeofenceRepository.save(userCareGeofence);
