@@ -55,7 +55,7 @@ class LogRepositoryTest {
         logRepository.save(testLogThree);
 
         // when
-        List<Log> findNumbers = logRepository.findByNumber(number);
+        List<Log> findNumbers = logRepository.findByNumberOrderByDepartureTimeDesc(number);
 
         // then
         assertThat(findNumbers).hasSize(2);

@@ -24,7 +24,7 @@ public class LogService {
 
         String number = numberRequestDto.getNumber();
 
-        List<Log> logList = logRepository.findByNumber(number);
+        List<Log> logList = logRepository.findByNumberOrderByDepartureTimeDesc(number);
 
         for (Log log : logList) {
             LogListResponseDto logListResponseDto = logToLogListResponseDto(log);

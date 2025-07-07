@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface LogRepository extends JpaRepository<Log, Long> {
 
-    List<Log> findByNumber(String number);
+    List<Log> findByNumberOrderByDepartureTimeDesc(String number);
 
 }
