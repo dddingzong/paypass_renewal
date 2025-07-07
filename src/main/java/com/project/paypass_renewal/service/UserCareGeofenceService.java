@@ -2,6 +2,7 @@ package com.project.paypass_renewal.service;
 
 import com.project.paypass_renewal.domain.UserCareGeofence;
 import com.project.paypass_renewal.domain.dto.request.UserRequestDto;
+import com.project.paypass_renewal.domain.dto.response.UserCareGeofenceResponseDto;
 import com.project.paypass_renewal.repository.UserCareGeofenceRepository;
 import com.project.paypass_renewal.util.ZipCodeToLatLogUtils;
 import jakarta.transaction.Transactional;
@@ -29,8 +30,6 @@ public class UserCareGeofenceService {
         String homeAddress = userRequestDto.getHomeAddress();
         String centerAddress = userRequestDto.getCenterAddress();
 
-        System.out.println("userRequestDto = " + userRequestDto);
-
         Map<String, BigDecimal> homeLatLog = ZipCodeToLatLogUtils.getLatLogFromZipCode(homeAddress);
 
         if (centerAddress != null) {
@@ -52,5 +51,25 @@ public class UserCareGeofenceService {
         userCareGeofenceRepository.save(userCareGeofence);
 
         return userCareGeofence;
+    }
+
+    @Transactional
+    public UserCareGeofenceResponseDto findUserCareGeofence(String number) {
+        log.info("유저의 케어서비스 지오펜스를 조회합니다. number: {}", number);
+
+        UserCareGeofence userGeofence = userCareGeofenceRepository.findByNumber(number);
+
+        String userNumber = userGeofence.getNumber();
+        BigDecimal homeLatitude = userGeofence.getHomeLatitude();
+        BigDecimal homeLongitude = userGeofence.getHomeLongitude();
+        BigDecimal centerLatitude = userGeofence.getCenterLatitude();
+        BigDecimal centerLongitude = userGeofence.getCenterLongitude();
+
+        if (centerLatitude == null && centerLongitude == null) {
+            log.info("센터 주소가 없으므로, null값을 반환합니다.");
+            return null;
+        }
+
+        return new UserCareGeofenceResponseDto(userNumber, homeLatitude, homeLongitude, centerLatitude, centerLongitude);
     }
 }
