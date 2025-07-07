@@ -62,7 +62,7 @@ class UserCareGeofenceServiceTest {
         // given
         NumberRequestDto numberRequestDto = new NumberRequestDto("01012345678");
         String number = numberRequestDto.getNumber();
-        UserCareGeofence userCareGeofence = new UserCareGeofence(number, new BigDecimal("37.5665"), new BigDecimal("126.9780"), new BigDecimal("37.5667"), new BigDecimal("126.9782"));
+        UserCareGeofence userCareGeofence = new UserCareGeofence(number, new BigDecimal("37.66277080"), new BigDecimal("127.05514400"), new BigDecimal("37.63772280"), new BigDecimal("127.13790120"));
 
         // when
         when(userCareGeofenceRepository.findByNumber(any(String.class))).thenReturn(userCareGeofence);
@@ -77,9 +77,8 @@ class UserCareGeofenceServiceTest {
     @DisplayName("유저_지오펜스_조회_null_테스트")
     void findUserGeofenceCenterAddressNullTest() {
         // given
-        NumberRequestDto numberRequestDto = new NumberRequestDto("01012345678");
-        String number = numberRequestDto.getNumber();
-        UserCareGeofence userCareGeofence = new UserCareGeofence(number, new BigDecimal("37.5665"), new BigDecimal("126.9780"), null, null);
+        String number = "01012345678";
+        UserCareGeofence userCareGeofence = new UserCareGeofence(number, new BigDecimal("37.66277080"), new BigDecimal("127.05514400"), null, null);
 
         // when
         when(userCareGeofenceRepository.findByNumber(any(String.class))).thenReturn(userCareGeofence);
