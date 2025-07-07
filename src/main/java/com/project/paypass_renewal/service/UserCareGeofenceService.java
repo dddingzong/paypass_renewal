@@ -55,7 +55,6 @@ public class UserCareGeofenceService {
 
     @Transactional
     public UserCareGeofenceResponseDto findUserCareGeofence(String number) {
-        log.info("유저의 케어서비스 지오펜스를 조회합니다. number: {}", number);
 
         UserCareGeofence userGeofence = userCareGeofenceRepository.findByNumber(number);
 
