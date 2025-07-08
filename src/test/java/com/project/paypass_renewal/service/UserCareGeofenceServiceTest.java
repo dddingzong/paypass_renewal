@@ -2,6 +2,8 @@ package com.project.paypass_renewal.service;
 
 import com.project.paypass_renewal.domain.ServiceCode;
 import com.project.paypass_renewal.domain.UserCareGeofence;
+import com.project.paypass_renewal.domain.dto.request.CareGeofenceMoveDto;
+import com.project.paypass_renewal.domain.dto.request.HistoryEntryDto;
 import com.project.paypass_renewal.domain.dto.request.NumberRequestDto;
 import com.project.paypass_renewal.domain.dto.request.UserRequestDto;
 import com.project.paypass_renewal.domain.dto.response.UserCareGeofenceResponseDto;
@@ -15,6 +17,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -25,6 +28,9 @@ class UserCareGeofenceServiceTest {
 
     @Mock
     private UserCareGeofenceRepository userCareGeofenceRepository;
+
+    @Mock
+    private LogService logService;
 
     @InjectMocks
     private UserCareGeofenceService userCareGeofenceService;
@@ -88,6 +94,21 @@ class UserCareGeofenceServiceTest {
         assertThat(userCareGeofenceResponseDto).isNull();
     }
 
+    @Test
+    @DisplayName("유저_지오펜스_저장_후보_서비스_테스트")
+    void checkCareGeofenceAlgorithmTest() {
+        // given
+        CareGeofenceMoveDto careGeofenceMoveDto =
+                new CareGeofenceMoveDto("01012345678",
+                        List.of(new HistoryEntryDto("집", LocalDate.now().atStartOfDay().plusMinutes(30)),
+                                new HistoryEntryDto("센터", LocalDate.now().atStartOfDay().plusMinutes(46)))
+                );
 
+        // when
+        String result = userCareGeofenceService.checkCareGeofenceAlgorithm(careGeofenceMoveDto);
+
+        // then
+        assertThat(result).isEqualTo("successSaveLog");
+    }
 
 }
