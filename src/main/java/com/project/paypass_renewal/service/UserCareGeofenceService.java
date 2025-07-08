@@ -1,6 +1,9 @@
 package com.project.paypass_renewal.service;
 
+import com.project.paypass_renewal.domain.Log;
 import com.project.paypass_renewal.domain.UserCareGeofence;
+import com.project.paypass_renewal.domain.dto.request.CareGeofenceMoveDto;
+import com.project.paypass_renewal.domain.dto.request.HistoryEntryDto;
 import com.project.paypass_renewal.domain.dto.request.UserRequestDto;
 import com.project.paypass_renewal.domain.dto.response.UserCareGeofenceResponseDto;
 import com.project.paypass_renewal.repository.UserCareGeofenceRepository;
@@ -11,6 +14,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -19,6 +24,7 @@ import java.util.Map;
 public class UserCareGeofenceService {
 
     private final UserCareGeofenceRepository userCareGeofenceRepository;
+    private final LogService logService;
 
     @Transactional
     public UserCareGeofence saveUserGeofence(UserRequestDto userRequestDto) {
@@ -70,5 +76,26 @@ public class UserCareGeofenceService {
         }
 
         return new UserCareGeofenceResponseDto(userNumber, homeLatitude, homeLongitude, centerLatitude, centerLongitude);
+    }
+
+    public String checkCareGeofenceAlgorithm(CareGeofenceMoveDto careGeofenceMoveDto) {
+
+        // 알고리즘 진행
+
+        String number = careGeofenceMoveDto.getNumber();
+
+        List<HistoryEntryDto> history = careGeofenceMoveDto.getHistory();
+        String departureLocation = history.get(0).getName();
+        LocalDateTime departureTime = history.get(0).getTime();
+
+        String arrivalLocation = history.get(1).getName();
+        LocalDateTime arrivalTime = history.get(1).getTime();
+
+        log.info("케어 지오펜스 알고리즘을 확인합니다. 출발지: {}, 도착지: {}, 출발 시간: {}, 도착 시간: {}",
+                 departureLocation, arrivalLocation, departureTime, arrivalTime);
+
+        logService.saveLog(new Log(number, departureTime, arrivalTime, departureLocation, arrivalLocation));
+
+        return "successSaveLog";
     }
 }
