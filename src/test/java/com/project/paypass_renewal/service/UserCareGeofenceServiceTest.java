@@ -8,6 +8,7 @@ import com.project.paypass_renewal.domain.dto.request.NumberRequestDto;
 import com.project.paypass_renewal.domain.dto.request.UserRequestDto;
 import com.project.paypass_renewal.domain.dto.response.UserCareGeofenceResponseDto;
 import com.project.paypass_renewal.repository.UserCareGeofenceRepository;
+import com.project.paypass_renewal.util.algorithm.CareGeofenceTimeAlgorithm;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -31,6 +32,9 @@ class UserCareGeofenceServiceTest {
 
     @Mock
     private LogService logService;
+
+    @Mock
+    private CareGeofenceTimeAlgorithm careGeofenceTimeAlgorithm;
 
     @InjectMocks
     private UserCareGeofenceService userCareGeofenceService;
@@ -103,6 +107,9 @@ class UserCareGeofenceServiceTest {
                         List.of(new HistoryEntryDto("집", LocalDate.now().atStartOfDay().plusMinutes(30)),
                                 new HistoryEntryDto("센터", LocalDate.now().atStartOfDay().plusMinutes(46)))
                 );
+
+        // stub
+        when(careGeofenceTimeAlgorithm.careTimeAlgorithm(any(CareGeofenceMoveDto.class))).thenReturn(true);
 
         // when
         String result = userCareGeofenceService.checkCareGeofenceAlgorithm(careGeofenceMoveDto);

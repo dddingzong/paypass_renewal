@@ -8,6 +8,7 @@ import com.project.paypass_renewal.domain.dto.request.UserRequestDto;
 import com.project.paypass_renewal.domain.dto.response.UserCareGeofenceResponseDto;
 import com.project.paypass_renewal.repository.UserCareGeofenceRepository;
 import com.project.paypass_renewal.util.ZipCodeToLatLogUtils;
+import com.project.paypass_renewal.util.algorithm.CareGeofenceTimeAlgorithm;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,6 +26,8 @@ public class UserCareGeofenceService {
 
     private final UserCareGeofenceRepository userCareGeofenceRepository;
     private final LogService logService;
+
+    private final CareGeofenceTimeAlgorithm careGeofenceTimeAlgorithm;
 
     @Transactional
     public UserCareGeofence saveUserGeofence(UserRequestDto userRequestDto) {
@@ -81,6 +84,7 @@ public class UserCareGeofenceService {
     public String checkCareGeofenceAlgorithm(CareGeofenceMoveDto careGeofenceMoveDto) {
 
         // 알고리즘 진행
+        if(!careGeofenceTimeAlgorithm.careTimeAlgorithm(careGeofenceMoveDto)) return "notValidAlgorithm";
 
         String number = careGeofenceMoveDto.getNumber();
 
