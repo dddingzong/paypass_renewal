@@ -1,5 +1,6 @@
 package com.project.paypass_renewal.controller;
 
+import com.project.paypass_renewal.domain.dto.request.CareGeofenceMoveDto;
 import com.project.paypass_renewal.domain.dto.request.NumberRequestDto;
 import com.project.paypass_renewal.domain.dto.response.UserCareGeofenceResponseDto;
 import com.project.paypass_renewal.service.UserCareGeofenceService;
@@ -32,6 +33,19 @@ public class UserCareGeofenceController {
 
         log.info("사용자 " + number + "의 케어 지오펜스 정보 조회 완료");
         return ResponseEntity.ok(userCareGeofenceResponseDto);
+    }
+
+    @PostMapping("geofence/careGeofence/algorithm")
+    public ResponseEntity<String> checkCareGeofenceAlgorithm(@RequestBody CareGeofenceMoveDto careGeofenceMoveDto) {
+        
+        String result = userCareGeofenceService.checkCareGeofenceAlgorithm(careGeofenceMoveDto);
+
+        if (result.equals("notValidAlgorithm")) {
+            log.info("케어 지오펜스 시간 알고리즘 불만족으로 로그 미저장");
+            return ResponseEntity.ok(result);
+        }
+        
+        return ResponseEntity.ok(result);
     }
 
 
