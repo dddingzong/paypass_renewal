@@ -47,4 +47,8 @@ public class LogService {
 
     }
 
+    public void saveLog(Log log) {
+        logRepository.save(log);
+    }
+
 }
