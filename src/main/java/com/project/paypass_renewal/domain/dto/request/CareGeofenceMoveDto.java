@@ -3,7 +3,6 @@ package com.project.paypass_renewal.domain.dto.request;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
