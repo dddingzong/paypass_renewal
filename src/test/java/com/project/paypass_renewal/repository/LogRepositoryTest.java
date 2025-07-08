@@ -28,8 +28,8 @@ class LogRepositoryTest {
         Log log = new Log("01012345678",
                 LocalDateTime.of(2025, 6, 15, 14, 30),
                 LocalDateTime.of(2025, 6, 15, 14, 50),
-                "12453",
-                "42343");
+                "집",
+                "센터");
 
         // when
         Log savedLog = logRepository.save(log);
