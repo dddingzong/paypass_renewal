@@ -1,8 +1,16 @@
 package com.project.paypass_renewal.domain.data;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
+import java.math.BigDecimal;
 
 @Entity
+@Getter
+@NoArgsConstructor
+@ToString
 public class Station {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -12,9 +20,9 @@ public class Station {
 
     private Long stationNumber;
 
-    private double longitude;
+    private BigDecimal longitude;
 
-    private double latitude;
+    private BigDecimal latitude;
 
     @Column(columnDefinition = "TEXT")
     private String busInfo;

@@ -1,8 +1,12 @@
 package com.project.paypass_renewal.domain.data;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
+@Getter
+@NoArgsConstructor
 public class BusTime {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
