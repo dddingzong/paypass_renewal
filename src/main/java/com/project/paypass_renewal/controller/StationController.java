@@ -1,6 +1,7 @@
 package com.project.paypass_renewal.controller;
 
 import com.project.paypass_renewal.domain.data.Station;
+import com.project.paypass_renewal.domain.dto.response.StationListResponseDto;
 import com.project.paypass_renewal.service.StationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -16,8 +17,8 @@ public class StationController {
     private final StationService stationService;
 
     @GetMapping("/station/getStationList")
-    public ResponseEntity<List<Station>> getStationList() {
-        List<Station> stationList = stationService.findAll();
+    public ResponseEntity<List<StationListResponseDto>> getStationList() {
+        List<StationListResponseDto> stationList = stationService.getStationList();
         return ResponseEntity.ok(stationList);
     }
 
