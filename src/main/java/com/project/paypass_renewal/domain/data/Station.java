@@ -20,8 +20,10 @@ public class Station {
 
     private Long stationNumber;
 
+    @Column(nullable = false, precision = 38, scale = 8)
     private BigDecimal longitude;
 
+    @Column(nullable = false, precision = 38, scale = 8)
     private BigDecimal latitude;
 
     @Column(columnDefinition = "TEXT")

@@ -2,10 +2,12 @@ package com.project.paypass_renewal.domain.dto.response;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.math.BigDecimal;
 
 @Getter
+@ToString
 @NoArgsConstructor
 public class StationListResponseDto {
     private String name;
