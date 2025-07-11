@@ -4,4 +4,6 @@ import com.project.paypass_renewal.domain.data.Station;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface StationRepository extends JpaRepository<Station, Long> {
+
+    String findBusInfoByStationNumber(Long stationNumber);
 }
