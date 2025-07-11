@@ -25,7 +25,10 @@ public class StationService {
                         station.getLatitude()
                 )
         ).toList();
+    }
 
+    public String findBusInfoByStationNumber(Long stationNumber) {
+        return stationRepository.findBusInfoByStationNumber(stationNumber);
     }
 
 }
