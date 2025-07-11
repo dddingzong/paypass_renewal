@@ -1,10 +1,14 @@
 package com.project.paypass_renewal.domain;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Entity
+@Getter
+@NoArgsConstructor
 public class PaypassGeofence {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,4 +27,13 @@ public class PaypassGeofence {
 
     @Column(nullable = false, columnDefinition = "TEXT")
     private String busInfo;
+
+    public PaypassGeofence(String number, LocalDateTime fenceInTime, LocalDateTime fenceOutTime, Long stationNumber, String busInfo) {
+        this.number = number;
+        this.fenceInTime = fenceInTime;
+        this.fenceOutTime = null;
+        this.stationNumber = stationNumber;
+        this.busInfo = busInfo;
+    }
+
 }

@@ -28,4 +28,12 @@ public class Station {
 
     @Column(columnDefinition = "TEXT")
     private String busInfo;
+
+    public Station(String name, Long stationNumber, BigDecimal longitude, BigDecimal latitude, String busInfo) {
+        this.name = name;
+        this.stationNumber = stationNumber;
+        this.longitude = longitude;
+        this.latitude = latitude;
+        this.busInfo = busInfo;
+    }
 }
