@@ -28,9 +28,9 @@ public class PaypassGeofence {
     @Column(nullable = false, columnDefinition = "TEXT")
     private String busInfo;
 
-    public PaypassGeofence(String number, LocalDateTime fenceInTime, Long stationNumber, String busInfo) {
+    public PaypassGeofence(String number, Long stationNumber, String busInfo) {
         this.number = number;
-        this.fenceInTime = fenceInTime;
+        this.fenceInTime = LocalDateTime.now();
         this.fenceOutTime = null;
         this.stationNumber = stationNumber;
         this.busInfo = busInfo;
