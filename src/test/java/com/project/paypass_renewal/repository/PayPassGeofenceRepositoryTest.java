@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.util.List;
+
 @ActiveProfiles("test")
 @SpringBootTest
 @Transactional
@@ -30,13 +32,13 @@ class PayPassGeofenceRepositoryTest {
         payPassGeofenceRepository.save(paypassGeofence);
 
         // when
-        PaypassGeofence result = payPassGeofenceRepository.findByNumberAndStationNumber(number, stationNumber);
+        List<PaypassGeofence> result = payPassGeofenceRepository.findByNumberAndStationNumber(number, stationNumber);
 
         // then
-        Assertions.assertThat(result).isNotNull();
-        Assertions.assertThat(result.getNumber()).isEqualTo(number);
-        Assertions.assertThat(result.getStationNumber()).isEqualTo(stationNumber);
-        Assertions.assertThat(result.getBusInfo()).isEqualTo(busInfo);
+        Assertions.assertThat(result.get(0)).isNotNull();
+        Assertions.assertThat(result.get(0).getNumber()).isEqualTo(number);
+        Assertions.assertThat(result.get(0).getStationNumber()).isEqualTo(stationNumber);
+        Assertions.assertThat(result.get(0).getBusInfo()).isEqualTo(busInfo);
     }
 
 

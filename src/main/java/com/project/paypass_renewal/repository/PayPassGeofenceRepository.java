@@ -3,6 +3,8 @@ package com.project.paypass_renewal.repository;
 import com.project.paypass_renewal.domain.PaypassGeofence;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
+
 public interface PayPassGeofenceRepository extends JpaRepository<PaypassGeofence, Long> {
-    PaypassGeofence findByNumberAndStationNumber(String number, Long stationNumber);
+    List<PaypassGeofence> findByNumberAndStationNumber(String number, Long stationNumber);
 }
