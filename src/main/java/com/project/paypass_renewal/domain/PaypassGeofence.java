@@ -36,4 +36,19 @@ public class PaypassGeofence {
         this.busInfo = busInfo;
     }
 
+    public PaypassGeofence(String number, Long stationNumber, String busInfo, LocalDateTime fenceOutTime) {
+        this.number = number;
+        this.fenceInTime = fenceOutTime.minusMinutes(2);
+        this.fenceOutTime = fenceOutTime;
+        this.stationNumber = stationNumber;
+        this.busInfo = busInfo;
+    }
+
+    public void userFenceOut(){
+        this.fenceOutTime = LocalDateTime.now();
+    }
+
+    public boolean fenceOutTimeIsNull(){
+        return fenceOutTime == null;
+    }
 }
