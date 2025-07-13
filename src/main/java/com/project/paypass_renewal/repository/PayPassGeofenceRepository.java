@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface PayPassGeofenceRepository extends JpaRepository<PaypassGeofence, Long> {
     List<PaypassGeofence> findByNumberAndStationNumber(String number, Long stationNumber);
+    List<PaypassGeofence> findByNumber(String number);
 }
