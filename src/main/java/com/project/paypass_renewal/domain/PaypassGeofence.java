@@ -3,11 +3,13 @@ package com.project.paypass_renewal.domain;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Getter
+@ToString
 @NoArgsConstructor
 public class PaypassGeofence {
     @Id
