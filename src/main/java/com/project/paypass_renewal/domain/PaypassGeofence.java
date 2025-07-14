@@ -28,6 +28,15 @@ public class PaypassGeofence {
     @Column(nullable = false, columnDefinition = "TEXT")
     private String busInfo;
 
+    public String toString() {
+        return "PaypassGeofence{" +
+                "fenceInTime=" + fenceInTime +
+                ", fenceOutTime=" + fenceOutTime +
+                ", stationNumber=" + stationNumber +
+                ", busInfo='" + busInfo + '\'' +
+                '}';
+    }
+
     public PaypassGeofence(String number, Long stationNumber, String busInfo) {
         this.number = number;
         this.fenceInTime = LocalDateTime.now();
