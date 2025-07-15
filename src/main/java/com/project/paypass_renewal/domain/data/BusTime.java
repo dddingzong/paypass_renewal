@@ -3,9 +3,11 @@ package com.project.paypass_renewal.domain.data;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @Getter
+@ToString
 @NoArgsConstructor
 public class BusTime {
     @Id
