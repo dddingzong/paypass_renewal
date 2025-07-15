@@ -25,10 +25,10 @@ class UserCareGeofenceRepositoryTest {
     void saveUserCareGeofenceTest() {
         // given
         String number = "01012345678";
-        BigDecimal homeLatitude = new BigDecimal("37.5665");
-        BigDecimal homeLongitude = new BigDecimal("126.9780");
-        BigDecimal centerLatitude = new BigDecimal("37.5667");
-        BigDecimal centerLongitude = new BigDecimal("126.9782");
+        BigDecimal homeLatitude = new BigDecimal("37.66277080");
+        BigDecimal homeLongitude = new BigDecimal("127.05514400");
+        BigDecimal centerLatitude = new BigDecimal("37.63772280");
+        BigDecimal centerLongitude = new BigDecimal("127.13790120");
 
         UserCareGeofence userCareGeofence = new UserCareGeofence(number, homeLatitude, homeLongitude, centerLatitude, centerLongitude);
 
@@ -41,6 +41,31 @@ class UserCareGeofenceRepositoryTest {
         assertThat(savedGeofence.getHomeLongitude()).isEqualTo(homeLongitude);
         assertThat(savedGeofence.getCenterLatitude()).isEqualTo(centerLatitude);
         assertThat(savedGeofence.getCenterLongitude()).isEqualTo(centerLongitude);
+    }
+
+    @Test
+    @DisplayName("유저_지오펜스_조회_테스트")
+    void findUserCareGeofenceTest() {
+        // given
+        String number = "01012345678";
+        BigDecimal homeLatitude = new BigDecimal("37.66277080");
+        BigDecimal homeLongitude = new BigDecimal("127.05514400");
+        BigDecimal centerLatitude = new BigDecimal("37.63772280");
+        BigDecimal centerLongitude = new BigDecimal("127.13790120");
+
+        UserCareGeofence userCareGeofence = new UserCareGeofence(number, homeLatitude, homeLongitude, centerLatitude, centerLongitude);
+        userCareGeofenceRepository.save(userCareGeofence);
+
+        // when
+        UserCareGeofence foundGeofence = userCareGeofenceRepository.findByNumber(number);
+
+        // then
+        assertThat(foundGeofence).isNotNull();
+        assertThat(foundGeofence.getNumber()).isEqualTo(number);
+        assertThat(foundGeofence.getHomeLatitude()).isEqualTo(homeLatitude);
+        assertThat(foundGeofence.getHomeLongitude()).isEqualTo(homeLongitude);
+        assertThat(foundGeofence.getCenterLatitude()).isEqualTo(centerLatitude);
+        assertThat(foundGeofence.getCenterLongitude()).isEqualTo(centerLongitude);
     }
 
 }

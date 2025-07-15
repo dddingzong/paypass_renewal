@@ -47,7 +47,7 @@ class LogServiceTest {
                 ));
 
         // stub
-        when(logRepository.findByNumber(any(String.class))).thenReturn(dummyLogs);
+        when(logRepository.findByNumberOrderByDepartureTimeDesc(any(String.class))).thenReturn(dummyLogs);
         when(userRepository.findByNumber(any(String.class))).thenReturn(UserTestUtils.createDummyUser());
 
         // when

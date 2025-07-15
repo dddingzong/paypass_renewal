@@ -28,8 +28,8 @@ class LogRepositoryTest {
         Log log = new Log("01012345678",
                 LocalDateTime.of(2025, 6, 15, 14, 30),
                 LocalDateTime.of(2025, 6, 15, 14, 50),
-                "12453",
-                "42343");
+                "집",
+                "센터");
 
         // when
         Log savedLog = logRepository.save(log);
@@ -55,7 +55,7 @@ class LogRepositoryTest {
         logRepository.save(testLogThree);
 
         // when
-        List<Log> findNumbers = logRepository.findByNumber(number);
+        List<Log> findNumbers = logRepository.findByNumberOrderByDepartureTimeDesc(number);
 
         // then
         assertThat(findNumbers).hasSize(2);
