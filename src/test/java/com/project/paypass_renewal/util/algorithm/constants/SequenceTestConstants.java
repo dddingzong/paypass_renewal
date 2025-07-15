@@ -48,5 +48,10 @@ public class SequenceTestConstants {
             "100100425_1", List.of(29L, 30L, 31L)
     );
 
+    public static final Map<String, List<Long>> TIME_NOT_SATISFY_TEST_LIST = Map.of(
+            "100100014_1", List.of(1L, 2L),
+            "100100017_1", List.of(1L, 2L)
+    );
+
 
 }

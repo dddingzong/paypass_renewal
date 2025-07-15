@@ -98,6 +98,20 @@ class PaypassAverageTimeAlgorithmTest {
         assertThat(averageTimeGeofenceMap.size()).isEqualTo(SequenceTestConstants.SEQUENCE_DOUBLE_TEST_LIST.size());
     }
 
+    @Test
+    @DisplayName("paypassAverageTimeAlgorithm_테스트_불만족")
+    void paypassAverageTimeAlgorithmDissatisfactionTest() {
+        // given
+        Map<String, List<Long>> sequenceGeofenceMap = SequenceTestConstants.TIME_NOT_SATISFY_TEST_LIST;
+        List<PaypassGeofence> dissatisfactionTestList = AlgorithmTestConstants.TIME_NOT_SATISFY_TEST_LIST;
 
+        // when
+        Map<String, List<Long>> averageTimeGeofenceMap = paypassAverageTimeAlgorithm.algorithmStart(sequenceGeofenceMap, dissatisfactionTestList);
+
+        // then
+        assertThat(averageTimeGeofenceMap).isNotNull();
+        assertThat(averageTimeGeofenceMap.get("100100014_1")).isEqualTo(List.of(1L, 2L));
+        assertThat(averageTimeGeofenceMap.get("100100017_1")).isEqualTo(List.of(1L, 2L));
+    }
 
 }

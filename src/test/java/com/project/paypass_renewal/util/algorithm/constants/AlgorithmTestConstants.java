@@ -62,4 +62,10 @@ public class AlgorithmTestConstants {
              new PaypassGeofence("01089099721", 108000382L, "{100100014,1},{100100017,1},{108000002,1}", LocalDateTime.now().minusMinutes(30))
     );
 
+    public static final List<PaypassGeofence> TIME_NOT_SATISFY_TEST_LIST = List.of (
+            new PaypassGeofence("01089099721", 108000382L, "{100100014,1},{100100017,1},{108000002,1}",LocalDateTime.now().minusMinutes(50)),
+            new PaypassGeofence("01089099721", 108000014L, "{100100014,2},{100100017,2},{100100023,2}", LocalDateTime.now().minusMinutes(45)),
+            new PaypassGeofence("01089099721", 108000015L, "{100100014,3},{100100017,3},{100100023,3}", LocalDateTime.now().minusMinutes(5))
+    );
+
 }
