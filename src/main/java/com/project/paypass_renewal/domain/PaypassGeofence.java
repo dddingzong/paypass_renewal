@@ -53,6 +53,17 @@ public class PaypassGeofence {
         this.busInfo = busInfo;
     }
 
+    // 테스트용
+    public PaypassGeofence(Long id, String number, Long stationNumber, String busInfo, LocalDateTime fenceOutTime) {
+        this.id = id;
+        this.number = number;
+        this.fenceInTime = fenceOutTime.minusMinutes(2);
+        this.fenceOutTime = fenceOutTime;
+        this.stationNumber = stationNumber;
+        this.busInfo = busInfo;
+    }
+
+
     public void userFenceOut(){
         this.fenceOutTime = LocalDateTime.now();
     }
