@@ -124,6 +124,37 @@ class PaypassSequenceAlgorithmTest {
         assertThat(result.get("100100014_3")).isEqualTo(List.of(13L, 14L));
     }
 
+    @Test
+    @DisplayName("PaypassSequenceAlgorithm_테스트_복수정류장_혼합")
+    void paypassSequenceAlgorithmDoubleTest() {
+        PaypassGeofence geofenceSeq1 = new PaypassGeofence("010", 0L, "{100100148,10},{100100148,57},{100100150,10},{100100150,51},{100100151,10},{100100151,31},{100100165,38},{100100192,30},{100100193,24},{100100193,57}", LocalDateTime.now().minusMinutes(60));
+        PaypassGeofence geofenceSeq2 = new PaypassGeofence("010", 0L, "{100100148,11},{100100148,58},{100100150,11},{100100150,52},{100100151,11},{100100151,32},{100100165,39},{100100179,49}", LocalDateTime.now().minusMinutes(55));
+        PaypassGeofence geofenceSeq3 = new PaypassGeofence("010", 0L, "{100100148,12},{100100148,59},{100100150,12},{100100150,53},{100100151,12},{100100151,33},{100100165,40},{100100179,50},{100100192,31},{100100193,25},{100100193,58}", LocalDateTime.now().minusMinutes(50));
+        PaypassGeofence geofenceSeq4 = new PaypassGeofence("010", 0L, "{100100148,13},{100100165,41},{100100192,32},{100100193,26},{100100193,59}", LocalDateTime.now().minusMinutes(50));
+        PaypassGeofence geofenceSeq5 = new PaypassGeofence("010", 0L, "{100100148,14},{100100165,42}", LocalDateTime.now().minusMinutes(45));
+        PaypassGeofence geofenceSeq6 = new PaypassGeofence("010", 0L, "{100100148,17},{100100425,29}", LocalDateTime.now().minusMinutes(40));
+        PaypassGeofence geofenceSeq7 = new PaypassGeofence("010", 0L, "{100100148,18},{100100425,30}", LocalDateTime.now().minusMinutes(35));
+        PaypassGeofence geofenceSeq8 = new PaypassGeofence("010", 0L, "{100100148,19},{100100425,31}", LocalDateTime.now().minusMinutes(30));
+        PaypassGeofence geofenceSeq9 = new PaypassGeofence("010", 0L, "{100100148,20}", LocalDateTime.now().minusMinutes(25));
+
+        List<PaypassGeofence> list = List.of(
+                geofenceSeq1, geofenceSeq2, geofenceSeq3, geofenceSeq4,
+                geofenceSeq5, geofenceSeq6, geofenceSeq7, geofenceSeq8, geofenceSeq9
+        );
+        Map<String, List<Long>> result = paypassSequenceAlgorithm.algorithmStart(list);
+
+        assertThat(result.get("100100148_1")).isEqualTo(List.of(10L, 11L, 12L, 13L, 14L));
+        assertThat(result.get("100100148_2")).isEqualTo(List.of(17L, 18L, 19L, 20L));
+        assertThat(result.get("100100150_1")).isEqualTo(List.of(10L, 11L, 12L));
+        assertThat(result.get("100100151_1")).isEqualTo(List.of(10L, 11L, 12L));
+        assertThat(result.get("100100165_1")).isEqualTo(List.of(38L, 39L, 40L, 41L, 42L));
+        assertThat(result.get("100100179_1")).isEqualTo(List.of(49L, 50L));
+        assertThat(result.get("100100192_1")).isEqualTo(List.of(30L, 31L, 32L));
+        assertThat(result.get("100100193_1")).isEqualTo(List.of(24L, 25L, 26L));
+        assertThat(result.get("100100425_1")).isEqualTo(List.of(29L, 30L, 31L));
+
+    }
+
 
 
 }
