@@ -17,9 +17,9 @@ public class PaypassSequenceAlgorithm {
 
         List<PaypassGeofence> sortedList = sortByUserFenceInTime(paypassGeofenceList);
 
-        Map<String, List<Long>> sequenceGeofenceList = sequenceLogic(sortedList);
+        Map<String, List<Long>> sequenceGeofenceMap = sequenceLogic(sortedList);
 
-        return sequenceGeofenceList;
+        return sequenceGeofenceMap;
     }
 
     private Map<String, List<Long>> sequenceLogic(List<PaypassGeofence> paypassGeofenceList) {
@@ -174,10 +174,13 @@ public class PaypassSequenceAlgorithm {
 
                 for (int i = 0; i < list.size(); i++) {
                     String seqStr = String.valueOf(list.get(i));
-                    if (seqStr.contains("000")) {
-                        String[] parts = seqStr.split("000");
-                        Long s1 = Long.parseLong(parts[0]);
-                        Long s2 = Long.parseLong(parts[1]);
+                    if (seqStr.length() > 4 && seqStr.contains("000")) {
+                        int splitIdx = seqStr.lastIndexOf("000");
+                        String left = seqStr.substring(0, splitIdx);
+                        String right = seqStr.substring(splitIdx + 3);
+
+                        Long s1 = Long.parseLong(left);
+                        Long s2 = Long.parseLong(right);
 
                         list.set(i, s1);
                         updated.put(routeId + "_1", new ArrayList<>(list));
