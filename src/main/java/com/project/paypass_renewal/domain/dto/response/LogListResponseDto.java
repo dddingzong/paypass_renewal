@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class LogListResponseDto {
 
+    private Long id;
     private String number;
     private String name;
     private LocalDateTime departureTime;
@@ -16,7 +17,8 @@ public class LogListResponseDto {
     private String departureLocation;
     private String arrivalLocation;
 
-    public LogListResponseDto(String number, String name, LocalDateTime departureTime, LocalDateTime arrivalTime, String departureLocation, String arrivalLocation) {
+    public LogListResponseDto(Long id, String number, String name, LocalDateTime departureTime, LocalDateTime arrivalTime, String departureLocation, String arrivalLocation) {
+        this.id = id;
         this.number = number;
         this.name = name;
         this.departureTime = departureTime;

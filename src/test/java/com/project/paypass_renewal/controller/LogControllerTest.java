@@ -53,7 +53,7 @@ class LogControllerTest {
         NumberRequestDto numberRequestDto = new NumberRequestDto("01089099721");
         String json = objectMapper.writeValueAsString(numberRequestDto);
 
-        LogListResponseDto logListResponseDto = new LogListResponseDto("01089099721", "정종인", LocalDateTime.of(2025, 6, 20, 9, 0), LocalDateTime.of(2025, 6, 20, 9, 40), "집", "센터");
+        LogListResponseDto logListResponseDto = new LogListResponseDto(1L,"01089099721", "정종인", LocalDateTime.of(2025, 6, 20, 9, 0), LocalDateTime.of(2025, 6, 20, 9, 40), "집", "센터");
         List<LogListResponseDto> logList = new ArrayList<>();
         logList.add(logListResponseDto);
 
@@ -70,6 +70,7 @@ class LogControllerTest {
         // then
         result.andExpect(status().isOk())
                 .andExpect(jsonPath("$.size()").value(1))
+                .andExpect(jsonPath("$[0].id").value(1))
                 .andExpect(jsonPath("$[0].number").value("01089099721"))
                 .andExpect(jsonPath("$[0].name").value("정종인"))
                 .andExpect(jsonPath("$[0].departureLocation").value("집"))

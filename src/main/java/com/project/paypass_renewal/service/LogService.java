@@ -35,6 +35,7 @@ public class LogService {
     }
 
     private LogListResponseDto logToLogListResponseDto(Log log) {
+        Long id = log.getId();
         String number = log.getNumber();
         LocalDateTime departureTime = log.getDepartureTime();
         LocalDateTime arrivalTime = log.getArrivalTime();
@@ -43,7 +44,7 @@ public class LogService {
 
         String name = userRepository.findByNumber(number).getName();
 
-        return new LogListResponseDto(number, name, departureTime, arrivalTime, departureLocation, arrivalLocation);
+        return new LogListResponseDto(id ,number, name, departureTime, arrivalTime, departureLocation, arrivalLocation);
 
     }
 
