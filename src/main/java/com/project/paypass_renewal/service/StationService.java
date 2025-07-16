@@ -31,4 +31,8 @@ public class StationService {
         return stationRepository.findBusInfoByStationNumber(stationNumber);
     }
 
+    public Station findByStationNumber(Long stationNumber) {
+        return stationRepository.findByStationNumber(stationNumber);
+    }
+
 }
