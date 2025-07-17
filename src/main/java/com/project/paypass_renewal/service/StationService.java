@@ -1,12 +1,15 @@
 package com.project.paypass_renewal.service;
 
 import com.project.paypass_renewal.domain.data.Station;
+import com.project.paypass_renewal.domain.dto.request.StationNumberRequestDto;
 import com.project.paypass_renewal.domain.dto.response.StationListResponseDto;
 import com.project.paypass_renewal.repository.StationRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -33,6 +36,13 @@ public class StationService {
 
     public Station findByStationNumber(Long stationNumber) {
         return stationRepository.findByStationNumber(stationNumber);
+    }
+
+    public Map<String, BigDecimal> getStationLatLng(StationNumberRequestDto stationNumberRequestDto) {
+        Long stationNumber = stationNumberRequestDto.getStationNumber();
+        Station station = stationRepository.findByStationNumber(stationNumber);
+
+        return Map.of("latitude", station.getLatitude(), "longitude", station.getLongitude());
     }
 
 }
