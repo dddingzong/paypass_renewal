@@ -45,7 +45,6 @@ public class UserLocationController {
         
         List<Map<String, BigDecimal>> latLngList = userLocationService.getUserMovingPath(detailLogPathRequestDto);
 
-        System.out.println("latLngList = " + latLngList);
         return ResponseEntity.ok(latLngList);
     }
 

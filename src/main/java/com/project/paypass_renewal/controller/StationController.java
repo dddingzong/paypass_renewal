@@ -1,10 +1,11 @@
 package com.project.paypass_renewal.controller;
 
-import com.project.paypass_renewal.domain.data.Station;
+
 import com.project.paypass_renewal.domain.dto.request.StationNumberRequestDto;
 import com.project.paypass_renewal.domain.dto.response.StationListResponseDto;
 import com.project.paypass_renewal.service.StationService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +16,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 public class StationController {
@@ -31,6 +33,7 @@ public class StationController {
     @PostMapping("/station/getStationLatLng")
     public ResponseEntity<Map<String, BigDecimal>> getStationLatLng(@RequestBody StationNumberRequestDto stationNumberRequestDto) {
         Map<String, BigDecimal> latLngMap = stationService.getStationLatLng(stationNumberRequestDto);
+        log.info("stationNumber 활용하여 위도 경도 조회: " + latLngMap);
         return ResponseEntity.ok(latLngMap);
     }
 
