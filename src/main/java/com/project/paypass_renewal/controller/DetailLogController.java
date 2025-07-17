@@ -5,6 +5,7 @@ import com.project.paypass_renewal.domain.DetailLog;
 import com.project.paypass_renewal.domain.data.Station;
 import com.project.paypass_renewal.domain.dto.request.LogIdRequestDto;
 import com.project.paypass_renewal.domain.dto.response.DetailLogListResponseDto;
+import com.project.paypass_renewal.service.BusNumberService;
 import com.project.paypass_renewal.service.DetailLogService;
 import com.project.paypass_renewal.service.StationService;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +24,7 @@ public class DetailLogController {
 
     private final DetailLogService detailLogService;
     private final StationService stationService;
+    private final BusNumberService busNumberService;
 
     @PostMapping("/detailLog/getDetailLogList")
     public ResponseEntity<List<DetailLogListResponseDto>> getDetailLogList(@RequestBody LogIdRequestDto logIdRequestDto) {
@@ -30,15 +32,27 @@ public class DetailLogController {
         List<DetailLogListResponseDto> detailLogListResponseDtoList = new ArrayList<>();
 
         for (DetailLog detailLog : detailLogList) {
+            List<String> busNumberList = new ArrayList<>();
             Long id = detailLog.getId();
             LocalDateTime fenceInTime = detailLog.getFenceInTime();
             LocalDateTime fenceOutTime = detailLog.getFenceOutTime();
+            String routeIdListString = detailLog.getRouteIdList();
+            List<String> routeIdList = List.of(routeIdListString.split(","));
+
+            for (String routeId : routeIdList) {
+                String busNumber = busNumberService.findBusNameByRouteId(routeId);
+                busNumberList.add(busNumber);
+            }
+
+            // busNumberList String으로 변환
+            String busNumberString = String.join(",", busNumberList);
+
             Long stationNumber = detailLog.getStationNumber();
 
             Station station = stationService.findByStationNumber(stationNumber);
             String name = station.getName();
 
-            DetailLogListResponseDto responseDto = new DetailLogListResponseDto(id, fenceInTime, fenceOutTime, stationNumber, name);
+            DetailLogListResponseDto responseDto = new DetailLogListResponseDto(id, fenceInTime, fenceOutTime, stationNumber, name, busNumberString);
             detailLogListResponseDtoList.add(responseDto);
         }
 

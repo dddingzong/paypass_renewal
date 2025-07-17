@@ -60,8 +60,8 @@ class DetailLogControllerTest {
         // stub
         when(detailLogService.findDetailLogsByLogId(any(LogIdRequestDto.class))).thenReturn(
                 List.of(
-                        new DetailLog(1L, 1L, "01012345678", LocalDateTime.now(), LocalDateTime.now().plusMinutes(2), 101123123L),
-                        new DetailLog(2L,1L,"01012345678", LocalDateTime.now().plusMinutes(10), LocalDateTime.now().plusMinutes(12), 105653632L)
+                        new DetailLog(1L, 1L, "01012345678", LocalDateTime.now(), LocalDateTime.now().plusMinutes(2), 101123123L, "routeId1,routeId2"),
+                        new DetailLog(2L,1L,"01012345678", LocalDateTime.now().plusMinutes(10), LocalDateTime.now().plusMinutes(12), 105653632L, "routeId3,routeId4")
                 )
         );
 
@@ -83,10 +83,8 @@ class DetailLogControllerTest {
                 .andExpect(jsonPath("$[0].fenceInTime").exists())
                 .andExpect(jsonPath("$[0].fenceOutTime").exists())
                 .andExpect(jsonPath("$[0].stationNumber").value(101123123L))
-                .andExpect(jsonPath("$[0].stationName").value("test_정류장A"));
-
-
-
+                .andExpect(jsonPath("$[0].stationName").value("test_정류장A"))
+                .andExpect(jsonPath("$[0].routeIdList").value("routeId1,routeId2"));
     }
 
 }

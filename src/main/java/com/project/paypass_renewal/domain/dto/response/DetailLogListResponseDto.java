@@ -13,13 +13,15 @@ public class DetailLogListResponseDto {
     private LocalDateTime fenceOutTime;
     private Long stationNumber;
     private String stationName;
+    private String busNumberString;
 
-    public DetailLogListResponseDto(Long id, LocalDateTime fenceInTime, LocalDateTime fenceOutTime, Long stationNumber, String stationName) {
+    public DetailLogListResponseDto(Long id, LocalDateTime fenceInTime, LocalDateTime fenceOutTime, Long stationNumber, String stationName, String busNumberString) {
         this.id = id;
         this.fenceInTime = fenceInTime;
         this.fenceOutTime = fenceOutTime;
         this.stationNumber = stationNumber;
         this.stationName = stationName;
+        this.busNumberString = busNumberString;
     }
 }
 

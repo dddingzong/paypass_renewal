@@ -15,7 +15,7 @@ public class DetailLog {
     private Long id;
 
     @Column(nullable = false)
-    private Long log_id;
+    private Long logId;
 
     @Column(nullable = false)
     private String number;
@@ -28,21 +28,25 @@ public class DetailLog {
     @Column(nullable = false)
     private Long stationNumber;
 
-    public DetailLog(Long log_id, String number, LocalDateTime fenceInTime, LocalDateTime fenceOutTime, Long stationNumber) {
-        this.log_id = log_id;
+    private String routeIdList;
+
+    public DetailLog(Long logId, String number, LocalDateTime fenceInTime, LocalDateTime fenceOutTime, Long stationNumber, String routeIdList) {
+        this.logId = logId;
         this.number = number;
         this.fenceInTime = fenceInTime;
         this.fenceOutTime = fenceOutTime;
         this.stationNumber = stationNumber;
+        this.routeIdList = routeIdList;
     }
 
     // 테스트용 생성자
-    public DetailLog(Long id, Long log_id, String number, LocalDateTime fenceInTime, LocalDateTime fenceOutTime, Long stationNumber) {
+    public DetailLog(Long id, Long logId, String number, LocalDateTime fenceInTime, LocalDateTime fenceOutTime, Long stationNumber, String routeIdList) {
         this.id = id;
-        this.log_id = log_id;
+        this.logId = logId;
         this.number = number;
         this.fenceInTime = fenceInTime;
         this.fenceOutTime = fenceOutTime;
         this.stationNumber = stationNumber;
+        this.routeIdList = routeIdList;
     }
 }
