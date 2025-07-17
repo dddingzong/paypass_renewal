@@ -17,7 +17,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DetailLogService {
 
-    DetailLogRepository detailLogRepository;
+    private final DetailLogRepository detailLogRepository;
 
     public List<DetailLog> findDetailLogsByLogId(LogIdRequestDto logIdRequestDto) {
         Long logId = logIdRequestDto.getLogId();
