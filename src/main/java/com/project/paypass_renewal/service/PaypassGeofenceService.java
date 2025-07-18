@@ -1,7 +1,10 @@
 package com.project.paypass_renewal.service;
 
 import com.project.paypass_renewal.domain.PaypassGeofence;
+import com.project.paypass_renewal.domain.UserLocation;
+import com.project.paypass_renewal.domain.dto.request.NumberRequestDto;
 import com.project.paypass_renewal.repository.PayPassGeofenceRepository;
+import com.project.paypass_renewal.repository.UserLocationRepository;
 import com.project.paypass_renewal.util.algorithm.PaypassAverageTimeAlgorithm;
 import com.project.paypass_renewal.util.algorithm.PaypassDeleteDuplicateAlgorithm;
 import com.project.paypass_renewal.util.algorithm.PaypassSequenceAlgorithm;
@@ -21,6 +24,7 @@ import java.util.Map;
 public class PaypassGeofenceService {
 
     private final PayPassGeofenceRepository payPassGeofenceRepository;
+    private final UserLocationRepository userLocationRepository;
 
     private final LogService logService;
 
@@ -112,6 +116,24 @@ public class PaypassGeofenceService {
         return paypassGeofence.fenceOutTimeIsNull();
     }
 
+    public List<UserLocation> getUserMovingHistory(NumberRequestDto numberRequestDto) {
+        String number = numberRequestDto.getNumber();
+
+        List<PaypassGeofence> geofenceList = payPassGeofenceRepository.findByNumber(number);
+
+        // fenceInTime 최소, fenceOutTime 최대 구하기
+        LocalDateTime minInTime = geofenceList.stream()
+                .map(PaypassGeofence::getFenceInTime)
+                .min(LocalDateTime::compareTo)
+                .orElseThrow();
+
+        LocalDateTime maxOutTime = geofenceList.stream()
+                .map(g -> g.getFenceOutTime() != null ? g.getFenceOutTime() : g.getFenceInTime())
+                .max(LocalDateTime::compareTo)
+                .orElseThrow();
+
+        return userLocationRepository.findByNumberAndSavedTimeBetweenOrderBySavedTime(number, minInTime, maxOutTime);
+    }
 
 
 }

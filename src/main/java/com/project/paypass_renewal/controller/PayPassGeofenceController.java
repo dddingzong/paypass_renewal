@@ -1,7 +1,10 @@
 package com.project.paypass_renewal.controller;
 
 import com.project.paypass_renewal.domain.PaypassGeofence;
+import com.project.paypass_renewal.domain.UserLocation;
+import com.project.paypass_renewal.domain.dto.request.NumberRequestDto;
 import com.project.paypass_renewal.domain.dto.request.UserPaypassGeofenceRequestDto;
+import com.project.paypass_renewal.domain.dto.response.UserLatLngListResponseDto;
 import com.project.paypass_renewal.service.PaypassGeofenceService;
 import com.project.paypass_renewal.service.StationService;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Slf4j
@@ -70,6 +74,18 @@ public class PayPassGeofenceController {
         }
 
         return ResponseEntity.ok("success update fenceOutTime");
+    }
+
+    @PostMapping("/geofence/getUserMovingHistory")
+    public  ResponseEntity<List<UserLatLngListResponseDto>> getUserMovingHistory(@RequestBody NumberRequestDto numberRequestDto) {
+        List<UserLocation> userLocationList = paypassGeofenceService.getUserMovingHistory(numberRequestDto);
+        List<UserLatLngListResponseDto> historyList = userLocationList.stream()
+                .map(location -> new UserLatLngListResponseDto(location.getLatitude(), location.getLongitude()))
+                .collect(Collectors.toList());
+
+        log.info("사용자 이동에 따른 경로를 지도에 표시합니다.");
+
+        return ResponseEntity.ok(historyList);
     }
 
     private void updateFenceOutTimeNoEntity(String number, Long stationNumber){
