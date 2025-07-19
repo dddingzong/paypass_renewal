@@ -15,6 +15,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -120,6 +121,8 @@ public class PaypassGeofenceService {
         String number = numberRequestDto.getNumber();
 
         List<PaypassGeofence> geofenceList = payPassGeofenceRepository.findByNumber(number);
+
+        if (geofenceList.isEmpty()) return new ArrayList<>();
 
         // fenceInTime 최소, fenceOutTime 최대 구하기
         LocalDateTime minInTime = geofenceList.stream()
