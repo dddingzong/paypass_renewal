@@ -104,6 +104,7 @@ public class PayPassGeofenceController {
 
     private void updateFenceOutTimeOneEntity(List<PaypassGeofence> paypassGeofences){
         PaypassGeofence paypassGeofence = paypassGeofences.get(0);
+        paypassGeofence.userFenceOut();
         paypassGeofenceService.save(paypassGeofence);
         log.info("하나의 entity를 발견하여 fenceOutTime을 추가합니다.");
     }

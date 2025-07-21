@@ -26,9 +26,8 @@ public class UserLocationController {
 
     @PostMapping("/user/saveUserLocation")
     public ResponseEntity<String> saveNewUser(@RequestBody UserLocationRequestDto userLocationRequestDto){
-
         userLocationService.saveUserLocation(userLocationRequestDto);
-
+        log.info("userLocation 위치 저장 완료");
         return ResponseEntity.ok("saveSuccess");
     }
 

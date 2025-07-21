@@ -121,6 +121,7 @@ public class PaypassGeofenceService {
         String number = numberRequestDto.getNumber();
 
         List<PaypassGeofence> geofenceList = payPassGeofenceRepository.findByNumber(number);
+        log.info("geofenceList = " + geofenceList);
 
         if (geofenceList.isEmpty()) return new ArrayList<>();
 
@@ -128,12 +129,14 @@ public class PaypassGeofenceService {
         LocalDateTime minInTime = geofenceList.stream()
                 .map(PaypassGeofence::getFenceInTime)
                 .min(LocalDateTime::compareTo)
-                .orElseThrow();
+                .orElseThrow()
+                .withNano(0);
 
         LocalDateTime maxOutTime = geofenceList.stream()
                 .map(g -> g.getFenceOutTime() != null ? g.getFenceOutTime() : g.getFenceInTime())
                 .max(LocalDateTime::compareTo)
-                .orElseThrow();
+                .orElseThrow()
+                .withNano(0);
 
         return userLocationRepository.findByNumberAndSavedTimeBetweenOrderBySavedTime(number, minInTime, maxOutTime);
     }
