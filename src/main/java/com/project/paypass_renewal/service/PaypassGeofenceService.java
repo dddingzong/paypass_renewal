@@ -59,6 +59,10 @@ public class PaypassGeofenceService {
         log.info("메인 알고리즘을 실행합니다. number = " + number);
         Map<List<PaypassGeofence>, List<String>> resultMap = startPaypassAlgorithm(number);
 
+        if (resultMap.isEmpty()) {
+            return;
+        }
+
         // 이후 데이터 저장
         logService.saveLogData(number, resultMap);
 
