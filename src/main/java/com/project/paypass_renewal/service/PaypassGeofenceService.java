@@ -132,11 +132,7 @@ public class PaypassGeofenceService {
                 .orElseThrow()
                 .withNano(0);
 
-        LocalDateTime maxOutTime = geofenceList.stream()
-                .map(g -> g.getFenceOutTime() != null ? g.getFenceOutTime() : g.getFenceInTime())
-                .max(LocalDateTime::compareTo)
-                .orElseThrow()
-                .withNano(0);
+        LocalDateTime maxOutTime = LocalDateTime.now().withNano(0);
 
         return userLocationRepository.findByNumberAndSavedTimeBetweenOrderBySavedTime(number, minInTime, maxOutTime);
     }
