@@ -31,6 +31,9 @@ class UserServiceTest {
     UserCareGeofenceService userCareGeofenceService;
 
     @Mock
+    WalletService walletService;
+
+    @Mock
     LinkCodeGenerator linkCodeGenerator;
 
     @InjectMocks

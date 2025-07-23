@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.paypass_renewal.domain.DetailLog;
 import com.project.paypass_renewal.domain.data.Station;
 import com.project.paypass_renewal.domain.dto.request.LogIdRequestDto;
+import com.project.paypass_renewal.service.BusNumberService;
 import com.project.paypass_renewal.service.DetailLogService;
 import com.project.paypass_renewal.service.StationService;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,6 +25,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -39,6 +41,9 @@ class DetailLogControllerTest {
 
     @Mock
     private StationService stationService;
+
+    @Mock
+    private BusNumberService busNumberService;
 
     @InjectMocks
     private DetailLogController detailLogController;
@@ -68,6 +73,11 @@ class DetailLogControllerTest {
         when(stationService.findByStationNumber(101123123L)).thenReturn(new Station("test_정류장A", 101123123L,new BigDecimal(128.123123), new BigDecimal(24.123213) , "test_정류장A_busInfo"));
         when(stationService.findByStationNumber(105653632L)).thenReturn(new Station("test_정류장B", 105653632L,new BigDecimal(127.123112), new BigDecimal(24.121231) , "test_정류장B_busInfo"));
 
+        // busNumberService를 routeId 그대로 반환하도록 설정
+        when(busNumberService.findBusNameByRouteId(anyString()))
+                .thenAnswer(invocation -> invocation.getArgument(0));
+
+
         // when
         ResultActions result = mockMvc.
                 perform(MockMvcRequestBuilders.post(url)
@@ -84,7 +94,7 @@ class DetailLogControllerTest {
                 .andExpect(jsonPath("$[0].fenceOutTime").exists())
                 .andExpect(jsonPath("$[0].stationNumber").value(101123123L))
                 .andExpect(jsonPath("$[0].stationName").value("test_정류장A"))
-                .andExpect(jsonPath("$[0].routeIdList").value("routeId1,routeId2"));
+                .andExpect(jsonPath("$[0].busNumberString").value("routeId1,routeId2"));
     }
 
 }

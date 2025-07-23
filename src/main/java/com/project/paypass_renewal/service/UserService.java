@@ -20,6 +20,7 @@ public class UserService {
     private final UserAddressService userAddressService;
     private final LinkCodeGenerator linkCodeGenerator;
     private final UserCareGeofenceService userCareGeofenceService;
+    private final WalletService walletService;
 
     public boolean checkDuplicateNumber (String number) {
         return userRepository.existsByNumber(number);
@@ -44,6 +45,9 @@ public class UserService {
 
         // UserCareGeofence 생성 및 저장
         userCareGeofenceService.saveUserGeofence(userRequestDto);
+
+        // Wallet 생성 및 저장
+        walletService.createWallet(userRequestDto);
 
         return user;
     }
