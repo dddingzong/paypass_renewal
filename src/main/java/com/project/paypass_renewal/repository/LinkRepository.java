@@ -20,5 +20,7 @@ public interface LinkRepository extends JpaRepository<Link, Long> {
 
     Link findByUserNumberAndSupporterNumber(String supporterNumber, String userNumber );
 
+    List<Link> findBySupporterNumber(String userNumber);
+
 }
 

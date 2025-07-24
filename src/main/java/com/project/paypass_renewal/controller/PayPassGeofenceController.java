@@ -1,7 +1,10 @@
 package com.project.paypass_renewal.controller;
 
 import com.project.paypass_renewal.domain.PaypassGeofence;
+import com.project.paypass_renewal.domain.UserLocation;
+import com.project.paypass_renewal.domain.dto.request.NumberRequestDto;
 import com.project.paypass_renewal.domain.dto.request.UserPaypassGeofenceRequestDto;
+import com.project.paypass_renewal.domain.dto.response.UserLatLngListResponseDto;
 import com.project.paypass_renewal.service.PaypassGeofenceService;
 import com.project.paypass_renewal.service.StationService;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Slf4j
@@ -72,6 +76,18 @@ public class PayPassGeofenceController {
         return ResponseEntity.ok("success update fenceOutTime");
     }
 
+    @PostMapping("/geofence/getUserMovingHistory")
+    public  ResponseEntity<List<UserLatLngListResponseDto>> getUserMovingHistory(@RequestBody NumberRequestDto numberRequestDto) {
+        List<UserLocation> userLocationList = paypassGeofenceService.getUserMovingHistory(numberRequestDto);
+        List<UserLatLngListResponseDto> historyList = userLocationList.stream()
+                .map(location -> new UserLatLngListResponseDto(location.getLatitude(), location.getLongitude()))
+                .collect(Collectors.toList());
+
+        log.info("사용자 이동에 따른 경로를 지도에 표시합니다.");
+
+        return ResponseEntity.ok(historyList);
+    }
+
     private void updateFenceOutTimeNoEntity(String number, Long stationNumber){
         log.info("stationNumber에 부합하는 entity가 존재하지 않기 때문에 2분 전 fenceIn을 가정하고 entity를 생성합니다.");
 
@@ -88,6 +104,7 @@ public class PayPassGeofenceController {
 
     private void updateFenceOutTimeOneEntity(List<PaypassGeofence> paypassGeofences){
         PaypassGeofence paypassGeofence = paypassGeofences.get(0);
+        paypassGeofence.userFenceOut();
         paypassGeofenceService.save(paypassGeofence);
         log.info("하나의 entity를 발견하여 fenceOutTime을 추가합니다.");
     }
