@@ -2,6 +2,7 @@ package com.project.paypass_renewal.service;
 
 import com.project.paypass_renewal.domain.data.Station;
 import com.project.paypass_renewal.domain.dto.request.StationNumberRequestDto;
+import com.project.paypass_renewal.domain.dto.request.UserPaypassGeofenceRequestDto;
 import com.project.paypass_renewal.domain.dto.response.StationListResponseDto;
 import com.project.paypass_renewal.repository.StationRepository;
 import lombok.RequiredArgsConstructor;
@@ -43,6 +44,11 @@ public class StationService {
         Station station = stationRepository.findByStationNumber(stationNumber);
 
         return Map.of("latitude", station.getLatitude(), "longitude", station.getLongitude());
+    }
+
+    public boolean checkStationCondition(UserPaypassGeofenceRequestDto userPaypassGeofenceRequestDto) {
+
+        return true;
     }
 
 }

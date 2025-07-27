@@ -33,6 +33,10 @@ public class PayPassGeofenceController {
         log.info("사용자가 geofence에 접근했기 때문에 userGeofenceIn method를 실행합니다.");
         log.info("****************************************************************");
 
+        if (!stationService.checkStationCondition(userPaypassGeofenceRequestDto)) {
+            return ResponseEntity.ok("fail to save geofence data: station condition not met");
+        }
+
         String number = userPaypassGeofenceRequestDto.getNumber();
         Long stationNumber = userPaypassGeofenceRequestDto.getStationNumber();
 
