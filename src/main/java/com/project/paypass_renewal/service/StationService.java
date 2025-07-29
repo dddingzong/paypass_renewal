@@ -5,6 +5,7 @@ import com.project.paypass_renewal.domain.dto.request.StationNumberRequestDto;
 import com.project.paypass_renewal.domain.dto.request.UserPaypassGeofenceRequestDto;
 import com.project.paypass_renewal.domain.dto.response.StationListResponseDto;
 import com.project.paypass_renewal.repository.StationRepository;
+import com.project.paypass_renewal.util.CheckCurrentStationCondition;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,7 @@ import java.util.Map;
 public class StationService {
 
     private final StationRepository stationRepository;
+    private final CheckCurrentStationCondition checkCurrentStationCondition;
 
     public List<StationListResponseDto> getStationList() {
         List<Station> stationList = stationRepository.findAll();
@@ -47,7 +49,7 @@ public class StationService {
     }
 
     public boolean checkStationCondition(UserPaypassGeofenceRequestDto userPaypassGeofenceRequestDto) {
-
+        checkCurrentStationCondition.checkStationCondition(userPaypassGeofenceRequestDto);
         return true;
     }
 
