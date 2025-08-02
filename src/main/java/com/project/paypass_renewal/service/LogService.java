@@ -8,6 +8,7 @@ import com.project.paypass_renewal.domain.dto.request.NumberRequestDto;
 import com.project.paypass_renewal.domain.dto.response.LogListResponseDto;
 import com.project.paypass_renewal.repository.LogRepository;
 import com.project.paypass_renewal.repository.UserRepository;
+import com.project.paypass_renewal.util.PushNotificationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -26,6 +27,8 @@ public class LogService {
     private final UserRepository userRepository;
     private final StationService stationService;
     private final DetailLogService detailLogService;
+
+    private final PushNotificationService pushNotificationService;
 
     public List<LogListResponseDto> getLogListByNumber(NumberRequestDto numberRequestDto) {
         List<LogListResponseDto> logListResponseDtoList = new ArrayList<>();
@@ -70,6 +73,8 @@ public class LogService {
             // detailLog save
             detailLogService.saveDetailLogData(number, logData, geofenceLocationList, routeIdString);
         }
+
+        pushNotificationService.sendNotificationToUser(number, "로그 저장 완료", "귀하의 이동경로가 성공적으로 저장되었습니다. 출발지와 도착지를 확인하세요.");
     }
 
     private Log saveLog(String number, List<PaypassGeofence> geofenceLocationList, List<String> routeIdList) {
